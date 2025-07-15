@@ -1,0 +1,50 @@
+
+\documentclass[a4,12pt,oneside,openany]{report}
+\usepackage{geometry}
+\geometry{left=30mm,right=30mm, top=40mm,bottom=40mm}
+\usepackage{import}
+\usepackage{slashed}
+\usepackage[english]{babel}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+%\usepackage{bbold}
+
+%\usepackage{feynmp-auto}
+\setlength{\parskip}{1em}
+
+% modify here, fix problem...
+\usepackage[backend=bibtex]{biblatex}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{csquotes}
+\usepackage{physics}
+\usepackage{color}
+\usepackage{subfigure}  
+\usepackage{url}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{mathtools}
+\allowdisplaybreaks
+\bibliography{bib.bib}
+%\addbibresource{}
+
+\title{Towards a twist-3 factorization of semi-inclusive deep inelastic scattering at NLO accuracy}
+\author{Diego Scantamburlo\\\textit{University of Tübingen}}
+
+
+\begin{document}
+
+
+
+
+\import{./content/}{titlepage.tex}
+
+
+\setstretch{1.1}
+%\import{./content/}{intro.tex}
+%\import{./content/}{chapter1.tex}
+%\import{./content/}{chapter2.tex}
+\import{./content/}{chapter3.tex}
+\import{./content/}{conc.tex}
+
+
+\end{document}

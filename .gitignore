@@ -1,0 +1,15 @@
+*.txt
+*.exe
+*.sty
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.pdf
+*.xml
+*.gz
+*.toc
+*.fd
+main-blx.bib

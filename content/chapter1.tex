@@ -1,0 +1,57 @@
+\chapter{Hadronic matrix elements at sub-leading twist}
+In order to obtain a factorized spin-dependent cross section for SIDIS, involving twist-3 contributions, we will need several so called \textit{soft} matrix elements. The "nucleon-to-parton" process, as well as the "parton-to-hadron" hadronization phenomenon, are typically described through non-perturbative matrix elements of certain QCD operators. In principle, they contain all relevant information about the distribution of quarks and gluons inside the nucleon, as well as the decay process from "free" quarks and gluons into color-neutral states such as baryons and mesons. These soft matrix elements, in other words, map the inner hadronic structure and dynamics. It is therefore clear that a thorough understanding of these non-perturbative objects is essential in order to study high-energy processes involving hadrons. For the scattering of unpolarized particles,...PDF FF \cite{rein2025}
+\section{Multi-parton correlations}
+\textcolor{blue}{sketch with diagrams for correlators? Just to give general idea. Also, we briefly recap this and that to set the notation etc..}
+\subsection{Intrinsic twist-3}
+The first type of hadronic matrix elements are the so called \textit{intrinsic} twist-3 functions. They are expressed in terms of 2-parton correlations, involving a pair of quark fields or a pair of gluons. Starting with the quark-quark case, these quantities are organized into a distribution correlator
+\begin{equation}
+    \begin{aligned}
+        \Phi_{ij}(x)&= \int\frac{\dd \lambda}{2\pi} \,e^{i\lambda x}\mel{N(P,S)}{\bar \psi_j(0) \psi_i(\lambda n)}{N(P,S)}\\
+        &= \frac{1}{2}\left(\slashed{P}\right)_{ij} f_1(x)
+        -\frac{1}{4} \left(\comm{\slashed{P}}{\slashed{S}}\gamma_5\right)_{ij} h_1(x)\\
+        &\quad-M\left((\slashed{S}-(S \cdot n) \slashed{P}) \gamma_5\right)_{ij} g_T(x)+\cdots
+    \end{aligned}
+\end{equation}
+and a fragmentation correlator
+\begin{equation}
+    \begin{aligned}
+        \Delta_{ij}(z)&= \sum_X\int\frac{\dd \lambda}{2\pi} \,e^{-i\frac{\lambda}{z}}\mel{0}{\psi_i(0)}{h(P_h);X}\mel{h(P_h);X}{\bar \psi_j(\lambda m)}{0}\\
+        &= \frac{1}{z}\left(\slashed{P}_h\right)_{ij} D_1(z)-\frac{iM_h}{2z} \left(\comm{\slashed{P}_h}{\slashed{m}}\right)_{ij} H(z)+\frac{M_h}{z}(\mathbb{1})_{ij}\,E(z)+\cdots
+        \end{aligned}
+\end{equation}
+
+
+\subsection{Kinematical twist-3}
+\begin{equation}
+    \begin{aligned}
+        \Phi_{ij}(x,k_T)&= \int\frac{\dd \lambda}{2\pi}\int \frac{\dd^2 \eta_T}{(2\pi)^2} \,e^{i\lambda x+i \eta_T\cdot k_T}\mel{N(P,S)}{\bar \psi_j(0) \psi_i(\lambda n+\eta_T)}{N(P,S)}\\
+        &= \frac{1}{2}\left(\slashed{P }\gamma_5\right)_{ij} \frac{\vec k_\perp\cdot \vec S_T}{M}g_{1T}(x_B,\vec k_\perp^2)+\cdots
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        \Delta_{ij}(z,p_T)&= \sum_X\int\frac{\dd \lambda}{2\pi}\int\frac{\dd^2\eta_T}{(2\pi)^2} \,e^{-i\frac{\lambda}{z}-i\eta_T\cdot p_T}\\
+        &\qquad\times\mel{0}{\psi_i(0)}{h(P_h);X}\mel{h(P_h);X}{\bar \psi_j(\lambda m+\eta_T)}{0}\\
+        &= \frac{i z M_h}{2}\comm{\slashed{P}_h}{\slashed{m}}H(z,p_T)+\frac{iz}{2M_h}\comm{\slashed{p_T}}{\slashed{P}_h}H_1^{\perp}(z,p_T)\\
+        &\quad +zM_h(\mathbb{1})_{ij}\,E(z)+\cdots
+        \end{aligned}
+\end{equation}
+then $\Phi_\partial$ and so on...
+
+\subsection{Dynamical twist-3}
+The last type of twist-3 correlators are described in terms of matrix elements of three partonic fields, typically two quark fields and gluonic field strength tensor. These objects are usually called \textit{dynamical} twist-3 correlation functions.
+\begin{equation}
+    \begin{aligned}
+        \Phi^\rho_{F,ij}(x,x')&= \int\frac{\dd \lambda}{2\pi}\int\frac{\dd \eta}{2\pi} \,e^{i\lambda x'+i\eta(x-x')}\mel{N(P,S)}{\bar \psi_j(0)\,i g_S\, n_\sigma F^{\sigma \rho}(\eta n)\, \psi_i(\lambda n)}{N(P,S)}\\
+        &= \frac{M}{2}\epsilon^{Pn\rho S}\left(\slashed{P }\right)_{ij}\,i F_{FT}(x,x')-\frac{M}{2}(S^\rho-(S \cdot n)P^\rho)\left(\slashed{P }\gamma_5\right)_{ij}G_{FT}(x,x')+\cdots
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        \Delta^\rho_{F,ij}(z,z')&= \sum_X\int\frac{\dd \lambda}{2\pi}\int\frac{\dd \eta}{2\pi} \,e^{-i\frac{\lambda}{z'}-i\eta\left(\frac{1}{z}-\frac{1}{z'}\right)}\mel{0}{ig_S m_\sigma F^{\sigma \rho}(\eta m)\psi_i(0)}{h(P_h);X}\mel{h(P_h);X}{\bar \psi_j(\lambda m)}{0}\\
+        &= \frac{iM_h}{2z}\left(\comm{\slashed{P}_h}{\gamma^\rho}-\comm{\slashed{P}_h}{\slashed{m}}P_h^\rho\right)_{ij}\,i\hat H_{FU}(z,z')+\cdots
+        \end{aligned}
+\end{equation}
+\section{QCD equation of motion relations}
+
+\section{Lorentz invariance relations}
