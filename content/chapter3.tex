@@ -9,8 +9,8 @@ We perform our pQCD calculation at next-to-leading order in dimensional regulari
 The virtual graphs contributing at twist-2 level are shown in Fig.\ref{fig:Virt NLO tw2}
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\linewidth]{fig/VirtNLOTw2.jpg}
-    \caption{Virt NLO twist-2}
+    \includegraphics[width=0.55\linewidth]{fig/VirtNLOTw2.jpg}
+    \caption{Virtual diagrams contributing to the leading-twist unpolarized cross section at NLO. The first diagram is the vertex correction graph, while the second and third diagrams are self-energy corrections to the quark lines.}
     \label{fig:Virt NLO tw2}
 \end{figure}
 \noindent Since we are performing our pQCD calculation in light-cone gauge, we shall employ an appropriate technique to evaluate loop integrals that allows us to treat the denominator of the gluon propagator in this gauge. Notoriously, this term requires a careful treatment since it leads to additional well-known \textit{light-cone divergences}. Not surprisingly, it turns out that a light-cone decomposition of the loop momentum allows for a systematic procedure to integrate out the $+$, $-$ and perpendicular components. Since this technique is essential for calculating virtual corrections also at the twist-3 level, we present it here in detail for the simpler leading-twist case. The method is quite general and can be readily extended to higher twists. Let's start by calculating the vertex correction graph. The amplitude reads
@@ -48,22 +48,18 @@ We then have
        &\times 2\pi i\,\mathrm{Res}\left[\frac{N^{\mu\nu}(\alpha,r_\perp,\beta)}{2\pi(\beta-\beta_0)(\beta-\beta_1)(\beta-\beta_2)},\beta=\beta_1\right]
 \end{aligned}
 \end{equation}
-After $\beta$ contour integration, the denominator factors arrange in the following way
-\begin{equation}\label{eq:betaimbetaj=C(rt2+Del)}
-    \beta_1-\beta_j=C_{1j}(\vec r_\perp^2+\Delta_{1j})
-\end{equation}
-with $j=0,2$ and $C_{1j},\Delta_{1j}$ some functions of $\alpha$. Then, the integration over the perpendicular loop momentum can be readily performed since the integrand depends only on the square modulus of $r_\perp$ (after dropping linear terms in the numerator since they vanish for symmetry). Adopting $d-2$ dimensional spherical coordinates, the angular integration is trivial and the radial integral turns out to be of the form
+After $\beta$ contour integration, the denominator factors arrange as $\beta_1-\beta_j=C_{1j}(\vec r_\perp^2+\omega^2_{1j})$, with $j=0,2$ and $C_{1j},\omega^2_{1j}$ some functions of $\alpha$. Then, the integration over the perpendicular loop momentum can be readily performed since the integrand depends only on the square modulus of $r_\perp$ (after dropping linear terms in the numerator since they vanish for symmetry). Adopting $d-2$ dimensional spherical coordinates, the angular integration is trivial and the radial integral turns out to be of the form
 \begin{equation}
-    \int_0^\infty \dd \rho \frac{ \rho^{2n+1-2\epsilon}}{(\rho^2+\Delta_1)(\rho^2+\Delta_2)}=\frac{\pi}{2\sin(\pi n-\pi\epsilon)}\frac{\Delta_1^{n-\epsilon}-\Delta_2^{n-\epsilon}}{\Delta_1-\Delta_2}\quad \text{if} \quad -1<n-\epsilon<1
+    \int_0^\infty \dd \rho \frac{ \rho^{2n+1-2\epsilon}}{(\rho^2+\omega^2_1)(\rho^2+\omega^2_2)}=\frac{\pi}{2\sin(\pi n-\pi\epsilon)}\frac{(\omega^2_1)^{n-\epsilon}-(\omega^2_2)^{n-\epsilon}}{\omega^2_1-\omega^2_2}\quad \text{if} \quad -1<n-\epsilon<1
 \end{equation}
-where $n\in \{\mathbb{N},0\}$ and assuming $\Delta_1,\Delta_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. Typically, one ends up with integrand terms of the general form $\alpha^a (\alpha-1)^b (\zeta \alpha-1)^c$ which yields combinations of hyper-geometric and gamma functions. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
+where $n\in \{\mathbb{N},0\}$ and assuming $\omega^2_1,\omega^2_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. Typically, one ends up with integrand terms of the general form $\alpha^a (\alpha-1)^b (\zeta \alpha-1)^c$ which yields combinations of hyper-geometric and gamma functions. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
 \begin{equation}\label{eq:NLO unpolarized virtual}
 \begin{aligned}
       \frac{\dd \sigma^{UUU}_{\text{NLO,vir}}}{\dd x_B \dd y \dd \phi_l \dd z_h}&= \frac{\dd \sigma^{UUU}_{\text{LO}}}{\dd x_B \dd y \dd \phi_l \dd z_h}\times\frac{\alpha_S}{2\pi}  C_F S_\epsilon \left(\frac{\mu^2}{Q^2}\right)^{\epsilon}\left(-\frac{2}{\epsilon^2}-\frac{3}{\epsilon}-8\right)
 \end{aligned}
 \end{equation}
 with the common $\overline{\text{MS}}$ scheme constant $S_\epsilon=(4\pi)^\epsilon/\Gamma(1-\epsilon)$. This in agreement with the original result for this vertex correction, first given in \cite{altarelli_large_1979}. \\
-Now, we should also calculate two other diagrams, namely the self-energy corrections of the quark lines. Interestingly, if we repeat the very same procedure explained above, we find that after contour integration over $\beta$ the denominator factor is proportional to $r_\perp^2$ only ($\Delta=0$ in Eq.~\ref{eq:betaimbetaj=C(rt2+Del)}) for both diagrams. This leads to a contribution that goes as
+Now, we should also calculate two other diagrams, namely the self-energy corrections of the quark lines. Interestingly, if we repeat the very same procedure explained above, we find that after contour integration over $\beta$ the denominator factor is proportional to $r_\perp^2$ only ($\omega^2_{ij}=0$) for both diagrams. This leads to a contribution that goes as
 \begin{equation}
      (\hat{\mathcal{M}}^{q \to q}_{\text{NLO,vir,self-energy}})^\rho\sim\int\frac{\dd^{d-2} r_\perp}{(2\pi)^{d-2}}\frac{A+B\,r_\perp^2}{r_\perp^2}
 \end{equation}
@@ -153,10 +149,9 @@ With such splitting functions, inserting the bare distributions into the LO expr
 We obtain the following unpolarized NLO result, which is consistent with the literature \cite{de_Florian_1998}
 \begin{equation}
     \begin{aligned}
-        \frac{\dd \sigma^{UUU}_{\rm LO+NLO}}{\dd x_B \dd y \dd \phi_l \dd z_h}&=\frac{2 \alpha_{\rm em}^2}{y Q^2} \left(1-y+\frac{y^2}{2}\right)\sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_U^{a \to a} \circ D_1^a \\
-        &\quad +f_1^g \circ \mathcal{C}_{U}^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_U^{a \to g} \circ D_1^g \Big)\\
-        &+\frac{2 \alpha_{\rm em}^2}{y Q^2} \left(1-y\right)\sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_L^{a \to a} \circ D_1^a \\
-        &\quad +f_1^g \circ \mathcal{C}_L^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_L^{a \to g} \circ D_1^g \Big)
+        \frac{\dd \sigma^{UUU}_{\rm LO+NLO}}{\dd x_B \dd y \dd \phi_l \dd z_h}&=\frac{2 \alpha_{\rm em}^2}{y  Q^2}\left[ \left(1-y+\frac{y^2}{2}\right)\mathcal{F}_{UU,T} +(1-y)\mathcal{F}_{UU,L}\right]\\
+        \mathcal{F}_{UU,T}(x_B,z_h,Q^2)&= \sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_U^{a \to a} \circ D_1^a +f_1^g \circ \mathcal{C}_{U}^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_U^{a \to g} \circ D_1^g \Big)\\
+        \mathcal{F}_{UU,L}(x_B,z_h,Q^2)&=\sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_L^{a \to a} \circ D_1^a  +f_1^g \circ \mathcal{C}_L^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_L^{a \to g} \circ D_1^g \Big)
     \end{aligned}
 \end{equation}
 where we introduced the convolution $\circ$ defined as
