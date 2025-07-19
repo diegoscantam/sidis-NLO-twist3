@@ -215,14 +215,23 @@ It is also interesting to study the leading-twist, unpolarized, triple different
 \clearpage
 
 \section{Transverse nucleon spin}
+We now turn our attention to the case of transversely-polarized protons. As already shown at LO (REF), the spin-dependent cross section can be obtained within the collinear twist-3 formalism. Here, we will derive the NLO corrections contributing to the $A_{UTU}$ spin asymmetry. Evidently, the complexity of the calculation increases significantly compared to the unpolarized case. In the literature there are very few similar NLO calculations for SIDIS, and they mostly focus on the $P_{h\perp}$-weigthed asymmetries (ADD LIT). This being said, the NLO methodologies presented in the previous section can be directly generalized to this higher-twist case, provided we take into account the additional structures of twist-3 correlators and handle the relative hard parts with care. As far as this work goes, we will restrict ourselves to the case of the $qq$ and $qgq$ fragmentation channels. This already provides good insights into how a twist-3 NLO calculation can be performed, and it is an important reference for similar future work. (HERE OVERALL RESULTS: IR safety, gauge invariance, etc...)
+
 
 \subsection{Virtual graphs}
+Let us start with the virtual corrections. The NLO diagrams contributing at the twist-3 level are identical to the unpolarized case, when it comes to intrinsic and kinematical contributions (see Fig.~\ref{fig:Virt NLO tw2}). For those terms, we employ the same methods as in the leading-twist NLO case but with different correlators structures. For dynamical twist-3 though,there are more diagrams that have to be taken into account. The dynamical twist-3 diagrams relevant at NLO are shown in Fig.~\ref{fig:Virt NLO tw3}.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.99\linewidth]{fig/VirtNLOTw3 V2.png}
-    \caption{Virtual NLO twist-3 test }
+    \caption{Virtual diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel.}
     \label{fig:Virt NLO tw3}
     \end{figure}
+As before, we write the loop momenta in their light-cone decomposition $\dd ^d r=\dd \alpha\,\dd^{d-2} r_\perp \,\dd \beta$ and perform contour integration over the longitudinal momentum fraction $\beta$. Next, the transverse components are integrated out in $d-2$ dimensions. Lastly, the integral over the longitudinal momentum fraction $\alpha$ is performed. Similarly to the unpolarized case, we find that self-energy diagrams for external quark and gluon lines vanish (diagrams $a,c,d,e$ and $f$), since they are given by massless integrals. We are therefore left with seven diagrams: the self-energy graph $b$, the vertex corrections $g,h,i$ and the box diagrams $j,k$ and $l$. As pointed out already, treating gluons in light-cone gauge is advantageous within the twist-3 formalism. In fact, not only we can easily derive a factorization formula at sub-leading twist, but also the gauge invariance of partonic cross sections can be tested throughout the calculation. By writing the polarization sum for gluons as
+\begin{equation}
+    \sum_{\lambda=\pm 1} \epsilon_\lambda^\mu(r)\,\epsilon_\lambda^{\nu*}(r)= -g^{\mu\nu}+\kappa\,\frac{r^\mu m^\nu+r^\nu m^\mu}{r \cdot m},
+\end{equation}
+we can easily check that if gauge parameter $\kappa$ drops out of the final result, as it should, proving the gauge invariance of the cross section. For virtual graphs, we find that gauge invariance is restored only when all the diagrams in Fig.~\ref{fig:Virt NLO tw3} are added, since individual diagrams depend on $\kappa$. We will later show that gauge invariance for real graphs is less obvious, since it requires all twist-3 contributions and the use of the equation of motion relations presented in Sec. REF.
+ 
 \subsection{Real graphs}
 \begin{figure}
     \centering
