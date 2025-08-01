@@ -1,4 +1,4 @@
-\chapter{Semi-inclusive deep inelastic scattering at next-to-leading-order}
+\chapter{Semi-inclusive deep inelastic scattering at next-to-leading-order}%alt+Z to format everything to column width!
 
 We perform our pQCD calculation at next-to-leading order in dimensional regularization in $d=4-2\epsilon$ dimensions. When it comes to renormalization, we adopt the common choice of using the minimal subtraction scheme ($\overline{\text{MS}}$).
 
@@ -10,10 +10,10 @@ The virtual graphs contributing at twist-2 level are shown in Fig.\ref{fig:Virt 
 \begin{figure}
     \centering
     \includegraphics[width=0.55\linewidth]{fig/VirtNLOTw2.jpg}
-    \caption{Virtual diagrams contributing to the leading-twist unpolarized cross section at NLO. The first diagram is the vertex correction graph, while the second and third diagrams are self-energy corrections to the quark lines.}
+    \caption{Virtual diagrams contributing to the leading-twist unpolarized cross section at NLO.}
     \label{fig:Virt NLO tw2}
 \end{figure}
-\noindent Since we are performing our pQCD calculation in light-cone gauge, we shall employ an appropriate technique to evaluate loop integrals that allows us to treat the denominator of the gluon propagator in this gauge. Notoriously, this term requires a careful treatment since it leads to additional well-known \textit{light-cone divergences}. Not surprisingly, it turns out that a light-cone decomposition of the loop momentum allows for a systematic procedure to integrate out the $+$, $-$ and perpendicular components. Since this technique is essential for calculating virtual corrections also at the twist-3 level, we present it here in detail for the simpler leading-twist case. The method is quite general and can be readily extended to higher twists. Let's start by calculating the vertex correction graph. The amplitude reads
+\noindent Since we are performing our pQCD calculation in light-cone gauge, we shall employ an appropriate technique to evaluate loop integrals that allows us to treat the denominator of the gluon propagator in this gauge. Notoriously, this $(r \cdot m)^{-1}$ term requires a careful treatment since it may lead to additional well-known \textit{light-cone divergences}, i.e. when $r \cdot m \to 0$. Not surprisingly, it turns out that a light-cone decomposition of the loop momentum allows for a systematic procedure to integrate out the $+$, $-$ and perpendicular components. Since this technique is essential for calculating virtual corrections also at the twist-3 level, we present it here in detail for the simpler leading-twist case. The method is quite general and can be readily extended to higher-twist contributions. Let's start by calculating the vertex correction graph. The amplitude reads
 \begin{equation}\label{eq:amplitudevirtualtwist2}
 \begin{aligned}
      &(\hat{\mathcal{M}}^{q \to q}_{\text{NLO,vir}})^\mu_{ij,ac} = \int\frac{\dd ^dr}{(2\pi)^d}\frac{\tilde N^\mu_{ij,ac}(r)}{[(p-r)^2+i\delta][(k-r)^2+i\delta][r^2+i\delta]r \cdot m},\\
@@ -26,7 +26,7 @@ As already anticipated, it is convenient to express the loop momentum in its lig
         (p_j-r)^2+i\delta&=(2\alpha-2p_j \cdot m)(\beta - \beta_j),\qquad \beta_j\equiv -\frac{r_\perp^2+p_j^2-2\alpha \,p_j\cdot P_h+i\delta}{2\alpha-2p_j\cdot m}
 \end{aligned}
 \end{equation}
-In order to simplify the calculation, it is convenient to perform the integration at the level of the hadronic tensor, and not just the amplitude alone. This is because many terms that are present in the hard scattering amplitude $\hat{\mathcal{M}}$ may vanish when traced with correlators and the LO interfering amplitude. We have then
+In order to simplify the calculation, we find that it is convenient to perform the integration at the level of the hadronic tensor, and not just the amplitude alone. This is because many terms that are present in the hard scattering amplitude $\hat{\mathcal{M}}$ may vanish when traced with correlators and the LO interfering amplitude. We have then
 \begin{equation}
 \begin{aligned}
        (W^{q \to q}_{\text{NLO,vir}})^{\mu\nu} &=\int_{-\infty}^{+\infty}\frac{\dd \alpha}{2\pi} \frac{1}{2\alpha(2\alpha-2p \cdot m)(2\alpha-2 k \cdot m)\alpha}\int \frac{\dd^{d-2}r_\perp}{(2\pi)^{d-2}}\\
@@ -34,7 +34,7 @@ In order to simplify the calculation, it is convenient to perform the integratio
         N^{\mu\nu}&\equiv \frac{e_a^2 2x_B z_h }{Q^2}z_h^{-2\epsilon}\Tr[\tilde N^\mu\Phi^a\gamma^\nu \Delta^a].
 \end{aligned}
 \end{equation}
-By studying the position of the poles $\beta_j$ ($j=0,1,2$) in the complex plane, we can use contour integration and the residue theorem to evaluate the $\beta$ integral in a straightforward manner. In order to perform the integration in this way, the integrand should fall off at least as $\sim\frac{1}{\beta}$ for large $\beta$ (meaning that $N^{\mu\nu}$ should be at most quadratic in $\beta$, which turns out to be the case). Evidently, the poles $\beta_j$ depend on $\alpha$, as seen in Eq.~\eqref{eq:beta pole beta_j}. In particular, the pole will lay above or below the real axis depending on the sign of $2\alpha-2p_j\cdot m$. By studying the imaginary part of all poles we can conveniently close the contour above or below the real axis and obtain the non-vanishing contributions to the $\beta$ integral. This, in turn, restricts the domain of integration over $\alpha$, since for certain values of $\alpha$ all the poles lie above (below) the real axis and we can close the contour below (above) and obtain zero since the curve does not include any poles. Going back to the integral above, we find that it is non-vanishing only for $0<\alpha<1/z_h$, and the only relevant pole is $\beta_1 = -(r_\perp^2+i\delta)/2(\alpha-1/z_h)$. A graphical sketch of the contour integration procedure can be found in Fig.~\ref{fig:beta contour}.
+By studying the position of the poles $\beta_j$ ($j=0,1,2$) in the complex plane, we can use contour integration and the residue theorem to evaluate the $\beta$ integral in a straightforward manner. In order to perform the integration in this way, the integrand should fall off at least as $\sim1/\beta$ for large $\beta$ (meaning that $N^{\mu\nu}$ should be at most quadratic in $\beta$, which turns out to be the case). Evidently, the poles $\beta_j$ depend on $\alpha$, as seen in Eq.~\eqref{eq:beta pole beta_j}. In particular, the pole will lay above or below the real axis depending on the sign of $2\alpha-2p_j\cdot m$. By studying the imaginary part of all poles we can conveniently close the contour above or below the real axis and obtain the non-vanishing contributions to the $\beta$ integral. This, in turn, restricts the domain of integration over $\alpha$, since for certain values of $\alpha$ all the poles lie above (below) the real axis and we can close the contour below (above) and obtain zero since the curve does not include any poles. Going back to the integral above, we find that it is non-vanishing only for $0<\alpha<1/z_h$, and the only relevant pole is $\beta_1 = -(r_\perp^2+i\delta)/2(\alpha-1/z_h)$. A graphical sketch of the contour integration procedure can be found in Fig.~\ref{fig:beta contour}.
 \begin{figure}
     \centering
     \includegraphics[width=0.95\linewidth]{fig/beta contour.pdf}
@@ -52,21 +52,26 @@ After $\beta$ contour integration, the denominator factors arrange as $\beta_1-\
 \begin{equation}
     \int_0^\infty \dd \rho \frac{ \rho^{2n+1-2\epsilon}}{(\rho^2+\omega^2_1)(\rho^2+\omega^2_2)}=\frac{\pi}{2\sin(\pi n-\pi\epsilon)}\frac{(\omega^2_1)^{n-\epsilon}-(\omega^2_2)^{n-\epsilon}}{\omega^2_1-\omega^2_2}\quad \text{if} \quad -1<n-\epsilon<1
 \end{equation}
-where $n\in \{\mathbb{N},0\}$ and assuming $\omega^2_1,\omega^2_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. Typically, one ends up with integrand terms of the general form $\alpha^a (\alpha-1)^b (\zeta \alpha-1)^c$ which yields combinations of hyper-geometric and gamma functions. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
+where $n\in \{\mathbb{N},0\}$ and assuming $\omega^2_1,\omega^2_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. Typically, one ends up with integrand terms of the general form $\alpha^a (\alpha-1)^b (\eta \alpha-1)^c$ which yields combinations of hyper-geometric and gamma functions. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
 \begin{equation}\label{eq:NLO unpolarized virtual}
 \begin{aligned}
       \frac{\dd \sigma^{UUU}_{\text{NLO,vir}}}{\dd x_B \dd y \dd \phi_l \dd z_h}&= \frac{\dd \sigma^{UUU}_{\text{LO}}}{\dd x_B \dd y \dd \phi_l \dd z_h}\times\frac{\alpha_S}{2\pi}  C_F S_\epsilon \left(\frac{\mu^2}{Q^2}\right)^{\epsilon}\left(-\frac{2}{\epsilon^2}-\frac{3}{\epsilon}-8\right)
 \end{aligned}
 \end{equation}
-with the common $\overline{\text{MS}}$ scheme constant $S_\epsilon=(4\pi)^\epsilon/\Gamma(1-\epsilon)$. This in agreement with the original result for this vertex correction, first given in \cite{altarelli_large_1979}. \\
-Now, we should also calculate two other diagrams, namely the self-energy corrections of the quark lines. Interestingly, if we repeat the very same procedure explained above, we find that after contour integration over $\beta$ the denominator factor is proportional to $r_\perp^2$ only ($\omega^2_{ij}=0$) for both diagrams. This leads to a contribution that goes as
+with the common $\overline{\text{MS}}$ scheme constant $S_\epsilon=(4\pi)^\epsilon/\Gamma(1-\epsilon)$. This in agreement with the original result for this $\gamma q q$ vertex correction \cite{altarelli_large_1979}. \\
+In principle, we should also calculate two other diagrams, namely the self-energy corrections of the quark lines. Interestingly, if we repeat the very same procedure explained above, we find that after contour integration over $\beta$ the denominator factor is proportional to $r_\perp^2$ only ($\omega^2_{ij}=0$) for both diagrams. This leads to a contribution that goes as
 \begin{equation}
      (\hat{\mathcal{M}}^{q \to q}_{\text{NLO,vir,self-energy}})^\rho\sim\int\frac{\dd^{d-2} r_\perp}{(2\pi)^{d-2}}\frac{A+B\,r_\perp^2}{r_\perp^2}
 \end{equation}
 which vanishes. This is because, in dimensional regularization, it is consistent to set to zero all scale-less integrals \cite{Schwartz:2014sze}. Therefore, the vertex correction is the only virtual diagram that has to be taken into account. Interestingly, this diagram leads to an hadronic tensor which is IR divergent only. No direct UV counterterms are then needed for this diagram (and for the two self-energy graphs, since they vanish). All in all, the full UV-renormalized virtual correction to the unpolarized cross section is just given by Eq.~\ref{eq:NLO unpolarized virtual}.
 
 \subsection{Real corrections}
-\textcolor{blue}{INSERT DIAGRAMS HERE}\\
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\linewidth]{fig/RealNLOTw2 V2.png}
+    \caption{Real diagrams contributing to the leading-twist unpolarized cross section at NLO. All three partonic channels are shown: $q\to q$ channel (left), $g\to q$ channel (middle) and $q \to g$ channel (right).}
+    \label{fig:Real NLO tw2}
+\end{figure}
 Another $\mathcal{O}(\alpha_S)$ correction to the cross section involves the emission of a final unobserved parton produced in the hard scattering process. At NLO, not only we can have the $q \to q$ channel (with real emission of gluons), but also $q \to g$ and $g \to q$ (with real emission of quarks). For all channels, the hadronic tensor is modified since there is an additional integration over the phase-space of the unobserved parton. The integrations in the hadronic tensors are modified according to
 \begin{equation}
 \begin{aligned}W^{\mu\nu}_{\rm NLO, real}=\frac{e_a^2}{(2\pi)^{d-1}} \int \dd^dk\int \dd^dp\,\delta^+((q+k-p)^2)\Tr[\hat{\mathcal{M}}^\mu_{\rm NLO}\Phi^a \hat{\bar{\mathcal{M}}}^\nu_{\rm NLO}\Delta^a],
@@ -84,7 +89,7 @@ where the $\theta$ function restricts the kinematic variables in the following w
         q^0+k^0-p^0\ge 0 & \iff \frac{x}{x_B}-\frac{z}{z_h}\left(1+\frac{Q_T^2}{Q^2}\right)\ge 0\iff \frac{x}{x_B}+\frac{z}{z_h}-2\ge 0.
     \end{aligned}
 \end{equation}
-Note that this condition would result in a complicated convolution of the $x$ and $z$ integrals due to the fact that the integration limits may depend on the other variable, i.e. the lower integration limits would result in either $z_{\rm min}(x)$ or $x_{\rm min}(z)$. However, one can greatly simplify the problem by simply ignoring the target fragmentation region, introducing a kinematical cut $z_{\rm cut}$ and $x_{\rm cut}$ \cite{Sissakian_2004} In this work, we simply set the kinematical cut $z_{\rm cut}\approx z_h$ and $x_{\rm cut}\approx x_B$. With this prescription, the integration variables must satisfy $z>z_h$ and $x>x_B$ and our formulae match many results already available in the literature \cite{de_Florian_1998,Koike_2006}. We note however that one can also fully keep the integration limits $x_{\rm min}$ and $z_{\rm min}$ as they are, like done in \cite{kanazawa_contribution_2013}. Nothing really changes in the end, except for the fact that the integration limits are more complicated and numerically they would probably result in a slightly different overall cross-section value. \\
+Note that this condition would result in a complicated convolution of the $x$ and $z$ integrals due to the fact that the integration limits may depend on the other variable, i.e. the lower integration limits would result in either $z_{\rm min}(x)$ or $x_{\rm min}(z)$. However, one can greatly simplify the problem by simply ignoring the target fragmentation region, introducing a kinematical cut $z_{\rm cut}$ and $x_{\rm cut}$ \cite{Sissakian_2004} In this work, we simply set the kinematical cut $z_{\rm cut}\approx z_h$ and $x_{\rm cut}\approx x_B$. With this prescription, the integration variables must satisfy $z>z_h$ and $x>x_B$ and our formulae match many results already available in the literature \cite{de_Florian_1998,Koike_2006}. We note however that one can also fully keep the integration limits $x_{\rm min}$ and $z_{\rm min}$ as they are, like done in \cite{kanazawa_contribution_2013}. Nothing really changes in the end, except for the fact that the integration limits are more complicated and numerically they would probably result in a slightly different overall value for the integrals. \\
 The hadronic tensor now reads
 \begin{equation}
 \begin{aligned}
@@ -100,7 +105,7 @@ where, depending on the channel, $w_{\mu\nu}$ assumes different forms
     \end{aligned}
 \end{equation}
 where $\Phi^{\mu\nu}_g(x)$ and $\Delta_g^{\mu\nu}(z)$ are the gluon distribution and fragmentation correlators respectively. 
-Next, the phase-space integration over the transverse momentum of the detected hadron can be performed by using symmetry, switching to $d-2$ dimensional spherical coordinates and making use of the delta function. Also, for further manipulation, it is convenient and common to work with scaled variables defined as $w\equiv\frac{x_B}{x}$ and $ v\equiv\frac{z_h}{z}$. The $P_{h\perp}$-integrated hadronic tensor then is
+Next, the phase-space integration over the transverse momentum of the detected hadron can be performed by using symmetry, switching to $d-2$ dimensional spherical coordinates and making use of the delta function. Also, for further manipulation, it is convenient and common to work with scaled variables defined as $w\equiv x_B/x$ and $ v\equiv z_h/z$. The $P_{h\perp}$-integrated hadronic tensor then is
 \begin{equation}
     \begin{aligned}
          \int \dd^{d-2}P_{h\perp} W_{\mu\nu}^{\text{NLO,real}}&=\frac{e_a^2z_h^{1-2\epsilon} x_B}{Q^{2\epsilon}8\pi^2}S_\epsilon    \int_{x_B}^{1} \frac{\dd w}{w}\int_{z_h}^{1}  \frac{\dd v}{v}\frac{1}{w}\\
@@ -126,7 +131,7 @@ Naturally, these distributional identities are analogous for $v$ as well. %Using
 %        &+\frac{1}{(1-w)_+(1-v)_+}+\left(\frac{\ln(1-w)}{1-w}\right)_%+\delta(1-v)+\left(\frac{\ln(1-v)}{1-v}\right)_+\delta(1-w)\Bigg]%\\&\times\hat\sigma_{\mu\nu}(w,v)f(x_B/w)D(z_h/v).
 %    \end{aligned}
 %\end{equation}
-This procedure makes the $1/\epsilon$ poles explicit and leads to the well-known cancellation of infrared singularities between real and virtual contributions (commonly referred as infrared safety \cite{kinoshita_mass_1962}). We do indeed observe this cancellation of $1/\epsilon^2$ poles in our calculation. However, the partonic cross section typically still exhibits collinear singularities emerging when the parton (coming from the nucleon or fragmenting) becomes collinear with the unobserved parton \cite{hinderer_single-inclusive_2015}. These poles may be absorbed into renormalized parton distribution functions and fragmentation functions \cite{altarelli_large_1979, Collins_2011}. The corresponding poles can be removed in the $\overline{\text{MS}}$ scheme by introducing renormalized functions
+This procedure makes the $1/\epsilon$ poles explicit and leads to the well-known cancellation of infrared singularities between real and virtual contributions (commonly referred as infrared safety \cite{kinoshita_mass_1962}). We do indeed observe this cancellation of $1/\epsilon^2$ poles in our calculation. However, the partonic cross section typically still exhibits collinear singularities emerging when the parton (coming from the nucleon or fragmenting) becomes collinear with the unobserved parton \cite{hinderer_single-inclusive_2015}. The standard procedure is to absorb these collinear poles into $\overline{\text{MS}}$-renormalized parton distribution and fragmentation functions \cite{altarelli_large_1979, Collins_2011}. The corresponding poles can be removed in the $\overline{\text{MS}}$ scheme by introducing renormalized functions
 \begin{equation}
 \begin{aligned}
     f^q_{\text{bare}}(x,\mu)&= f^q_{\text{ren}}(x,\mu)+\frac{\alpha_S}{2\pi}\frac{S_\epsilon}{\epsilon}\left[P_{qq} \otimes f^q_{\text{ren}}+P_{qg} \otimes f^g_{\text{ren}}\right](x,\mu)\\
@@ -179,41 +184,6 @@ and
          \mathcal{C}^{a\to g}_L (w,v)&=\frac{\alpha_S(\mu)}{2\pi}C_F\left[4w(1-v)\right]
     \end{aligned}
 \end{equation}
-
-\subsection{Numerics}
-It is interesting to perform a numerical analysis of the leading-twist NLO cross section presented so far. In order to do so, one needs to access the relevant PDFs and FFs that show up in the formulae. When it comes to unpolarized PDFs, we use the MSTW 2008 PDF set presented in \cite{Martin_2009}. For unpolarized fragmentation, we employ the DSS FF set \cite{de_Florian_2007}. In Fig.~\ref{fig:f1D1}, curves for $f_1(x)$ and $D_1(z)$ are presented, showcasing different flavors contributions.
-\begin{figure}
-    \centering
-    \subfigure[]{\centering
-                \includegraphics[width=0.45\linewidth]{fig/f1.pdf}
-    }
-    \hfill
-        \subfigure[]{\centering
-                    \includegraphics[width=0.45\linewidth]{fig/D1.pdf}
-    }
-    \caption{Leading-twist unpolarized $f_1$ PDF and $D_1$ FF as a function of $x_B$ and $z_h$, respectively. Different colors represent different flavors. The scale variation is supposed to give an idea on how much these distributions vary if evaluated at different scales.}
-    \label{fig:f1D1}
-\end{figure}
-It is also interesting to study the leading-twist, unpolarized, triple differential cross section $\dd \sigma/\dd x_B \dd y \dd z_h$ at NLO. A plot of this cross section as a function of the different kinematical variables is shown in Fig.~\ref{fig:plotNLOUUU}. We observe sizable NLO corrections to the LO cross section, especially at the edges of the phase space of the three kinematical variables. This is a common feature of NLO corrections in QCD.
-\begin{figure}
-    \centering
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(x).pdf}
-    }
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(y).pdf}
-    }
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(z).pdf}
-    }
-    \caption{Unpolarized leading-twist cross section at LO and NLO accuracy as a function of $x_B$ (panel a), $y$ (panel b) and $z_h$ (panel c).}
-    \label{fig:plotNLOUUU}
-\end{figure} 
-
-%cherednikova van der veken parton densities in quantum chromodynamics free pdf
-
-\clearpage
-
 \section{Transverse nucleon spin}
 We now turn our attention to the case of transversely-polarized protons. As already shown at LO (REF), the spin-dependent cross section can be obtained within the collinear twist-3 formalism. Here, we will derive the NLO corrections contributing to the $A_{UTU}$ spin asymmetry. Evidently, the complexity of the calculation increases significantly compared to the unpolarized case. In the literature there are very few similar NLO calculations for SIDIS, and they mostly focus on the $P_{h\perp}$-weigthed asymmetries (ADD LIT). This being said, the NLO methodologies presented in the previous section can be directly generalized to this higher-twist case, provided we take into account the additional structures of twist-3 correlators and handle the relative hard parts with care. As far as this work goes, we will restrict ourselves to the case of the $qq$ and $qgq$ fragmentation channels. This already provides good insights into how a twist-3 NLO calculation can be performed, and it is an important reference for similar future work. (HERE OVERALL RESULTS: IR safety, gauge invariance, etc...)
 
@@ -222,7 +192,7 @@ We now turn our attention to the case of transversely-polarized protons. As alre
 Let us start with the virtual corrections. The NLO diagrams contributing at the twist-3 level are identical to the unpolarized case, when it comes to intrinsic and kinematical contributions (see Fig.~\ref{fig:Virt NLO tw2}). For those terms, we employ the same methods as in the leading-twist NLO case but with different correlators structures. For dynamical twist-3 though,there are more diagrams that have to be taken into account. The dynamical twist-3 diagrams relevant at NLO are shown in Fig.~\ref{fig:Virt NLO tw3}.
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.99\linewidth]{fig/VirtNLOTw3 V2.png}
+    \includegraphics[width=0.9\linewidth]{fig/VirtNLOTw3 V2.png}
     \caption{Virtual diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel.}
     \label{fig:Virt NLO tw3}
     \end{figure}
@@ -233,10 +203,13 @@ As before, we write the loop momenta in their light-cone decomposition $\dd ^d r
 we can easily check that if gauge parameter $\kappa$ drops out of the final result, as it should, proving the gauge invariance of the cross section. For virtual graphs, we find that gauge invariance is restored only when all the diagrams in Fig.~\ref{fig:Virt NLO tw3} are added, since individual diagrams depend on $\kappa$. We will later show that gauge invariance for real graphs is less obvious, since it requires all twist-3 contributions and the use of the equation of motion relations presented in Sec. REF.
  
 \subsection{Real graphs}
+We now move on to the case of real radiation. Focusing on the $qg$ fragmentation channel, there can only be emission of gluons. Hence, real NLO corrections in the twist-3 case are simply obtained by adding gluon lines to LO twist-3 fragmentation diagrams. The relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}.
+
+
 \begin{figure}
     \centering
     \includegraphics[width=0.99\linewidth]{fig/RealNLOTw3q2qg.png}
-    \caption{Real NLO twist-3 $q\to gq $ channel }
+    \caption{Real diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel. Each of these diagrams interferes with the two leading-twist real NLO corrections in Fig. REF.}
     \label{fig:Real NLO tw3}
 \end{figure}
 
