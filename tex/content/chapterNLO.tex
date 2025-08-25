@@ -4,8 +4,6 @@ We perform our pQCD calculation at next-to-leading order in dimensional regulari
 
 \section{Leading-twist case}
 
-\subsection{Virtual corrections}
-
 The virtual graphs contributing at twist-2 level are shown in Fig.\ref{fig:Virt NLO tw2}
 \begin{figure}
     \centering
@@ -52,7 +50,11 @@ After $\beta$ contour integration, the denominator factors arrange as $\beta_1-\
 \begin{equation}
     \int_0^\infty \dd \rho \frac{ \rho^{2n+1-2\epsilon}}{(\rho^2+\omega^2_1)(\rho^2+\omega^2_2)}=\frac{\pi}{2\sin(\pi n-\pi\epsilon)}\frac{(\omega^2_1)^{n-\epsilon}-(\omega^2_2)^{n-\epsilon}}{\omega^2_1-\omega^2_2}\quad \text{if} \quad -1<n-\epsilon<1
 \end{equation}
-where $n\in \{\mathbb{N},0\}$ and assuming $\omega^2_1,\omega^2_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. Typically, one ends up with integrand terms of the general form $\alpha^a (\alpha-1)^b (\eta \alpha-1)^c$ which yields combinations of hyper-geometric and gamma functions. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
+where $n\in \{\mathbb{N},0\}$ and assuming $\omega^2_1,\omega^2_2>0$. Hence, within this framework, divergences are regulated through the dimension of the $d-2$ dimensional perpendicular space. Lastly, the $\alpha$ integral can be evaluated by direct integration. We find that the hyper-geometric function ${}_2F_1$ turns out to be quite useful in the evaluation of these $\alpha$ integrals. It can be expressed as \cite{dennery2012mathematics}
+\begin{equation}
+    {}_2F_1(a,b,c;\xi)=\frac{\Gamma(c)}{\Gamma(b)\Gamma(c-b)}\int_0^1  \dd \alpha\,(1-\alpha \xi)^{-a} \alpha^{b-1} (1-\alpha)^{c-b-1},
+\end{equation}
+if $\Re c> \Re b  >0  $ and $|\xi| < 1$ . It can be analytically be continued to the whole cut complex plane requiring $|\arg(1-\xi)|<\pi$. The expansion around integer parameters of ${}_2F_1$  can be easily performed with appropriate software \cite{Huber_2006}. Interestingly, the gauge dependence through the parameter $\kappa$ completely drops out in the end, leaving us with a gauge invariant expression. We therefore have the result
 \begin{equation}\label{eq:NLO unpolarized virtual}
 \begin{aligned}
       \frac{\dd \sigma^{UUU}_{\text{NLO,vir}}}{\dd x_B \dd y \dd \phi_l \dd z_h}&= \frac{\dd \sigma^{UUU}_{\text{LO}}}{\dd x_B \dd y \dd \phi_l \dd z_h}\times\frac{\alpha_S}{2\pi}  C_F S_\epsilon \left(\frac{\mu^2}{Q^2}\right)^{\epsilon}\left(-\frac{2}{\epsilon^2}-\frac{3}{\epsilon}-8\right)
@@ -63,9 +65,8 @@ In principle, we should also calculate two other diagrams, namely the self-energ
 \begin{equation}
      (\hat{\mathcal{M}}^{q \to q}_{\text{NLO,vir,self-energy}})^\rho\sim\int\frac{\dd^{d-2} r_\perp}{(2\pi)^{d-2}}\frac{A+B\,r_\perp^2}{r_\perp^2}
 \end{equation}
-which vanishes. This is because, in dimensional regularization, it is consistent to set to zero all scale-less integrals \cite{Schwartz:2014sze}. Therefore, the vertex correction is the only virtual diagram that has to be taken into account. Interestingly, this diagram leads to an hadronic tensor which is IR divergent only. No direct UV counterterms are then needed for this diagram (and for the two self-energy graphs, since they vanish). All in all, the full UV-renormalized virtual correction to the unpolarized cross section is just given by Eq.~\ref{eq:NLO unpolarized virtual}.
+which vanishes. This is because, in dimensional regularization, it is consistent to set to zero all scale-less integrals \cite{Schwartz:2014sze}. Therefore, the vertex correction is the only virtual diagram that has to be taken into account. Furthermore, this diagram leads to an hadronic tensor which is IR divergent only. No direct UV counterterms are then needed for this diagram (and for the two self-energy graphs, since they vanish). All in all, the full UV-renormalized virtual correction to the unpolarized cross section is just given by Eq.~\ref{eq:NLO unpolarized virtual}.
 
-\subsection{Real corrections}
 \begin{figure}
     \centering
     \includegraphics[width=0.95\linewidth]{fig/RealNLOTw2 V2.png}
@@ -83,10 +84,10 @@ where the momentum $r^\mu$ of the unobserved parton is set to $r=q+k-p$. We work
      \delta^+((q+k-p)^2)&=z z_h\delta\left(Q^2z_h^2\Big(1-\frac{z}{z_h} \Big)\Big(1-\frac{x}{x_B}\Big) - \vec P_{h\perp}^2\right)\theta(q^0+k^0-p^0),
 \end{aligned}
 \end{equation}
-where the $\theta$ function restricts the kinematic variables in the following way
+where the $\theta$ function restricts the kinematic variables in the following way WRONG
 \begin{equation}\label{eq:NLOrealtw2_theta function condition}
     \begin{aligned}
-        q^0+k^0-p^0\ge 0 & \iff \frac{x}{x_B}-\frac{z}{z_h}\left(1+\frac{Q_T^2}{Q^2}\right)\ge 0\iff \frac{x}{x_B}+\frac{z}{z_h}-2\ge 0.
+        q^0+k^0-p^0\ge 0 & \iff \frac{x}{x_B}-\frac{z}{z_h}\left(1+\frac{Q_T^2}{Q^2}\right)\ge 0 \iff \frac{x}{x_B}+\frac{z}{z_h}-2\ge 0.
     \end{aligned}
 \end{equation}
 Note that this condition would result in a complicated convolution of the $x$ and $z$ integrals due to the fact that the integration limits may depend on the other variable, i.e. the lower integration limits would result in either $z_{\rm min}(x)$ or $x_{\rm min}(z)$. However, one can greatly simplify the problem by simply ignoring the target fragmentation region, introducing a kinematical cut $z_{\rm cut}$ and $x_{\rm cut}$ \cite{Sissakian_2004} In this work, we simply set the kinematical cut $z_{\rm cut}\approx z_h$ and $x_{\rm cut}\approx x_B$. With this prescription, the integration variables must satisfy $z>z_h$ and $x>x_B$ and our formulae match many results already available in the literature \cite{de_Florian_1998,Koike_2006}. We note however that one can also fully keep the integration limits $x_{\rm min}$ and $z_{\rm min}$ as they are, like done in \cite{kanazawa_contribution_2013}. Nothing really changes in the end, except for the fact that the integration limits are more complicated and numerically they would probably result in a slightly different overall value for the integrals. \\
@@ -188,7 +189,7 @@ and
 We now turn our attention to the case of transversely-polarized protons. As already shown at LO (REF), the spin-dependent cross section can be obtained within the collinear twist-3 formalism. Here, we will derive the NLO corrections contributing to the $A_{UTU}$ spin asymmetry. Evidently, the complexity of the calculation increases significantly compared to the unpolarized case. In the literature there are very few similar NLO calculations for SIDIS, and they mostly focus on the $P_{h\perp}$-weigthed asymmetries (ADD LIT). This being said, the NLO methodologies presented in the previous section can be directly generalized to this higher-twist case, provided we take into account the additional structures of twist-3 correlators and handle the relative hard parts with care. As far as this work goes, we will restrict ourselves to the case of the $qq$ and $qgq$ fragmentation channels. This already provides good insights into how a twist-3 NLO calculation can be performed, and it is an important reference for similar future work. (HERE OVERALL RESULTS: IR safety, gauge invariance, etc...)
 
 
-\subsection{Virtual graphs}
+\subsection{Technical aspects}
 Let us start with the virtual corrections. The NLO diagrams contributing at the twist-3 level are identical to the unpolarized case, when it comes to intrinsic and kinematical contributions (see Fig.~\ref{fig:Virt NLO tw2}). For those terms, we employ the same methods as in the leading-twist NLO case but with different correlators structures. For dynamical twist-3 though,there are more diagrams that have to be taken into account. The dynamical twist-3 diagrams relevant at NLO are shown in Fig.~\ref{fig:Virt NLO tw3}.
 \begin{figure}[ht]
     \centering
@@ -196,21 +197,27 @@ Let us start with the virtual corrections. The NLO diagrams contributing at the 
     \caption{Virtual diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel.}
     \label{fig:Virt NLO tw3}
     \end{figure}
-As before, we write the loop momenta in their light-cone decomposition $\dd ^d r=\dd \alpha\,\dd^{d-2} r_\perp \,\dd \beta$ and perform contour integration over the longitudinal momentum fraction $\beta$. Next, the transverse components are integrated out in $d-2$ dimensions. Lastly, the integral over the longitudinal momentum fraction $\alpha$ is performed. Similarly to the unpolarized case, we find that self-energy diagrams for external quark and gluon lines vanish (diagrams $a,c,d,e$ and $f$), since they are given by massless integrals. We are therefore left with seven diagrams: the self-energy graph $b$, the vertex corrections $g,h,i$ and the box diagrams $j,k$ and $l$. As pointed out already, treating gluons in light-cone gauge is advantageous within the twist-3 formalism. In fact, not only we can easily derive a factorization formula at sub-leading twist, but also the gauge invariance of partonic cross sections can be tested throughout the calculation. By writing the polarization sum for gluons as
+As before, we write the loop momenta in their light-cone decomposition $\dd ^d r=\dd \alpha\,\dd^{d-2} r_\perp \,\dd \beta$ and perform contour integration over the longitudinal momentum fraction $\beta$. Next, the transverse components are integrated out in $d-2$ dimensions. Lastly, the integral over the longitudinal momentum fraction $\alpha$ is performed. Similarly to the unpolarized case, we find that self-energy diagrams for external quark and gluon lines vanish (diagrams $a,c,d,e,f,n$ and $o$), since they are given by massless integrals. We are therefore left with eight diagrams: the self-energy graph $b$, the vertex corrections $g,h,i,m$ and the box diagrams $j,k$ and $l$. As pointed out already, treating gluons in light-cone gauge is advantageous within the twist-3 formalism. In fact, not only we can easily derive a factorization formula at sub-leading twist, but also the gauge invariance of partonic cross sections can be tested throughout the calculation. By writing the polarization sum for gluons as
 \begin{equation}
     \sum_{\lambda=\pm 1} \epsilon_\lambda^\mu(r)\,\epsilon_\lambda^{\nu*}(r)= -g^{\mu\nu}+\kappa\,\frac{r^\mu m^\nu+r^\nu m^\mu}{r \cdot m},
 \end{equation}
-we can easily check that if gauge parameter $\kappa$ drops out of the final result, as it should, proving the gauge invariance of the cross section. For virtual graphs, we find that gauge invariance is restored only when all the diagrams in Fig.~\ref{fig:Virt NLO tw3} are added, since individual diagrams depend on $\kappa$. We will later show that gauge invariance for real graphs is less obvious, since it requires all twist-3 contributions and the use of the equation of motion relations presented in Sec. REF.
+we can easily check if the gauge parameter $\kappa$ drops out of the final result, as it should, proving the gauge invariance of the cross section. For virtual graphs, we find that gauge invariance is restored only when all the diagrams in Fig.~\ref{fig:Virt NLO tw3} are added, since individual diagrams depend on $\kappa$. Lastly, we find that classifying the different contributions depending on their color structure helps to organize the calculation in a cleaner way. We therefore separate terms proportional to $C_F$ and $N_C$ and eventually check gauge-invariance and IR-safety separately.
  
-\subsection{Real graphs}
-We now move on to the case of real radiation. Focusing on the $qg$ fragmentation channel, there can only be emission of gluons. Hence, real NLO corrections in the twist-3 case are simply obtained by adding gluon lines to LO twist-3 fragmentation diagrams. The relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}.
-
-
+We now move on to the case of real radiation. Focusing on the $qg$ fragmentation channel, there can only be emission of gluons. Hence, real NLO corrections in the twist-3 case are simply obtained by adding gluon lines to LO twist-3 fragmentation diagrams. Again, for intrinsic and kinematical contributions, the graphs are identical to the leading twist case in the $q\to q$ channel. When it comes to dynamical twist-3, the relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}.
 \begin{figure}
     \centering
     \includegraphics[width=0.99\linewidth]{fig/RealNLOTw3q2qg.png}
     \caption{Real diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel. Each of these diagrams interferes with the two leading-twist real $q \to q$ NLO corrections in Fig.~\ref{fig:Real NLO tw2}.}
     \label{fig:Real NLO tw3}
 \end{figure}
+Here, we employ the same phase-space integration techniques used in the unpolarized case. It is important to point out that the hadronic tensor stemming from these diagrams is not gauge invariant. Interestingly, the fact that real NLO corrections at sub-leading twist are $\kappa$-dependent has already been observed in the literature \cite{rein2025, Gamberg_2019}. We observe that gauge invariance is restored after combing all twist-3 contributions through EOM and LIR relations, once again proving the importance of these operator identities within this formalism. In the typical leading-twist case, adding virtual and real corrections leads to the well known cancellation of $1/\epsilon^2$ poles. Not surprisingly, we observe this cancellation also at the twist-3 level, after application of EOM and LIR relations.
+
+We are now left with soft and collinear singularities that can be absorbed into renormalized PDFs and FFs. It turns out that the $\overline{\text{MS}}$-renormalization of chiral-odd twist-3 fragmentation functions is significantly more involved compared to the one given by the usual DGLAP splitting kernels. The evolution is described by XX coupled differential equations, mixing different twist-3 contributions \cite{Ma_2017}. The cancellation of $1/\epsilon$ poles in our calculation matches exactly with the evolution presented in the literature, with the appropriate change of conventions between hadronic matrix elements.
+
+\subsection{Results}
+
+
+
+
 
 
