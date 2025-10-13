@@ -28,7 +28,7 @@ module set_variables
     ! Initialization
     parameter(pi = 3.1415927)
     parameter(alpha_em=1/137.d0)
-    parameter(Sep = 100.d0**2.d0) !GeV^2
+    parameter(Sep = 140.d0**2.d0) !GeV^2
     !parameter(Q2 = 200. )!GeV^2
     !parameter(Q = SQRT(Q2) )!GeV^2
 
@@ -64,9 +64,18 @@ program sidis
     ! Later on called with commnand ALPHAS(mu)
     CALL INITALPHAS(1, 1d0, 1d0, 0.5d0, 1.4d0, 4.75d0, 1.d10)
 
+
+    !###################### testing #############################
+    ! Calculate triple diff cross section at NLO - unpolarized
+    x = 0.5
+    y = 0.5
+    z = 0.5
+    call sigmaNLO_unpolarized(x,y,z, SQRT(Sep*x*y),output)
+    print *, "NLO unp = ",output
+    !######################################################################
     !###################### test PDFs and FFs #############################
     ! Write to file f_1(x) and D_1(z), for different flavors
-    do_this = 1
+    do_this = 0
     !######################################################################
 
     ! Photon momentum Q <--> Scale mu for PDFs & FFs
@@ -286,9 +295,9 @@ SUBROUTINE sigmaNLO_unpolarized(xB,y,zh,muu,output)
     !Setup integrator
     init=0
     idum = 0
-    ncall = 500
+    ncall = 10000
     itmx = 5
-    nprn = -1 ! Set to 0 for seeing results of integration
+    nprn = 0 ! Set to 0 for seeing results of integration
     sd = 0. 
     chi2a = 0.d0
 
@@ -310,11 +319,15 @@ SUBROUTINE sigmaNLO_unpolarized(xB,y,zh,muu,output)
 
     !Integrals over v & w 
     call vegas(region_v,1,sigmaNLO_unpolarizedAUXv,init,ncall,itmx,nprn,intgrAUXv,sd,chi2a)
+    call vegas(region_v,1,sigmaNLO_unpolarizedAUXv,init,ncall,itmx,nprn,intgrAUXv,sd,chi2a)
+    call vegas(region_v_plus,1,sigmaNLO_unpolarizedAUXv_plus,init,ncall,itmx,nprn,intgrAUXv_plus,sd,chi2a)
     call vegas(region_v_plus,1,sigmaNLO_unpolarizedAUXv_plus,init,ncall,itmx,nprn,intgrAUXv_plus,sd,chi2a)
     call vegas(region_w,1,sigmaNLO_unpolarizedAUXw,init,ncall,itmx,nprn,intgrAUXw,sd,chi2a)
+    call vegas(region_w,1,sigmaNLO_unpolarizedAUXw,init,ncall,itmx,nprn,intgrAUXw,sd,chi2a)
+    call vegas(region_w_plus,1,sigmaNLO_unpolarizedAUXw_plus,init,ncall,itmx,nprn,intgrAUXw_plus,sd,chi2a)
     call vegas(region_w_plus,1,sigmaNLO_unpolarizedAUXw_plus,init,ncall,itmx,nprn,intgrAUXw_plus,sd,chi2a)
     call vegas(region_wv,2,sigmaNLO_unpolarizedAUXwv,init,ncall,itmx,nprn,intgrAUXwv,sd,chi2a)
-    
+    call vegas(region_wv,2,sigmaNLO_unpolarizedAUXwv,init,ncall,itmx,nprn,intgrAUXwv,sd,chi2a)
 
     !print *, sigmaNLO_unpolarizedAUX()
     !print *, intgrAUXv
