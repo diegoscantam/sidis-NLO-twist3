@@ -651,9 +651,9 @@ function sigmaNLO_unpolarizedAUXwv(Y)
             -CF*(alpha_running/2d0/pi)*(1d0/w)*softq2qOFw*((1d0/(1d0-w)/(1d0-v))*(1d0 + w*w)) &
             +CF*(alpha_running/2d0/pi)*softq2q*((1d0/(1d0-w)/(1d0-v))*(2d0)) &
             +CF*(alpha_running/2d0/pi)*dlog(1d0 - zh)/(1d0-zh)*(1d0/(1d0-w))*&
-              (softg2qOFw*(1d0 + w*w)/w - softg2q*(2d0)) &
+              (softq2qOFw*(1d0 + w*w)/w - softq2q*(2d0)) &
             +CF*(alpha_running/2d0/pi)*dlog(1d0 - xB)/(1d0-xB)*(1d0/(1d0-v))*&
-              (softg2qOFv*(1d0 + v*v)/v - softg2q*(2d0)) &
+              (softq2qOFv*(1d0 + v*v)/v - softq2q*(2d0)) &
             +CF*(alpha_running/2d0/pi)*dlog(1d0-xB)*dlog(1d0-zh)*(2d0)/(1d0-zh)/(1d0-xB)   &
             !!!!!! g -> q channel !!!!!!
             ! delta 1 - v PROBLEM HERE!!!!!
