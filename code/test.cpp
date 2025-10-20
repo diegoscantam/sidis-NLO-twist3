@@ -22,10 +22,11 @@
 using namespace LHAPDF;
 
 // Global variables
+//double Sep; // Gev^2, center-of-mass energy S xB y = Q^2 
 double Mpi = 0.1396; // GeV, pion mass
-double Sep = 52.77; // Gev^2, center-of-mass energy S = Q^2 xB y
-double y = 0.469;
-double pi = M_PI;
+int which_pion; // 1 for pi+, 0 for pi0, -1 for pi-
+//double y; // Scaling variable
+double pi = M_PI; // pi =  3.1415...
 
 
 /**
@@ -47,7 +48,7 @@ void display_results (const char *title, double result, double error)
  * @brief Returns the weigthed sum over flavors q qbar of f1(x) D1(z), used for unpolarized q2q channel
  * @param x Argument of f1
  * @param z Argument of D1
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param mu Factorization scale 
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF
  */
@@ -61,26 +62,26 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
 
     // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
 
-    xf1u = f1->xfxQ2(1,x,mu2);
-    xf1ub = f1->xfxQ2(-1,x,mu2);
-    xf1d = f1->xfxQ2(2,x,mu2);
-    xf1db = f1->xfxQ2(-2,x,mu2);
-    xf1c = f1->xfxQ2(3,x,mu2);
-    xf1cb = f1->xfxQ2(-3,x,mu2);
-    xf1s = f1->xfxQ2(4,x,mu2);
-    xf1sb = f1->xfxQ2(-4,x,mu2);
+    xf1u = f1->xfxQ2(2,x,mu2);
+    xf1ub = f1->xfxQ2(-2,x,mu2);
+    xf1d = f1->xfxQ2(1,x,mu2);
+    xf1db = f1->xfxQ2(-1,x,mu2);
+    xf1c = f1->xfxQ2(4,x,mu2);
+    xf1cb = f1->xfxQ2(-4,x,mu2);
+    xf1s = f1->xfxQ2(3,x,mu2);
+    xf1sb = f1->xfxQ2(-3,x,mu2);
     xf1b = f1->xfxQ2(5,x,mu2);
     xf1bb = f1->xfxQ2(-5,x,mu2);
 
 
-    zD1u = D1->xfxQ2(1,z,mu2);
-    zD1ub = D1->xfxQ2(-1,z,mu2);
-    zD1d = D1->xfxQ2(2,z,mu2);
-    zD1db = D1->xfxQ2(-2,z,mu2);
-    zD1c = D1->xfxQ2(3,z,mu2);
-    zD1cb = D1->xfxQ2(-3,z,mu2);
-    zD1s = D1->xfxQ2(4,z,mu2);
-    zD1sb = D1->xfxQ2(-4,z,mu2);
+    zD1u = D1->xfxQ2(2,z,mu2);
+    zD1ub = D1->xfxQ2(-2,z,mu2);
+    zD1d = D1->xfxQ2(1,z,mu2);
+    zD1db = D1->xfxQ2(-1,z,mu2);
+    zD1c = D1->xfxQ2(4,z,mu2);
+    zD1cb = D1->xfxQ2(-4,z,mu2);
+    zD1s = D1->xfxQ2(3,z,mu2);
+    zD1sb = D1->xfxQ2(-3,z,mu2);
     zD1b = D1->xfxQ2(5,z,mu2);
     zD1bb = D1->xfxQ2(-5,z,mu2);
 
@@ -96,7 +97,7 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
  * @brief Returns the [weigthed sum over flavors q qbar of f1(x)] X D1^g(z), used for unpolarized q2g channel
  * @param x Argument of f1
  * @param z Argument of D1
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param mu Factorization scale 
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF 
  */
@@ -110,18 +111,18 @@ double weighted_sum_f1_times_D1g(double x, double z, double mu, const PDF* f1, c
 
     // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
 
-    xf1u = f1->xfxQ2(1,x,mu2);
-    xf1ub = f1->xfxQ2(-1,x,mu2);
-    xf1d = f1->xfxQ2(2,x,mu2);
-    xf1db = f1->xfxQ2(-2,x,mu2);
-    xf1c = f1->xfxQ2(3,x,mu2);
-    xf1cb = f1->xfxQ2(-3,x,mu2);
-    xf1s = f1->xfxQ2(4,x,mu2);
-    xf1sb = f1->xfxQ2(-4,x,mu2);
+    xf1u = f1->xfxQ2(2,x,mu2);
+    xf1ub = f1->xfxQ2(-2,x,mu2);
+    xf1d = f1->xfxQ2(1,x,mu2);
+    xf1db = f1->xfxQ2(-1,x,mu2);
+    xf1c = f1->xfxQ2(4,x,mu2);
+    xf1cb = f1->xfxQ2(-4,x,mu2);
+    xf1s = f1->xfxQ2(3,x,mu2);
+    xf1sb = f1->xfxQ2(-3,x,mu2);
     xf1b = f1->xfxQ2(5,x,mu2);
     xf1bb = f1->xfxQ2(-5,x,mu2);
 
-    zD1g = D1->xfxQ2(21,x,mu2);
+    zD1g = D1->xfxQ2(21,z,mu2);
 
     // Return weigthed sum
     resultA = ( pow((2./3.),2) )*( (xf1u/x)+(xf1ub/x)+(xf1c/x)+(xf1cb/x) );
@@ -136,7 +137,7 @@ double weighted_sum_f1_times_D1g(double x, double z, double mu, const PDF* f1, c
  * @brief Returns the [weigthed sum over flavors q qbar of D1(z)] X f1^g(z), used for unpolarized g2q channel
  * @param x Argument of f1
  * @param z Argument of D1
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param mu Factorization scale 
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF 
  */
@@ -152,14 +153,14 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
 
     xf1g = f1->xfxQ2(21,x,mu2);
 
-    zD1u = D1->xfxQ2(1,z,mu2);
-    zD1ub = D1->xfxQ2(-1,z,mu2);
-    zD1d = D1->xfxQ2(2,z,mu2);
-    zD1db = D1->xfxQ2(-2,z,mu2);
-    zD1c = D1->xfxQ2(3,z,mu2);
-    zD1cb = D1->xfxQ2(-3,z,mu2);
-    zD1s = D1->xfxQ2(4,z,mu2);
-    zD1sb = D1->xfxQ2(-4,z,mu2);
+    zD1u = D1->xfxQ2(2,z,mu2);
+    zD1ub = D1->xfxQ2(-2,z,mu2);
+    zD1d = D1->xfxQ2(1,z,mu2);
+    zD1db = D1->xfxQ2(-1,z,mu2);
+    zD1c = D1->xfxQ2(4,z,mu2);
+    zD1cb = D1->xfxQ2(-4,z,mu2);
+    zD1s = D1->xfxQ2(3,z,mu2);
+    zD1sb = D1->xfxQ2(-3,z,mu2);
     zD1b = D1->xfxQ2(5,z,mu2);
     zD1bb = D1->xfxQ2(-5,z,mu2);
 
@@ -170,12 +171,162 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
     return (resultA+resultB)*xf1g/x;
 };
 
+
+
+/**
+ * @brief Returns the weigthed sum over flavors of h1(x) Ht(z)
+ * @param x Argument of h1
+ * @param z Argument of Ht
+ * @param mu Factorization scale 
+ * @param h1 Pointer to h1 PDF
+ * @param Ht Pointer to Ht FF
+ */
+double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF* Ht){
+
+    double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result, resultp, resultm ;
+
+    mu2 = mu*mu;
+
+    // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
+    //WHAT ABOUT ANTIQURKS?
+    xh1u = h1->xfxQ2(2,x,mu2);
+    //xh1ub = -h1->xfxQ2(1,-x,mu2);
+    xh1d = h1->xfxQ2(1,x,mu2);
+    //xh1db = -h1->xfxQ2(2,-x,mu2);
+    zHtu = Ht->xfxQ2(2,z,mu2);
+    //zHtub = Ht->xfxQ2(-1,z,mu2);
+    zHtd = Ht->xfxQ2(1,z,mu2);
+    //zHtdb = Ht->xfxQ2(-2,z,mu2);
+
+    // Return weigthed sum
+    if(which_pion == +1){
+            result = ( pow((2./3.),2)  )*(xh1u/x)*(zHtu/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtd/z);
+            return result;
+    }
+    else if(which_pion == -1){
+            result = ( pow((2./3.),2)  )*(xh1u/x)*(zHtd/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtu/z);
+            return result;
+    }
+    else if(which_pion == 0){
+            resultp = ( pow((2./3.),2)  )*(xh1u/x)*(zHtu/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtd/z);
+            resultm = ( pow((2./3.),2)  )*(xh1u/x)*(zHtd/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtu/z);
+            return 0.5*(resultp + resultm);
+    }
+    else{
+        std::cout << "which_pion variable not correctly set! Exiting..." << std::endl;
+        exit(1);
+    }
+};
+
+/**
+ * @brief Returns the weigthed sum over flavors of h1(x) ImH_FU^qg
+ * @param x Argument of h1
+ * @param z Argument of ImH_FU^qg
+ * @param zeta Argument of ImH_FU^qg
+ * @param mu Factorization scale 
+ * @param au Model parameter for u quark
+ * @param ad Model parameter for d quark
+ * @param bu Model parameter for u quark
+ * @param bd Model parameter for d quark
+ * @param h1 Pointer to h1 PDF
+ * @param Ht Pointer to Ht FF
+ */
+double weighted_sum_h1ImHFUqg(double x, double z, double zeta, double mu,double au,double ad,double bu,double bd, const PDF* h1, const PDF* Ht){
+      
+    double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result ;
+    double ImHFUug, ImHFUdg;
+
+    mu2 = mu*mu;
+
+    // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
+    //WHAT ABOUT ANTIQURKS?
+    xh1u = h1->xfxQ2(2,x,mu2);
+    //xh1ub = -h1->xfxQ2(1,-x,mu2);
+    xh1d = h1->xfxQ2(1,x,mu2);
+    //xh1db = -h1->xfxQ2(2,-x,mu2);
+    zHtu = Ht->xfxQ2(2,z,mu2);
+    //zHtub = Ht->xfxQ2(-1,z,mu2);
+    zHtd = Ht->xfxQ2(1,z,mu2);
+    //zHtdb = Ht->xfxQ2(-2,z,mu2);
+
+    
+    // Return weigthed sum
+    if(which_pion == +1){
+        ImHFUug = (zHtu/z)*(1./(2.*z)) * pow(zeta,au) * pow(1.-zeta,bu) * std::tgamma(1.+au+bu)/std::tgamma(1.+au)/std::tgamma(bu);
+        ImHFUdg = (zHtd/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) * std::tgamma(1.+ad+bd)/std::tgamma(1.+ad)/std::tgamma(bd);
+
+        result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUug + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdg;
+    }
+    else if(which_pion == -1){
+        ImHFUug = (zHtd/z)*(1./(2.*z)) * pow(zeta,au) * pow(1.-zeta,bu) * std::tgamma(1.+au+bu)/std::tgamma(1.+au)/std::tgamma(bu);
+        ImHFUdg = (zHtu/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) * std::tgamma(1.+ad+bd)/std::tgamma(1.+ad)/std::tgamma(bd);
+
+        result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUug + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdg;
+    
+    }
+    else{
+        std::cout << "which_pion variable not correctly set! Exiting..." << std::endl;
+        exit(1);
+    }
+    return result;
+};
+
+/**
+ * @brief Returns the weigthed sum over flavors of h1(x)  ImH_FU^qbarq
+ * @param x Argument of h1
+ * @param z Argument of ImH_FU^qbarq
+ * @param zeta Argument of ImH_FU^qbarq
+ * @param mu Factorization scale 
+ * @param cu Model parameter for u quark
+ * @param cd Model parameter for d quark
+ * @param Nu Model parameter for u quark
+ * @param Nd Model parameter for d quark
+ * @param h1 Pointer to h1 PDF
+ * @param Ht Pointer to Ht FF
+ */
+double weighted_sum_h1ImHFUqbarq(double x, double z, double zeta, double mu,double cu,double cd,double Nu,double Nd, const PDF* h1, const PDF* Ht){
+      
+    double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result ;
+    double ImHFUubaru, ImHFUdbard;
+
+    mu2 = mu*mu;
+
+    // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
+    //WHAT ABOUT ANTIQURKS?
+    xh1u = h1->xfxQ2(2,x,mu2);
+    //xh1ub = -h1->xfxQ2(1,-x,mu2);
+    xh1d = h1->xfxQ2(1,x,mu2);
+    //xh1db = -h1->xfxQ2(2,-x,mu2);
+    zHtu = Ht->xfxQ2(2,z,mu2);
+    //zHtub = Ht->xfxQ2(-1,z,mu2);
+    zHtd = Ht->xfxQ2(1,z,mu2);
+    //zHtdb = Ht->xfxQ2(-2,z,mu2);
+
+    if(which_pion == 1){
+        ImHFUubaru = (zHtu/z)*(1./(2.*z)) *Nu* pow(zeta,cu) * pow(1.-zeta,cu) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        ImHFUdbard = (zHtd/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        // Return weigthed sum
+        result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUubaru + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdbard;
+    }
+    else if(which_pion == -1){
+        ImHFUubaru = (zHtd/z)*(1./(2.*z)) *Nu* pow(zeta,cu) * pow(1.-zeta,cu) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        ImHFUdbard = (zHtu/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        // Return weigthed sum
+        result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUubaru + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdbard;
+    }
+    else{
+        std::cout << "which_pion variable not correctly set! Exiting..." << std::endl;
+        exit(1);
+    }
+    return result;
+};
+
 // This struct is to pass multiple parameters to the gsl function for the monte carlo integration.
 // It is essentially the equivalent way of passing variables to the vegas function 
 // without them being arguments of the function to be integrated.
 // Basically it serves the same purpose as a common block in fortran, kind of... 
 struct vegas_params_unpol {
-        double xB, zh, mu;
+        double xB, zh, mu, Q;
         const LHAPDF::PDF* f1;
         const LHAPDF::PDF* D1;
 };
@@ -195,6 +346,7 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
     double xB = p->xB;
     double zh = p->zh;
     double mu = p->mu;
+    double Q = p->Q;
     const PDF* f1 = p->f1;
     const PDF* D1 = p->D1;
 
@@ -209,7 +361,8 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
    
     // Color factors
     double CF = 4./3., TF = 1./2. ;
-    double Q = std::sqrt(Sep*xB*y);
+    //double Q;
+    //Q = mu;
     double Q2= Q*Q;
 
     // Strong coupling
@@ -222,16 +375,16 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
     double softg2q_del1mwdel1mv, softg2q_del1mw, softg2q_del1mv, softg2q;
     double softq2g_del1mwdel1mv, softq2g_del1mw, softq2g_del1mv, softq2g;
 
-    softq2q_del1mwdel1mv = weighted_sum_f1D1(xB,zh,mu,f1,D1);
-    softq2q_del1mw = weighted_sum_f1D1(xB,zh/v,mu,f1,D1);
-    softq2q_del1mv = weighted_sum_f1D1(xB/w,zh,mu,f1,D1);
-    softq2q = weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
+    softq2q_del1mwdel1mv = (xB)* weighted_sum_f1D1(xB,zh,mu,f1,D1);
+    softq2q_del1mw = (xB)* weighted_sum_f1D1(xB,zh/v,mu,f1,D1);
+    softq2q_del1mv = (xB/w)*  weighted_sum_f1D1(xB/w,zh,mu,f1,D1);
+    softq2q = (xB/w)*  weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
 
-    softg2q_del1mv = weighted_sum_D1_times_f1g(xB/w,zh,mu,f1,D1);
-    softg2q = weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
+    softg2q_del1mv = (xB/w)* weighted_sum_D1_times_f1g(xB/w,zh,mu,f1,D1);
+    softg2q = (xB/w)* weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
 
-    softq2g_del1mw = weighted_sum_f1_times_D1g(xB,zh/v,mu,f1,D1);
-    softq2g = weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
+    softq2g_del1mw = (xB)*  weighted_sum_f1_times_D1g(xB,zh/v,mu,f1,D1);
+    softq2g = (xB/w)* weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
 
     // q2q channel
     double resultq2q,resultg2q,resultq2g;
@@ -239,6 +392,8 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
     resultg2q = 0.;
     resultq2g = 0.;
 
+    
+    
     resultq2q += softq2q_del1mwdel1mv*(1. + CF * (alphas/2./pi)*(-8. -3. *std::log(mu*mu/Q2) )  ) /(1.-xB)/(1.-zh);
     resultq2q += +CF*(alphas/2./pi)*(1./v)*softq2q_del1mw*(   
               (std::log(1.-v)/(1.-v))*(1.+v*v) +1. - v + 
@@ -280,6 +435,7 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
                  -CF*(alphas/2./pi)*(1./v)*softq2g_del1mw*(1. + v*v + 1. - 2.*v - 2.*v*v + 2.*v*v )/v*(-std::log(1.-xB))/(1.-xB);
     
     return resultq2q + resultg2q + resultq2g;
+    
 
 
 };
@@ -298,6 +454,7 @@ double AuxF_UUL4vegas(double *X, size_t dim, void *params){
     double xB = p->xB;
     double zh = p->zh;
     double mu = p->mu;
+    double Q = p->Q;
     const PDF* f1 = p->f1;
     const PDF* D1 = p->D1;
 
@@ -312,7 +469,8 @@ double AuxF_UUL4vegas(double *X, size_t dim, void *params){
    
     // Color factors
     double CF = 4./3., TF = 1./2. ;
-    double Q = std::sqrt(Sep*xB*y);
+    //double Q;
+    //Q = mu;
     double Q2= Q*Q;
 
     // Strong coupling
@@ -343,17 +501,169 @@ double AuxF_UUL4vegas(double *X, size_t dim, void *params){
 
 };
 
+// This struct is to pass multiple parameters to the gsl function for the monte carlo integration.
+// It is essentially the equivalent way of passing variables to the vegas function 
+// without them being arguments of the function to be integrated.
+// Basically it serves the same purpose as a common block in fortran, kind of... 
+struct vegas_params_pol {
+        double xB, zh, mu, Q;
+        const LHAPDF::PDF* h1;
+        const LHAPDF::PDF* Ht;
+};
+
+/**
+ * @brief Returns (auxiliary) polarized structure function F_UT @ NLO, explicit terms implemented
+ * @param  X Integration variables, X[0] -> w, X[1] -> v
+ * @param dim Dimensions of integral
+ * @param params Parameters not to be integrated, passed thrugh a struct
+ */
+double AuxF_UT4vegas(double *X, size_t dim, void *params){
+
+    // Here we grab the parameters from the params struct
+    vegas_params_pol* p = static_cast<vegas_params_pol*>(params);
+    double xB = p->xB;
+    double zh = p->zh;
+    double mu = p->mu;
+    double Q = p->Q;
+    const PDF* h1 = p->h1;
+    const PDF* Ht = p->Ht;
+
+    // And the integration variables
+    double w = X[0];
+    double v = X[1];
+    double zeta = X[2];
+    double result, resultqbarq ;
+
+    
+    // IMPLEMENT HERE NLO
+   
+    // Color factors
+    double CF = 4./3., TF = 1./2., Nc = 3. ;
+    //double Q;
+    //Q = sqrt(Sep*xB*y);
+    double Q2= Q*Q;
+
+    // Strong coupling
+    double alphas;
+    // Evaluated at mu^2
+    alphas = h1->alphasQ2(mu*mu);
+
+    double asd2pi= alphas/2./pi;
+
+    // Calculate soft parts in advance
+    double softqg_del1mwdel1mv, softqg_del1mw, softqg_del1mv, softqg;
+    double softqbarq_del1mwdel1mv, softqbarq_del1mw, softqbarq_del1mv, softqbarq;
+
+    // Model parameters, greater than 2 though...
+  
+    double  au = 2.1;
+    double  ad = 2.1;
+    double  bu = 2.2;
+    double  bd = 2.2;
+    double  cu = 1.4;
+    double  cd = 2.3;
+    double  Nu = 1.;
+    double  Nd = 1.;
+
+   
+    // Soft parts: first factor is from strcture function
+
+    // qg channel
+    softqg_del1mwdel1mv = (-xB*2*Mpi/Q/zh)*weighted_sum_h1ImHFUqg(xB,zh,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+    softqg_del1mw = (-xB*2*Mpi/Q/(zh/v))*weighted_sum_h1ImHFUqg(xB,zh/v,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+    softqg_del1mv = (-(xB/w)*2*Mpi/Q/zh)*weighted_sum_h1ImHFUqg(xB/w,zh,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+    softqg = (-(xB/w)*2*Mpi/Q/(zh/v))*weighted_sum_h1ImHFUqg(xB/w,zh/v,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+
+    // qbarq channel
+    softqbarq_del1mwdel1mv = (-xB*2*Mpi/Q/zh)*weighted_sum_h1ImHFUqbarq(xB,zh,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+    softqbarq_del1mw = (-xB*2*Mpi/Q/(zh/v))*weighted_sum_h1ImHFUqbarq(xB,zh/v,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+    softqbarq_del1mv = (-(xB/w)*2*Mpi/Q/zh)*weighted_sum_h1ImHFUqbarq(xB/w,zh,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+    softqbarq = (-(xB/w)*2*Mpi/Q/(zh/v))*weighted_sum_h1ImHFUqbarq(xB/w,zh/v,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+
+    
+    result = 0. ;
+    
+    // LO
+    result += 2*zh *softqg_del1mwdel1mv/(1.-xB)/(1.-zh) ;
+
+    
+    // NLO
+
+    // qg channel
+    // Nc part
+    result +=asd2pi* Nc/(1.-zh)/(1.-xB) /4 *( -2. * std::log(1. - zeta)/zeta - std::log(zeta)*(-4. + 2. * std::log(Q2/mu/mu) +std::log(zeta)  )/(-1.+zeta)    )*softqg_del1mwdel1mv;
+
+    result += asd2pi* Nc/(1.-xB) /(2.*(1.-zeta)*zeta*(1.-v*zeta) )*(    (1.+zeta+v*(-2. +zeta - zeta*zeta))*( std::log((1.-v)*v)+std::log(Q2/mu/mu) )
+                 - v*zeta - v*zeta*zeta  + 2.*v*v*zeta*zeta   )*softqg_del1mw/v;
+    
+    result += asd2pi* Nc /(1.-w) /( 2.*(1.-zeta)*zeta*(w*(-1+zeta) + (-1+v)*zeta )) *w*( (-1.+2.*v)*w*w*(1.-zeta)*(1.-zeta) - 3.*(-1.+v)*w*(-1.+zeta)*zeta + 2.*(-1.+v)*zeta*zeta  )*softqg/v/w;
+    result -=asd2pi*  Nc /(1.-w) /( 2.*(1.-zeta)*zeta*((-1+zeta) + (-1+v)*zeta )) *( (-1.+2.*v)*(1.-zeta)*(1.-zeta) - 3.*(-1.+v)*(-1.+zeta)*zeta + 2.*(-1.+v)*zeta*zeta  )*softqg_del1mw/v;
+    result -=asd2pi*  Nc *(-std::log(1. - xB)/(1.-xB))/( 2.*(1.-zeta)*zeta*((-1+zeta) + (-1+v)*zeta )) *( (-1.+2.*v)*(1.-zeta)*(1.-zeta) - 3.*(-1.+v)*(-1.+zeta)*zeta + 2.*(-1.+v)*zeta*zeta  )*softqg_del1mw/v;
+
+    // CF part
+    result += asd2pi* CF/(1.-zh)/(1.-xB) /(2.*(-1.+zeta)) *( 15. - 15.*zeta - 6.*std::log(zeta) + std::log(zeta)*std::log(zeta) + 2.*std::log(Q2/mu/mu)*(-2. + 2.*zeta + std::log(zeta)) )*softqg_del1mwdel1mv;
+
+    result += asd2pi* CF/(1.-zh)/(1. - w) *2.*w*(-1. + std::log(Q2/mu/mu)  - std::log(w) )*softqg_del1mv/w;
+    result -= asd2pi* CF/(1.-zh)/(1. - w) *2.*(-1. + std::log(Q2/mu/mu) )*softqg_del1mwdel1mv;
+    result -= asd2pi* CF/(1.-zh)*(-std::log(1.-xB)/1.-xB) *2.*(-1. + std::log(Q2/mu/mu) )*softqg_del1mwdel1mv;
+    result += asd2pi* CF/(1.-zh)*(std::log(1.-w)/(1. - w) )*2.*w*softqg_del1mv/w;
+    result -= asd2pi* CF/(1.-zh)*(std::log(1.-w)/(1. - w) )*2.*softqg_del1mwdel1mv;
+    result -= asd2pi* CF/(1.-zh)*(-0.5*std::log(1.-xB)*std::log(1.-xB)/(1.-xB) )*2.*softqg_del1mwdel1mv;
+
+    result += asd2pi* CF/(1.-xB)/(1.-v)/zeta * ( (-1. -v*(-3.+zeta) +2.*v*v*(-1.+zeta) + zeta )*(std::log(Q2/mu/mu) +std::log(v) )  + 1. - 3.*v + 2.*v*v - 2.*v*v*zeta  )*softqg_del1mw/v;
+    result -= asd2pi* CF/(1.-xB)/(1.-v)/zeta * ( (-1.-(-3.+zeta) +2.*(-1.+zeta) + zeta )*(std::log(Q2/mu/mu) )  + 1. - 3. + 2. - 2.*zeta  )*softqg_del1mwdel1mv;
+    result -= asd2pi* CF/(1.-xB)*(-std::log(1.-zh)/(1.-zh))/zeta * ( (-1.-(-3.+zeta) +2.*(-1.+zeta) + zeta )*(std::log(Q2/mu/mu) )  + 1. - 3. + 2. - 2.*zeta  )*softqg_del1mwdel1mv;
+    result += asd2pi* CF/(1.-xB)*(std::log(1.-v) /(1.-v))/zeta * ( -1. -v*(-3.+zeta) +2.*v*v*(-1.+zeta) + zeta  )*softqg_del1mw/v;
+    result -= asd2pi* CF/(1.-xB)*(std::log(1.-v) /(1.-v))/zeta * ( -1. -(-3.+zeta) +2.*(-1.+zeta) + zeta  )*softqg_del1mwdel1mv;
+    result -= asd2pi* CF/(1.-xB)*(-0.5*std::log(1.-zh)*std::log(1.-zh)/(1.-zh))/zeta * ( -1. -(-3.+zeta) +2.*(-1.+zeta) + zeta  )*softqg_del1mwdel1mv;
+
+    result += -asd2pi* CF/(1.-w)/(1.-v)/zeta/(w*(-1.+zeta) +(-1.+v)*zeta ) *w* ( (1.-3.*v +2.*v*v)*w*w*(-1.+zeta) + (1.-v)*(1.-v)*zeta*zeta + 
+                        w*zeta*( -3.*v*v -2.*v*v*v*(-1.+zeta) - zeta + v*(3. + zeta) )     )*softqg/w/v;
+    result -= asd2pi* CF/(1.-w)/(1.-v) * 2.*softqg_del1mv;
+    result -= -asd2pi* CF/(1.-w)/(1.-v)/zeta/((-1.+zeta) +(-1.+v)*zeta ) * ( (1.-3.*v +2.*v*v)*(-1.+zeta) + (1.-v)*(1.-v)*zeta*zeta + 
+                        zeta*( -3.*v*v -2.*v*v*v*(-1.+zeta) - zeta + v*(3. + zeta) )    )*softqg_del1mw/v;
+    result += asd2pi* CF/(1.-w)/(1.-v) * 2.* softqg_del1mwdel1mv;
+
+    result += asd2pi* std::log(1.-zh)/(1.-zh)/(1.-w) *( 2.*CF*softqg_del1mv -  2.*CF*softqg_del1mwdel1mv);
+    result += asd2pi* std::log(1.-xB)/(1.-xB)/(1.-v) *(  -CF/zeta/((-1.+zeta) +(-1.+v)*zeta ) * ( (1.-3.*v +2.*v*v)*(-1.+zeta) + (1.-v)*(1.-v)*zeta*zeta + 
+                        zeta*( -3.*v*v -2.*v*v*v*(-1.+zeta) - zeta + v*(3. + zeta) )    )*softqg_del1mw/v   -  2.*CF*softqg_del1mwdel1mv    );
+    result += asd2pi* 2.*CF*softqg_del1mwdel1mv*std::log(1.-xB)*std::log(1.-zh)/(1.-xB)/(1.-zh);
+
+    
+
+    // qbarq channel
+    result += asd2pi*(CF - Nc/2.)/(1. + v*(-1.+zeta))/zeta * (v*zeta + (1.-3.*v+2.*v*v)*(std::log(v*(1.-v))  + std::log(Q2/mu/mu)  )  )*softqbarq_del1mw/v/(1.-xB);
+
+    result += (1./(1. - w))*asd2pi*(CF - Nc/2.)/(v*(-1. + zeta)*zeta*(w*(-1. + zeta) + (-1. + v)*zeta )*(1. + v*(-1.+zeta) + zeta*(-1.+w)  )   ) * 
+                (1. - 3.*v + 2.*v*v )*w*w*(v*v*(-1.+zeta)*zeta + (-1.+w)*zeta*(1. + (-1. + w)*zeta) + v*(-1.+zeta)*(-2.*zeta + w*(-1. + 2.*zeta))  )*softqbarq/w/v;
+    result -= (1./(1. - w))*asd2pi*(CF - Nc/2.)/(v*(-1. + zeta)*zeta*((-1. + zeta) + (-1. + v)*zeta )*(1. + v*(-1.+zeta)  )   ) * 
+                (1. - 3.*v + 2.*v*v )*(v*v*(-1.+zeta)*zeta + v*(-1.+zeta)*(-2.*zeta + (-1. + 2.*zeta))  )*softqbarq_del1mw/v;
+    result -= (-std::log(1.-xB)/(1.-xB))*asd2pi*(CF - Nc/2.)/(v*(-1. + zeta)*zeta*((-1. + zeta) + (-1. + v)*zeta )*(1. + v*(-1.+zeta)  )   ) * 
+                (1. - 3.*v + 2.*v*v )*(v*v*(-1.+zeta)*zeta + v*(-1.+zeta)*(-2.*zeta + (-1. + 2.*zeta))  )*softqbarq_del1mw/v;
+                 
+
+
+
+    return result;
+    
+
+    
+
+
+};
+
+
 /**
  * @brief Returns the unpolarized structure function F_UU,T @ given alphasS order of accuracy.
  * The w and v integrals are performed here
  * @param xB Scaling variable
  * @param zh Scaling variable
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param mu Factorization scale 
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF
  * @param accuracy = 0 LO, = 1 LO+NLO
  */
-double F_UUT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, int accuracy){
+double F_UUT(double xB, double zh, double mu, double Q, const PDF* f1, const PDF* D1, int accuracy){
 
     double result ;
 
@@ -372,6 +682,7 @@ double F_UUT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, int 
         myparams.xB = xB;
         myparams.zh = zh;
         myparams.mu = mu;
+        myparams.Q = Q;
         myparams.f1 = f1;
         myparams.D1 = D1;
 
@@ -435,20 +746,22 @@ double F_UUT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, int 
 };
 
 /**
-     * @brief Returns the unpolarized structure function F_UU,L @ NLO accuracy (only present at NLO!).
+     * @brief Returns the unpolarized structure function F_UU,L @ NLO accuracy (only present at NLO! At LO, this function returns 0.0 ).
      * The w and v integrals are performed here
      * @param xB Scaling variable
      * @param zh Scaling variable
-     * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+     * @param mu Factorization scale
      * @param Q Virtuality of exchanged photon
      * @param f1 Pointer to f1 PDF
      * @param D1 Pointer to D1 FF
+     * @param accuracy = 0 LO, = 1 LO+NLO
      */
-double F_UUL(double xB, double zh, double mu, const PDF* f1, const PDF* D1){
+double F_UUL(double xB, double zh, double mu, double Q, const PDF* f1, const PDF* D1, int accuracy){
 
     double result ;
 
-    // Set up the gsl monte carlo integration for the 2D integral in w and v
+    if(accuracy == 1){
+        // Set up the gsl monte carlo integration for the 2D integral in w and v
 
     
     // Define the struct and fill it with the parameters to be passed to the gsl vegas monte carlo function
@@ -456,6 +769,7 @@ double F_UUL(double xB, double zh, double mu, const PDF* f1, const PDF* D1){
     myparams.xB = xB;
     myparams.zh = zh;
     myparams.mu = mu;
+    myparams.Q = Q;
     myparams.f1 = f1;
     myparams.D1 = D1;
 
@@ -500,7 +814,7 @@ double F_UUL(double xB, double zh, double mu, const PDF* f1, const PDF* D1){
         printf ("result = % .10f sigma = % .10f "
                 "chisq/dof = %.1f\n", res, err, gsl_monte_vegas_chisq (s));
     }
-    while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.2);
+    while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
 
     display_results ("vegas final", res, err);
 
@@ -508,6 +822,11 @@ double F_UUL(double xB, double zh, double mu, const PDF* f1, const PDF* D1){
 
     
     return res;
+
+    }
+    else{
+        return 0.0;
+    }
  
 
     
@@ -516,109 +835,93 @@ double F_UUL(double xB, double zh, double mu, const PDF* f1, const PDF* D1){
 };
 
 
-/**
- * @brief Returns the weigthed sum over flavors of h1(x) Ht(z)
- * @param x Argument of h1
- * @param z Argument of Ht
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
- * @param h1 Pointer to h1 PDF
- * @param Ht Pointer to Ht FF
- */
-double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF* Ht){
-
-    double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result ;
-
-    mu2 = mu*mu;
-
-    // Evaluate PDF & FF at x, z and mu. Here I am considering pi+ !!
-    //WHAT ABOUT ANTIQURKS?
-    xh1u = h1->xfxQ2(1,x,mu2);
-    //xh1ub = -h1->xfxQ2(1,-x,mu2);
-    xh1d = h1->xfxQ2(2,x,mu2);
-    //xh1db = -h1->xfxQ2(2,-x,mu2);
-    zHtu = Ht->xfxQ2(1,z,mu2);
-    //zHtub = Ht->xfxQ2(-1,z,mu2);
-    zHtd = Ht->xfxQ2(2,z,mu2);
-    //zHtdb = Ht->xfxQ2(-2,z,mu2);
-
-    // Return weigthed sum
-    result = ( pow((2./3.),2)  )*(xh1u/x)*(zHtu/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtd/z);
-
-    return result;
-};
 
 /**
  * @brief Returns the structure function F_UT^sin(phi_S) @ given alphasS order of accuracy.
  * The w and v (and zeta) integrals are performed here
- * @param x Argument of h1
- * @param z Argument of Ht
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param xB Scaling variable
+ * @param zh Scaling variable
+ * @param mu Factorization scale 
  * @param h1 Pointer to h1 PDF
  * @param Ht Pointer to Ht FF
- * @param accuracy = 0 LO, = 1 NLO, = 2 LO+NLO
+ * @param accuracy = 0 LO, = 1 LO+NLO
  */
-double F_UT(double x, double z, double mu,  const PDF* h1, const PDF* Ht, int accuracy){
+double F_UT(double xB, double zh, double mu,double Q, const PDF* h1, const PDF* Ht, int accuracy){
 
-    double result, Q = std::sqrt(Sep*x*y) ;
+    double result;
 
     if(accuracy == 0){
         // Return structure function @ LO [Bacchetta07]
-        result = - x*2*Mpi/Q *weighted_sum_h1Ht(x,z,mu,h1,Ht)/z;
+        result = - xB*2*Mpi/Q *weighted_sum_h1Ht(xB,zh,mu,h1,Ht)/zh;
         return result;
     }
     // IMPLEMENT HERE NLO
-    else 
-        return 0.;
+    else {
+
+        // Test for qgq function
+        // Set up the gsl monte carlo integration for the 3D integral in w and v and zeta
+
     
-};
+        // Define the struct and fill it with the parameters to be passed to the gsl vegas monte carlo function
+        vegas_params_pol myparams;
+        myparams.xB = xB;
+        myparams.zh = zh;
+        myparams.mu = mu;
+        myparams.Q = Q;
+        myparams.h1 = h1;
+        myparams.Ht = Ht;
 
-/**
- * @brief Writes down to file the structure function F_UT^sin(phi_S) as a function of x and z. 
- * The data is stored in a table with coordinates x (row) and z (columns)
- * @param x_sample Vector of x values in which F_UT is meant to be evaluated
- * @param z_sample Vector of z values in which F_UT is meant to be evaluated
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
- * @param h1 Pointer to h1 PDF
- * @param Ht Pointer to Ht FF
- * @param accuracy = 0 LO, = 1 NLO, = 2 LO+NLO
- */
-void write_F_UT_to_file(std::vector<double> x_sample, std::vector<double> z_sample, double mu, const PDF* h1, const PDF* Ht, int accuracy, std::string fname){
+        // Declare result and sigma of the integration
+        double res, err;
 
-    // Declare ofstream object (file in which we are going to store our data points)
-    std::ofstream ofile, ofilex, ofilez;
-    
+        
+        // Dimensions
+        size_t dim = 3;
+        // Boundaries of the integration
+        double xl[3] = {xB, zh, 0.};
+        double xu[3] = {1, 1, 1};
 
-    // Save F_UT(x,z)
-    // Open it
-    ofile.open(fname);
+        // GSL MONTE CARLO INTEGRATION
+        // Modify only calls variable if needed!
+        const gsl_rng_type *T;
+        gsl_rng *r;
 
-    for (double x : x_sample) {
-        for (double z : z_sample){
-            // Write to file
-            ofile << F_UT(x, z, mu, h1, Ht, accuracy) << " ";
+        gsl_monte_function G = {&AuxF_UT4vegas,dim,&myparams};
+
+        size_t calls = 10000;
+
+        gsl_rng_env_setup ();
+
+        T = gsl_rng_default;
+        r = gsl_rng_alloc (T);
+        gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
+
+        gsl_monte_vegas_integrate (&G, xl, xu, dim, calls, r, s,
+                                &res, &err);
+        display_results ("vegas warm-up", res, err);
+
+        printf ("converging...\n");
+
+        do
+        {
+            gsl_monte_vegas_integrate (&G, xl, xu, dim, calls*3, r, s,
+                                    &res, &err);
+            printf ("result = % .10f sigma = % .10f "
+                    "chisq/dof = %.1f\n", res, err, gsl_monte_vegas_chisq (s));
         }
-        // End the line
-        ofile << std::endl;
+        while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
+
+        display_results ("vegas final", res, err);
+
+        gsl_monte_vegas_free (s);
+
+        return res;
     }
-    // Close the file
-    ofilex.close();
-
-    // Save x vector
-    ofilex.open("xB.txt");
-    for (double x : x_sample) {
-        // Write to file
-        ofilex << x << std::endl;
-    }
-
-    // Save z vector
-    ofilez.open("zh.txt");
-    for (double z : z_sample) {
-        // Write to file
-        ofilez << z << std::endl;
-    }
-
-
+    
 };
+
+
+
 
 /**
  * @brief Function that returns the xB and zh vectors filed with the kinematical points we want to evaluate further on in the analysis
@@ -646,9 +949,15 @@ std::vector<double> fill_xz_vector(double min, double max,double N){
 }
 
 
-double A_UT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU){
+double A_UT(double xB,double y, double zh, double mu,double Q, const PDF* f1, const PDF* D1, const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU){
 
-    return F_UT(xB,zh,mu,h1,Ht,accuracyFUT)/F_UUT(xB,zh,mu,f1,D1,accuracyFUU);
+    double eps;
+
+
+    // The ratio ε of longitudinal and transverse photon flux
+    eps = (1. - y)/(1. - y + y*y/2.);
+
+    return F_UT(xB,zh,mu,Q,h1,Ht,accuracyFUT)/(F_UUT(xB,zh,mu,Q,f1,D1,accuracyFUU)  + eps*F_UUL(xB,zh,mu,Q,f1,D1,accuracyFUU) );
 
 };
 
@@ -657,7 +966,7 @@ double A_UT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, const
  * The data is stored in a table with coordinates x (row) and z (columns)
  * @param x_sample Vector of x values in which A_UT is meant to be evaluated
  * @param z_sample Vector of z values in which A_UT is meant to be evaluated
- * @param mu Factorization scale (effectively ignored for Ht since evolution is not implemented)
+ * @param Q 
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF
  * @param h1 Pointer to h1 PDF
@@ -665,7 +974,7 @@ double A_UT(double xB, double zh, double mu, const PDF* f1, const PDF* D1, const
  * @param accuracyFUT = 0 LO, = 1 NLO, = 2 LO+NLO
  * @param accuracyFUU = 0 LO, = 1 NLO, = 2 LO+NLO
  */
-void write_A_UT_to_file(std::vector<double> x_sample, std::vector<double> z_sample, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU, std::string fname){
+void write_A_UT_to_file(std::vector<double> x_sample, double y, std::vector<double> z_sample,double mu, double Q, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU, std::string fname){
 
     // Declare ofstream object (file in which we are going to store our data points)
     std::ofstream ofile, ofilex, ofilez;
@@ -675,16 +984,33 @@ void write_A_UT_to_file(std::vector<double> x_sample, std::vector<double> z_samp
     // Open it
     ofile.open(fname);
 
-    for (double x : x_sample) {
-        for (double z : z_sample){
-            // Write to file
-            ofile << A_UT(x, z, std::sqrt(Sep*x*y), f1, D1, h1, Ht, accuracyFUT, accuracyFUU) << " ";
-        }
+    if(x_sample.size() == 1 || z_sample.size() == 1 ){
+        for (double x : x_sample) {
+            for (double z : z_sample){
+                if(x_sample.size() == 1){
+                    // Write to file
+                    ofile << z << " " << A_UT(x, y, z, mu, Q, f1, D1, h1, Ht, accuracyFUT, accuracyFUU)  << std::endl;
+                }
+                if(z_sample.size() == 1){
+                    // Write to file
+                    ofile << x << " " << A_UT(x, y, z, mu, Q, f1, D1, h1, Ht, accuracyFUT, accuracyFUU)  << std::endl;
+                }
+            }
+    }
+    }
+    else{
+        for (double x : x_sample) {
+            for (double z : z_sample){
+                // Write to file
+                ofile << A_UT(x, y, z, mu, Q, f1, D1, h1, Ht, accuracyFUT, accuracyFUU) << " ";
+            }
         // End the line
         ofile << std::endl;
     }
+    }
+    
     // Close the file
-    ofilex.close();
+    ofile.close();
 
     // Save x vector
     ofilex.open("xB.txt");
@@ -692,6 +1018,8 @@ void write_A_UT_to_file(std::vector<double> x_sample, std::vector<double> z_samp
         // Write to file
         ofilex << x << std::endl;
     }
+    // Close the file
+    ofilex.close();
 
     // Save z vector
     ofilez.open("zh.txt");
@@ -699,6 +1027,8 @@ void write_A_UT_to_file(std::vector<double> x_sample, std::vector<double> z_samp
         // Write to file
         ofilez << z << std::endl;
     }
+    // Close the file
+    ofilez.close();
 
 
 };
@@ -707,35 +1037,163 @@ void write_A_UT_to_file(std::vector<double> x_sample, std::vector<double> z_samp
 int main(){
     //std::cout <<"Hello"  << std::endl;
 
-    double min = 0.1;
-    double max = 0.9;
-    double n_points = 50;
+    double min = 0.05;
+    double max = 0.8;
+    double n_points = 10;
     double Q;
-    
+   
 
     // Import f1 PDF
-    const PDF* f1 = LHAPDF::mkPDF("MSTW2008lo68cl", 0); // 0 is the member number
+    const PDF* f1 = LHAPDF::mkPDF("JAM20-SIDIS_PDF_proton_nlo", 0); // 0 is the member number
 
     // Import h1 PDF
     const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo", 0); // 0 is the member number
+    
+    // Import D1 FF (pi+ ??)
+    const PDF* D1p = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
 
-    // Import D1 FF (pi+)
-    const PDF* D1 = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
+    // Import D1 FF (pi-)
+    const PDF* D1m = LHAPDF::mkPDF("NNFF10_PIm_lo", 0); // 0 is the member number
 
-    // Import H tilde FF (pi+)
+    // Import H tilde FF (pi+) (later on changed to pi- via C conjugation if needed)
     const PDF* Ht = LHAPDF::mkPDF("JAM22-Htilde_pion_lo", 0); // 0 is the member number
+
+
+    // Declare useful variables
+    double avgQ2, avgzh,avgxB, avgy;
+    std::vector<double> x_sample, z_sample;
+    
+    
+    
+    ////////////////////////////////////////////////////
+    // HERMES 9066. pi+, z dependence
+    avgQ2 = 2.415;
+    avgxB = 0.1017;
+    avgy = 0.4976; 
+   
+
+    x_sample.push_back(avgxB);
+    z_sample.push_back(0.1);
+    z_sample.push_back(0.15);
+    z_sample.push_back(0.2);
+    z_sample.push_back(0.25);
+    z_sample.push_back(0.3);
+    z_sample.push_back(0.35);
+    z_sample.push_back(0.4);
+    z_sample.push_back(0.45);
+    z_sample.push_back(0.5);
+    z_sample.push_back(0.55);
+    z_sample.push_back(0.6);
+    z_sample.push_back(0.65);
+    z_sample.push_back(0.7);
+    z_sample.push_back(0.75);
+    z_sample.push_back(0.8);
+    z_sample.push_back(0.85);
+    z_sample.push_back(0.9);
+
+    which_pion = +1;
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"AUTz_LO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,1,1,"AUTz_NLO_pp.txt");
+
+    x_sample.clear();
+    z_sample.clear();
+
+    ////////////////////////////////////////////////////
+    // HERMES 9055. pi+, x dependence
+    avgQ2 = 2.79;
+    avgzh = 0.3664;
+    avgy = 0.519; 
+
+   
+    z_sample.push_back(avgzh);
+
+    x_sample.push_back(0.05);
+    x_sample.push_back(0.1);
+    x_sample.push_back(0.15);
+    x_sample.push_back(0.2);
+    x_sample.push_back(0.25);
+    x_sample.push_back(0.3);
+    x_sample.push_back(0.35);
+    x_sample.push_back(0.4);
+    x_sample.push_back(0.45);
+    x_sample.push_back(0.5);
+
+    which_pion = +1;
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"AUTx_LO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,1,1,"AUTx_NLO_pp.txt");
+
+    x_sample.clear();
+    z_sample.clear();
+    
+    ////////////////////////////////////////////////////
+    // HERMES 10032. pi-, z dependence
+    avgQ2 = 2.285;
+    avgxB = 0.0965;
+    avgy = 0.4983; 
+
+    
+    x_sample.push_back(avgxB);
+    z_sample.push_back(0.1);
+    z_sample.push_back(0.15);
+    z_sample.push_back(0.2);
+    z_sample.push_back(0.25);
+    z_sample.push_back(0.3);
+    z_sample.push_back(0.35);
+    z_sample.push_back(0.4);
+    z_sample.push_back(0.45);
+    z_sample.push_back(0.5);
+    z_sample.push_back(0.55);
+    z_sample.push_back(0.6);
+    z_sample.push_back(0.65);
+    z_sample.push_back(0.7);
+    z_sample.push_back(0.75);
+    z_sample.push_back(0.8);
+    z_sample.push_back(0.85);
+    z_sample.push_back(0.9);
+
+    which_pion = -1;
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"AUTz_LO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,1,1,"AUTz_NLO_pm.txt");
+
+    x_sample.clear();
+    z_sample.clear();
+    
+    ////////////////////////////////////////////////////
+    // HERMES 10021. pi-, x dependence
+    avgQ2 = 2.774;
+    avgzh= 0.358;
+    avgy = 0.51857; 
+
+    
+    z_sample.push_back(avgzh);
+
+    x_sample.push_back(0.05);
+    x_sample.push_back(0.1);
+    x_sample.push_back(0.15);
+    x_sample.push_back(0.2);
+    x_sample.push_back(0.25);
+    x_sample.push_back(0.3);
+    x_sample.push_back(0.35);
+    x_sample.push_back(0.4);
+    x_sample.push_back(0.45);
+    x_sample.push_back(0.5);
+
+    which_pion = -1;
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"AUTx_LO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,1,1,"AUTx_NLO_pm.txt");
+
+    x_sample.clear();
+    z_sample.clear();
+    
 
     
 
-    write_A_UT_to_file(fill_xz_vector(min,max,n_points), fill_xz_vector(min,max,n_points), f1,D1,h1,Ht,0,0,"AUT_LO.txt");
+
     
     return 0;
     
     // TO DO:
-    // Implement NLO F_UT
-    // Implement pi-
+    // Implement pi-, figure out what it means to do charge conjugation for FFs
     // Figure out if so far the code makes sense
-
-
 };
 
