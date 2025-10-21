@@ -1,6 +1,6 @@
 \chapter{Next-to-Leading Order QCD Analysis of the spin asymmetry}%alt+Z to format everything to column width!
 
-We perform our pQCD calculation at next-to-leading order in dimensional regularization in $d=4-2\epsilon$ dimensions. When it comes to renormalization, we adopt the common choice of using the minimal subtraction scheme ($\overline{\text{MS}}$).
+We perform our pQCD calculation at next-to-leading order in dimensional regularization in $d=4-2\epsilon$ dimensions. When it comes to renormalization, we adopt the common choice of using the modified minimal subtraction scheme ($\overline{\text{MS}}$).
 
 \section{Leading-twist case}
 
@@ -155,12 +155,12 @@ With such splitting functions, inserting the bare distributions into the LO expr
 We obtain the following unpolarized NLO result, which is consistent with the literature \cite{de_Florian_1998}
 \begin{equation}
     \begin{aligned}
-        \frac{\dd \sigma^{UUU}_{\rm LO+NLO}}{\dd x_B \dd y \dd \phi_l \dd z_h}&=\frac{2 \alpha_{\rm em}^2}{y  Q^2}\left[ \left(1-y+\frac{y^2}{2}\right)\mathcal{F}_{UU,T} +(1-y)\mathcal{F}_{UU,L}\right]\\
-        \mathcal{F}_{UU,T}(x_B,z_h,Q^2)&= \sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_U^{a \to a} \circ D_1^a +f_1^g \circ \mathcal{C}_{U}^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_U^{a \to g} \circ D_1^g \Big)\\
-        \mathcal{F}_{UU,L}(x_B,z_h,Q^2)&=\sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_L^{a \to a} \circ D_1^a  +f_1^g \circ \mathcal{C}_L^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_L^{a \to g} \circ D_1^g \Big)
+        \frac{\dd \sigma^{UU}_{\rm LO+NLO}}{\dd x_B \dd y \dd \phi_l \dd z_h}&=\frac{2 \alpha_{\rm em}^2}{y  Q^2}\left[ \left(1-y+\frac{y^2}{2}\right)F_{UU,T} +(1-y)F_{UU,L}\right]\\
+        F_{UU,T}(x_B,z_h,Q^2)&= \sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_U^{a \to a} \circ D_1^a +f_1^g \circ \mathcal{C}_{U}^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_U^{a \to g} \circ D_1^g \Big)\\
+        F_{UU,L}(x_B,z_h,Q^2)&=\sum_a e_a^2 \Big(f_1^a \circ \mathcal{C}_L^{a \to a} \circ D_1^a  +f_1^g \circ \mathcal{C}_L^{g \to a} \circ D_1^a+f_1^a \circ \mathcal{C}_L^{a \to g} \circ D_1^g \Big)
     \end{aligned}
 \end{equation}
-where we introduced the convolution $\circ$ defined as
+where we introduced the double convolution $a\circ b\circ c$ defined as
 \begin{equation}
     f \circ \mathcal{C} \circ D = \int_{x_B}^1 \frac{\dd w}{w}\int_{z_h}^1 \frac{\dd v}{v} f\left(\frac{x_B}{w}\right) \mathcal{C}\left(w,v\right) D\left(\frac{z_h}{v}\right)
 \end{equation}
@@ -186,11 +186,10 @@ and
     \end{aligned}
 \end{equation}
 \section{Transverse nucleon spin}
-We now turn our attention to the case of transversely-polarized protons. As already shown at LO (REF), the spin-dependent cross section can be obtained within the collinear twist-3 formalism. Here, we will derive the NLO corrections contributing to the $A_{UTU}$ spin asymmetry. Evidently, the complexity of the calculation increases significantly compared to the unpolarized case. In the literature there are very few similar NLO calculations for SIDIS, and they mostly focus on the $P_{h\perp}$-weigthed asymmetries (ADD LIT). This being said, the NLO methodologies presented in the previous section can be directly generalized to this higher-twist case, provided we take into account the additional structures of twist-3 correlators and handle the relative hard parts with care. As far as this work goes, we will restrict ourselves to the case of the $qq$ and $qgq$ fragmentation channels. This already provides good insights into how a twist-3 NLO calculation can be performed, and it is an important reference for similar future work. (HERE OVERALL RESULTS: IR safety, gauge invariance, etc...)
-
+We now turn our attention to the case of transversely-polarized protons. As already shown at LO (REF), the spin-dependent cross section can be obtained within the collinear twist-3 formalism. Here, we will derive the NLO corrections contributing to the $A_{UT}$ spin asymmetry. Evidently, the complexity of the calculation increases significantly compared to the unpolarized case. In the literature there are very few similar NLO calculations for SIDIS, and they mostly focus on the $P_{h\perp}$-weigthed asymmetries (ADD LIT and couple phrases). This being said, the NLO methodologies presented in the previous section can be directly generalized to this higher-twist case, provided we take into account the additional structures of twist-3 correlators and handle the relative hard parts and transverse partonic momenta with care. Our calculation closely follows, extends and adapts the techniques developed in \cite{rein2025, Gamberg_2019, kanazawa_contribution_2013, koike_transverse_2022}. 
 
 \subsection{Technical aspects}
-Let us start with the virtual corrections. The NLO diagrams contributing at the twist-3 level are identical to the unpolarized case, when it comes to intrinsic and kinematical contributions (see Fig.~\ref{fig:Virt NLO tw2}). For those terms, we employ the same methods as in the leading-twist NLO case but with different correlators structures. For dynamical twist-3 though,there are more diagrams that have to be taken into account. The dynamical twist-3 diagrams relevant at NLO are shown in Fig.~\ref{fig:Virt NLO tw3}.
+Let us start with the virtual corrections. The NLO diagrams contributing at the twist-3 level are identical to the unpolarized case, when it comes to intrinsic and kinematical contributions (see Fig.~\ref{fig:Virt NLO tw2}). For those terms, we employ the same methods as in the leading-twist NLO case but with different correlators structures. For dynamical twist-3 though,there are more diagrams that have to be taken into account. The virtual dynamical twist-3 diagrams relevant at NLO are shown in Fig.~\ref{fig:Virt NLO tw3}.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{fig/VirtNLOTw3 V2.png}
@@ -202,17 +201,22 @@ As before, we write the loop momenta in their light-cone decomposition $\dd ^d r
     \sum_{\lambda=\pm 1} \epsilon_\lambda^\mu(r)\,\epsilon_\lambda^{\nu*}(r)= -g^{\mu\nu}+\kappa\,\frac{r^\mu m^\nu+r^\nu m^\mu}{r \cdot m},
 \end{equation}
 we can easily check if the gauge parameter $\kappa$ drops out of the final result, as it should, proving the gauge invariance of the cross section. For virtual graphs, we find that gauge invariance is restored only when all the diagrams in Fig.~\ref{fig:Virt NLO tw3} are added, since individual diagrams depend on $\kappa$. Lastly, we find that classifying the different contributions depending on their color structure helps to organize the calculation in a cleaner way. We therefore separate terms proportional to $C_F$ and $N_C$ and eventually check gauge-invariance and IR-safety separately.
- 
-We now move on to the case of real radiation. Focusing on the $qg$ fragmentation channel, there can only be emission of gluons. Hence, real NLO corrections in the twist-3 case are simply obtained by adding gluon lines to LO twist-3 fragmentation diagrams. Again, for intrinsic and kinematical contributions, the graphs are identical to the leading twist case in the $q\to q$ channel. When it comes to dynamical twist-3, the relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}.
+
+We now move on to the case of real radiation. Similarly to the unpolarized case, at NLO more partonic channels become available. In fact, at NLO not only the $qg$ fragmentation channel contributes, but also $q\bar{q}$ and $gg$ fragmentation channels, in principle. The latter, actually, only contributes if the outgoing hadron is polarized, which is not the case here. Hence, for our observable of interest we only need the $qg$ and $q\bar{q}$ channels.
+
+Focusing on the $qg$ fragmentation channel, there can only be emission of gluons. Hence, real NLO corrections in the twist-3 case are simply obtained by adding gluon lines to LO twist-3 fragmentation diagrams. Again, for intrinsic and kinematical contributions, the graphs are identical to the leading twist case in the $q\to q$ channel. When it comes to dynamical twist-3, the relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}.
 \begin{figure}
     \centering
     \includegraphics[width=0.99\linewidth]{fig/RealNLOTw3q2qg.png}
-    \caption{Real diagrams contributing to the NLO dynamical twist-3 $qg$ fragmentation channel. Each of these diagrams interferes with the two leading-twist real $q \to q$ NLO corrections in Fig.~\ref{fig:Real NLO tw2}.}
+    \caption{Real diagrams contributing to the NLO dynamical twist-3 fragmentation process. (Top row) $qg$ fragmentation channel. Each of these diagrams interferes with the two leading-twist real $q \to q$ NLO corrections in Fig.~\ref{fig:Real NLO tw2}. (Bottom row) $q\bar{q}$ fragmentation channel. Each of these diagrams interferes with the two leading-twist real $q \to g$ NLO corrections in Fig.~\ref{fig:Real NLO tw2}}
     \label{fig:Real NLO tw3}
 \end{figure}
 Here, we employ the same phase-space integration techniques used in the unpolarized case. It is important to point out that the hadronic tensor stemming from these diagrams is not gauge invariant. Interestingly, the fact that real NLO corrections at sub-leading twist are $\kappa$-dependent has already been observed in the literature \cite{rein2025, Gamberg_2019}. We observe that gauge invariance is restored after combing all twist-3 contributions through EOM and LIR relations, once again proving the importance of these operator identities within this formalism. In the typical leading-twist case, adding virtual and real corrections leads to the well known cancellation of $1/\epsilon^2$ poles. Not surprisingly, we observe this cancellation also at the twist-3 level, after application of EOM and LIR relations.
 
-We are now left with soft and collinear singularities that can be absorbed into renormalized PDFs and FFs. It turns out that the $\overline{\text{MS}}$-renormalization of chiral-odd twist-3 fragmentation functions is significantly more involved compared to the one given by the usual DGLAP splitting kernels. The evolution is described by XX coupled differential equations, mixing different twist-3 contributions \cite{Ma_2017}. The cancellation of $1/\epsilon$ poles in our calculation matches exactly with the evolution presented in the literature, with the appropriate change of conventions between hadronic matrix elements and variables.
+When it come to the $q\bar{q}$ case, real emission of quarks is taken into account. The relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3 qqbar}. We observe that the hadronic tensor is $\kappa$-gauge invariant and electromagnetic gauge invariant, since it is the only contribution in this channel. It also $1/\epsilon^2$ poles free, in agreement with the fact that there are no virtual corrections to cancel these double poles emerging from the phase space integration. In this sense, the $q\bar{q}$ channel is significantly simpler compared to the $qg$ one and we regard it as a "stand-alone" channel. This is particularly useful when it comes to renormalization, as we will see in the next section. If the IR behaviour of this channel is in agreement with the evolution equations of the relevant fragmentation functions, then we regard it as a strong clue that our calculation is consistent.
+
+Once all the terms are added and combined through the EoMR, we obtain gauge invariant partonic cross sections, free of $1/\epsilon^2$ poles and exhibiting electromagnetic gauge invariance for both channels. We are now left with soft and collinear singularities that can be absorbed, as standard, into renormalized PDFs and FFs. It turns out that the $\overline{\text{MS}}$-renormalization of chiral-odd twist-3 fragmentation functions is significantly more involved compared to the one given by the usual leading-twist DGLAP splitting kernels. The evolution is described by a set of coupled integro-differential equations, mixing different twist-3 contributions, and it has been derived in Ref. \cite{Ma_2017}. Crucially, we observe that the collinear singularities emerging from our NLO calculation match exactly with these evolution equations, with the appropriate change of conventions between hadronic matrix elements and variables. It is also very relevant to point out that one could wonder whether the EoMR and LIR relations derived at LO would still hold after renormalization at NLO. In Ref. \cite{Ma_2017} they numerically verified that this is indeed the case, at least for the chiral-odd twist-3 FFs, which is a highly non-trivial result. This means that the twist-3 $\overline{\text{MS}}$-subtraction can be, in principle, performed either \textit{before} or \textit{after} the application of the EoMR.
+
 
 \subsection{Results}
 
