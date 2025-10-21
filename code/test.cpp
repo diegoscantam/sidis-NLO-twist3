@@ -554,14 +554,14 @@ double AuxF_UT4vegas(double *X, size_t dim, void *params){
     double softqg_del1mwdel1mv, softqg_del1mw, softqg_del1mv, softqg;
     double softqbarq_del1mwdel1mv, softqbarq_del1mw, softqbarq_del1mv, softqbarq;
 
-    // Model parameters, greater than 2 though...
+    // Model parameters
   
-    double  au = 2.1;
-    double  ad = 2.1;
-    double  bu = 2.2;
-    double  bd = 2.2;
+    double  au = 1.1;
+    double  ad = 1.1;
+    double  bu = 1.5;
+    double  bd = 1.7;
     double  cu = 1.4;
-    double  cd = 2.3;
+    double  cd = 1.3;
     double  Nu = 1.;
     double  Nd = 1.;
 
@@ -697,16 +697,14 @@ double F_UUT(double xB, double zh, double mu, double Q, const PDF* f1, const PDF
         double xu[2] = {1, 1};
         
 
-
-
-        // GSL MONTE CARLO INTEGRATION
-        // Modify only calls variable if needed!
-        const gsl_rng_type *T;
-        gsl_rng *r;
-
+        // Function to integrate. Modify only calls variable if needed!
         gsl_monte_function G = {&AuxF_UUT4vegas,dim,&myparams};
 
         size_t calls = 10000;
+
+        // GSL MONTE CARLO INTEGRATION
+        const gsl_rng_type *T;
+        gsl_rng *r;
 
         gsl_rng_env_setup ();
 
@@ -786,14 +784,15 @@ double F_UUL(double xB, double zh, double mu, double Q, const PDF* f1, const PDF
 
 
 
-    // GSL MONTE CARLO INTEGRATION
+    
     // Modify only calls variable if needed!
-    const gsl_rng_type *T;
-    gsl_rng *r;
-
     gsl_monte_function G = {&AuxF_UUL4vegas,dim,&myparams};
 
     size_t calls = 10000;
+
+    // GSL MONTE CARLO INTEGRATION
+    const gsl_rng_type *T;
+    gsl_rng *r;
 
     gsl_rng_env_setup ();
 
@@ -881,14 +880,15 @@ double F_UT(double xB, double zh, double mu,double Q, const PDF* h1, const PDF* 
         double xl[3] = {xB, zh, 0.};
         double xu[3] = {1, 1, 1};
 
-        // GSL MONTE CARLO INTEGRATION
+        
         // Modify only calls variable if needed!
-        const gsl_rng_type *T;
-        gsl_rng *r;
-
         gsl_monte_function G = {&AuxF_UT4vegas,dim,&myparams};
 
         size_t calls = 10000;
+
+        // GSL MONTE CARLO INTEGRATION
+        const gsl_rng_type *T;
+        gsl_rng *r;
 
         gsl_rng_env_setup ();
 
@@ -1044,16 +1044,19 @@ int main(){
    
 
     // Import f1 PDF
-    const PDF* f1 = LHAPDF::mkPDF("JAM20-SIDIS_PDF_proton_nlo", 0); // 0 is the member number
+    const PDF* f1 = LHAPDF::mkPDF("MSTW2008lo68cl", 0); // 0 is the member number
+    const PDF* f1nlo = LHAPDF::mkPDF("MSTW2008nlo68cl", 0); // 0 is the member number
 
     // Import h1 PDF
     const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo", 0); // 0 is the member number
     
-    // Import D1 FF (pi+ ??)
+    // Import D1 FF (pi+)
     const PDF* D1p = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
+    const PDF* D1pnlo = LHAPDF::mkPDF("NNFF10_PIp_nlo", 0); // 0 is the member number
 
     // Import D1 FF (pi-)
     const PDF* D1m = LHAPDF::mkPDF("NNFF10_PIm_lo", 0); // 0 is the member number
+    const PDF* D1mnlo = LHAPDF::mkPDF("NNFF10_PIm_nlo", 0); // 0 is the member number
 
     // Import H tilde FF (pi+) (later on changed to pi- via C conjugation if needed)
     const PDF* Ht = LHAPDF::mkPDF("JAM22-Htilde_pion_lo", 0); // 0 is the member number
@@ -1092,8 +1095,8 @@ int main(){
     z_sample.push_back(0.9);
 
     which_pion = +1;
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"AUTz_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,1,1,"AUTz_NLO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1pnlo,h1,Ht,1,1,"out/AUTz_NLO_pp.txt");
 
     x_sample.clear();
     z_sample.clear();
@@ -1119,8 +1122,8 @@ int main(){
     x_sample.push_back(0.5);
 
     which_pion = +1;
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"AUTx_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,1,1,"AUTx_NLO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1p,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1pnlo,h1,Ht,1,1,"out/AUTx_NLO_pp.txt");
 
     x_sample.clear();
     z_sample.clear();
@@ -1152,8 +1155,8 @@ int main(){
     z_sample.push_back(0.9);
 
     which_pion = -1;
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"AUTz_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,1,1,"AUTz_NLO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1mnlo,h1,Ht,1,1,"out/AUTz_NLO_pm.txt");
 
     x_sample.clear();
     z_sample.clear();
@@ -1179,8 +1182,8 @@ int main(){
     x_sample.push_back(0.5);
 
     which_pion = -1;
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"AUTx_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,1,1,"AUTx_NLO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1m,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1mnlo,h1,Ht,1,1,"out/AUTx_NLO_pm.txt");
 
     x_sample.clear();
     z_sample.clear();
