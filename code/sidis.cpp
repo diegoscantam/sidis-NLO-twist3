@@ -1130,8 +1130,8 @@ int main(){
 
     // Import f1 PDF 
     // Do they use JAM20-SIDIS_PDF_proton_nlo? For both orders?
-    const PDF* f1 = LHAPDF::mkPDF("MSTW2008lo68cl", 0); // 0 is the member number
-    const PDF* f1nlo = LHAPDF::mkPDF("MSTW2008nlo68cl", 0); // 0 is the member number
+    const PDF* f1 = LHAPDF::mkPDF("JAM20-SIDIS_PDF_proton_nlo", 0); // 0 is the member number
+    const PDF* f1nlo = LHAPDF::mkPDF("JAM20-SIDIS_PDF_proton_nlo", 0); // 0 is the member number
 
     // Import h1 PDF
     const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo", 0); // 0 is the member number
