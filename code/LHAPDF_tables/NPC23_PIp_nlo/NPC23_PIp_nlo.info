@@ -1,0 +1,24 @@
+ SetDesc: 'π^+ FF fit at NLO;This set has 127 member PDFs. mem=0 --> central value; mem=1-126 --> eigenvector sets 68%'
+ SetIndex: 2070000 
+ Authors: Jun Gao, ChongYang Liu, XiaoMin Shen, Hongxi Xing, Yuxiang Zhao
+ Reference: arXiv:2401.02781, 2407.04422
+ Format: lhagrid1
+ DataVersion: 1
+ NumMembers:         127
+ Particle:          211
+ Flavors: [ -5, -4, -3, -2, -1, 21,  1,  2,  3,  4,  5]
+ OrderQCD:           1
+ FlavorScheme: fixed
+ NumFlavors:            5
+ ErrorType: hessian
+ XMin:   0.003
+ XMax:   1.0
+ QMin:   4.0
+ QMax:   4000.0
+ Extrapolator: nearest
+ AlphaS_OrderQCD:           1
+ AlphaS_Type: ipol
+ MZ:  91.188
+ AlphaS_MZ:  0.118
+ AlphaS_Qs: [   4.00000E+00,    5.00000E+00,    5.67086E+00,    6.34173E+00,    7.27420E+00,    8.20668E+00,    9.53032E+00,    1.08539E+01,    1.27761E+01,    1.46983E+01,    1.75595E+01,    2.04208E+01,    2.47956E+01,    2.91705E+01,    3.60571E+01,    4.29437E+01,    5.41320E+01,    6.53202E+01,    8.41303E+01,    1.02940E+02,    1.35762E+02,    1.68583E+02,    2.28209E+02,    2.87835E+02,    4.01000E+02,    5.14165E+02,    7.39386E+02,    9.64607E+02,    1.43654E+03,    1.90847E+03,    2.95424E+03,    4.00000E+03 ]
+ AlphaS_Vals: [   2.26548E-01,    2.12300E-01,    2.05052E-01,    1.99033E-01,    1.92130E-01,    1.86457E-01,    1.79887E-01,    1.74550E-01,    1.68304E-01,    1.63291E-01,    1.57356E-01,    1.52656E-01,    1.47021E-01,    1.42622E-01,    1.37274E-01,    1.33164E-01,    1.28092E-01,    1.24259E-01,    1.19451E-01,    1.15882E-01,    1.11327E-01,    1.08011E-01,    1.03696E-01,    1.00620E-01,    9.65345E-02,    9.36866E-02,    8.98192E-02,    8.71882E-02,    8.35278E-02,    8.11022E-02,    7.76383E-02,    7.54069E-02 ]
