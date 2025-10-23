@@ -681,7 +681,7 @@ double AuxF_UT4vegas(double *X, size_t dim, void *params){
 
     result += asd2pi* CF/(1.-zh)/(1. - w) *2.*w*(-1. + std::log(Q2/mu/mu)  - std::log(w) )*softqg_del1mv/w;
     result -= asd2pi* CF/(1.-zh)/(1. - w) *2.*(-1. + std::log(Q2/mu/mu) )*softqg_del1mwdel1mv;
-    result -= asd2pi* CF/(1.-zh)*(-std::log(1.-xB)/1.-xB) *2.*(-1. + std::log(Q2/mu/mu) )*softqg_del1mwdel1mv;
+    result -= asd2pi* CF/(1.-zh)*(-std::log(1.-xB)/(1.-xB)) *2.*(-1. + std::log(Q2/mu/mu) )*softqg_del1mwdel1mv;
     result += asd2pi* CF/(1.-zh)*(std::log(1.-w)/(1. - w) )*2.*w*softqg_del1mv/w;
     result -= asd2pi* CF/(1.-zh)*(std::log(1.-w)/(1. - w) )*2.*softqg_del1mwdel1mv;
     result -= asd2pi* CF/(1.-zh)*(-0.5*std::log(1.-xB)*std::log(1.-xB)/(1.-xB) )*2.*softqg_del1mwdel1mv;
