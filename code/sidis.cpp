@@ -60,6 +60,7 @@ Once we have done that (might not be necessary for everyone!), we can compile an
 #include <filesystem>
 #include "LHAPDF/LHAPDF.h"
 #include "LHAPDF/GridPDF.h"
+#include <LHAPDF/PDFSet.h>
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_monte.h>
 #include <gsl/gsl_monte_vegas.h>
@@ -188,9 +189,7 @@ void test_h1(std::vector<double> x_sample, double mu, const PDF* h1,std::string 
     }
     // Close the file
     ofile.close();
-   
-
-
+    
 }
 
 
@@ -256,6 +255,34 @@ void test_Ht(std::vector<double> z_sample, double mu, const PDF* Ht,std::string 
 
 }
 
+
+/**
+ * @brief writes to file h1(x) replicas for testing purposes
+ * @param z_sample Arguments of Ht
+ * @param mu Factorization scale 
+ */
+void test_Ht_0000(std::vector<double> z_sample, double mu){
+    
+    double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result, resultp, resultm ;
+
+    mu2 = mu*mu;
+    for (int i = 0 ; i<= 465;i++){
+        std::string fname_p;
+        std::stringstream out_p;
+
+        out_p << "out/Ht_test" <<  i << ".txt";
+        fname_p = out_p.str();
+        // Import h1 PDF
+        const PDF* Ht = LHAPDF::mkPDF("JAM22-Htilde_pion_lo",i); // i is the member number
+
+        test_Ht(z_sample, mu, Ht,fname_p);
+
+    }
+    
+    
+}
+
+
 /**
  * @brief Returns the weigthed sum over flavors q qbar of f1(x) D1(z), used for unpolarized q2q channel
  * @param x Argument of f1
@@ -315,8 +342,11 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
         }
         if(which_pion == -1){
             // Return weigthed sum
-            resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z)+(xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
+            resultA =  ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z)+(xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
             resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1db/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z)+(xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
+            //resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1d/z)+(xf1ub/x)*(zD1db/z)+(xf1c/x)*(zD1s/z)+(xf1cb/x)*(zD1c/z) );
+            //resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1u/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z)+(xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
+            
     
             return resultA+resultB;
         }
@@ -1346,14 +1376,18 @@ int main(int argc, char** argv){
     // Declare the PDFs/FFs that we are going to use as LHAPDF::PDF objects
 
     // Import f1 PDF
-    const PDF* f1 = LHAPDF::mkPDF("JAM22-PDF_proton_nlo", 0); // 0 is the member number
+    const PDF* f1 = LHAPDF::mkPDF("JAM22-PDF_proton_nlo",0); // 0 is the member number
+
+    //const PDFSet f1set = LHAPDF::mkPDF("JAM22-PDF_proton_nlo", 0)
 
     // Import h1 PDF
     const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",0); // 0 is the member number
     
     // Import D1 FF
-    is_JAM_D1 = +1;
+    is_JAM_D1 = 1;
     const PDF* D1 = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member number
+    //const PDF* D1 = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
+    //const PDF* D1m = LHAPDF::mkPDF("NNFF10_PIm_lo", 0); // 0 is the member number
     
     // Import H tilde FF (pi+)
     const PDF* Ht = LHAPDF::mkPDF("JAM22-Htilde_pion_lo", 0); // 0 is the member number
@@ -1363,192 +1397,129 @@ int main(int argc, char** argv){
 
     // Declare useful variables
     double avgQ2, avgzh,avgxB, avgy;
+    double min,max;
+    int Npoints;
     std::vector<double> x_sample, z_sample;
     
     ////////////////////////////////////////////////////
     // Test Ht
     avgQ2 = 4;
-    z_sample.push_back(0.1);
-    z_sample.push_back(0.2);
-    z_sample.push_back(0.3);
-    z_sample.push_back(0.4);
-    z_sample.push_back(0.5);
-    z_sample.push_back(0.6);
-    z_sample.push_back(0.7);
-    z_sample.push_back(0.8);
-    z_sample.push_back(0.9);
-    test_Ht(z_sample, sqrt(avgQ2), Ht,"out/Ht_test.txt");
-    z_sample.clear();
+    min = 0.05;
+    max = 0.95;
+    Npoints = 10;
+    
+    //test_Ht_0000(fill_xz_vector(min,max,Npoints), sqrt(avgQ2));
+    
 
     ////////////////////////////////////////////////////
     // Test h1
     avgQ2 = 4;
-    x_sample.push_back(0.01);
-    x_sample.push_back(0.05);
-    x_sample.push_back(0.1);
-    x_sample.push_back(0.15);
-    x_sample.push_back(0.2);
-    x_sample.push_back(0.25);
-    x_sample.push_back(0.3);
-    x_sample.push_back(0.35);
-    x_sample.push_back(0.4);
-    x_sample.push_back(0.45);
-    x_sample.push_back(0.5);
-    x_sample.push_back(0.55);
-    x_sample.push_back(0.6);
-    x_sample.push_back(0.65);
-    x_sample.push_back(0.7);
-    x_sample.push_back(0.75);
-    x_sample.push_back(0.8);
-    x_sample.push_back(0.85);
-    x_sample.push_back(0.9);
-    x_sample.push_back(0.95);
+    min = 0.01;
+    max = 0.95;
+    Npoints = 100;
+
+    // Import h1 PDF
+    const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
-    test_h1(x_sample, sqrt(avgQ2),h1,"out/h1_test_my0000.txt");
-    x_sample.clear();
+    test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1orig0000,"out/h1_test_0000original.txt");
+    
 
 
-
-    
-    
     ////////////////////////////////////////////////////
     // HERMES 9066. pi+, z dependence
     // Average values obtained from 9066 data set
     avgQ2 = 2.445;
-    avgxB = 0.096999;
-    avgy = 0.535; 
+    avgxB = 0.09699999999999999;
+    avgy =  0.535;
    
-    // Here we fill the vectors with the kinematical points we want to evaluate
-    x_sample.push_back(avgxB);
-    z_sample.push_back(0.1);
-    z_sample.push_back(0.15);
-    z_sample.push_back(0.2);
-    z_sample.push_back(0.25);
-    z_sample.push_back(0.3);
-    z_sample.push_back(0.35);
-    z_sample.push_back(0.4);
-    z_sample.push_back(0.45);
-    z_sample.push_back(0.5);
-    z_sample.push_back(0.55);
-    z_sample.push_back(0.6);
-    z_sample.push_back(0.65);
-    z_sample.push_back(0.7);
-    z_sample.push_back(0.75);
-    z_sample.push_back(0.8);
-    z_sample.push_back(0.85);
-    z_sample.push_back(0.9);
+    min = 0.1;
+    max = 0.7;
+    Npoints = 10;
 
     which_pion = +1; // It is a pi+
 
+    z_sample = fill_xz_vector(min,max,Npoints);
+    x_sample.push_back(avgxB);
+
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pp);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
-    //Reset the vectors (otherwise pushback would just add more points to the previous ones, at then end of the already existing vector)
-    x_sample.clear();
     z_sample.clear();
+    x_sample.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
     // Average values obtained from 9055 data set
-    avgQ2 = 3.038;
+    avgQ2 = 3.0383333333333336;
     avgzh = 0.3715;
-    avgy = 0.4889999; 
+    avgy =  0.48899999999999993;
+
+    min = 0.01;
+    max = 0.4;
+    Npoints = 10;
     
    // Here we fill the vectors with the kinematical points we want to evaluate
+    x_sample = fill_xz_vector(min,max,Npoints);
     z_sample.push_back(avgzh);
 
-    x_sample.push_back(0.05);
-    x_sample.push_back(0.1);
-    x_sample.push_back(0.15);
-    x_sample.push_back(0.2);
-    x_sample.push_back(0.25);
-    x_sample.push_back(0.3);
-    x_sample.push_back(0.35);
-    x_sample.push_back(0.4);
-    x_sample.push_back(0.45);
-    x_sample.push_back(0.5);
 
     which_pion = +1; // It is a pi+
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pp);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
-    //Reset the vectors (otherwise pushback would just add more points to the previous ones, at then end of the already existing vector)
-    x_sample.clear();
     z_sample.clear();
+    x_sample.clear();
     
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
     // Average values obtained from 10032 data set
     avgQ2 = 2.36;
-    avgxB = 0.0936666;
-    avgy = 0.536833333; 
-    
+    avgxB = 0.09366666666666666;
+    avgy =  0.5368333333333334;
 
-    // Here we fill the vectors with the kinematical points we want to evaluate
+    min = 0.1;
+    max = 0.7;
+    Npoints = 10;
+
+    z_sample = fill_xz_vector(min,max,Npoints);
     x_sample.push_back(avgxB);
-    z_sample.push_back(0.1);
-    z_sample.push_back(0.15);
-    z_sample.push_back(0.2);
-    z_sample.push_back(0.25);
-    z_sample.push_back(0.3);
-    z_sample.push_back(0.35);
-    z_sample.push_back(0.4);
-    z_sample.push_back(0.45);
-    z_sample.push_back(0.5);
-    z_sample.push_back(0.55);
-    z_sample.push_back(0.6);
-    z_sample.push_back(0.65);
-    z_sample.push_back(0.7);
-    z_sample.push_back(0.75);
-    z_sample.push_back(0.8);
-    z_sample.push_back(0.85);
-    z_sample.push_back(0.9);
+    
 
     which_pion = -1; // It is a pi-
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pm);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
-    //Reset the vectors (otherwise pushback would just add more points to the previous ones, at then end of the already existing vector)
-    x_sample.clear();
     z_sample.clear();
-    
+    x_sample.clear();
+
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
     // Average values obtained from 10021 data set
-    avgQ2 = 3.0216666666666665;
-    avgzh= 0.36283333333;
-    avgy = 0.4876667;
+    avgQ2 = 3.021666666666667;
+    avgzh=  0.36283333333333334;
+    avgy =  0.4876666666666667;
 
-    // Here we fill the vectors with the kinematical points we want to evaluate
+    min = 0.01;
+    max = 0.4;
+    Npoints = 10;
+
+
+    x_sample = fill_xz_vector(min,max,Npoints);
     z_sample.push_back(avgzh);
-
-    x_sample.push_back(0.05);
-    x_sample.push_back(0.1);
-    x_sample.push_back(0.15);
-    x_sample.push_back(0.2);
-    x_sample.push_back(0.25);
-    x_sample.push_back(0.3);
-    x_sample.push_back(0.35);
-    x_sample.push_back(0.4);
-    x_sample.push_back(0.45);
-    x_sample.push_back(0.5);
 
     which_pion = -1; // It is a pi-
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pm);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pm);
 
-    //Reset the vectors (otherwise pushback would just add more points to the previous ones, at then end of the already existing vector)
-    x_sample.clear();
     z_sample.clear();
-    
-
+    x_sample.clear();
     
 
 
