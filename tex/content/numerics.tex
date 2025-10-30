@@ -1,42 +1,43 @@
 
-\chapter{Numerical analysis}
+\chapter{Phenomenological and numerical analysis}
 We saw that factorization holds also at NLO .... bla bla\\
 It is now interesting to numerically explore our analytical formulae to see if and how the NLO corrections affect the theoretical prediction of the spin asymmetry $A_{UT}^{\sin\phi_S}$. 
 
-We stress the fact that the quantitative analysis of this SSA is quite a recent development in the field of QCD hadron structure and phenomenology. In fact, measurements of the $A_{UT}^{\sin\phi_S}$ asymmetry in SIDIS have become available from the HERMES collaboration in 2020 \cite{hermescollaboration2020azimuthalsingledoublespinasymmetries}. With this set of recent data, the JAM collaboration managed to obtain the first ever information about the quark-gluon-quark fragmentation function $\tilde{H}(z) $ within a global QCD analysis \cite{Gamberg2022Htilde}. We are now in a position
+We stress the fact that the quantitative analysis of the $A_{UT}^{\sin\phi_S}$ SSA is quite a recent development in the field of QCD hadron structure and phenomenology. In fact, measurements of the $A_{UT}^{\sin\phi_S}$ asymmetry in SIDIS have become available from the HERMES collaboration only in 2020 \cite{hermescollaboration2020azimuthalsingledoublespinasymmetries}. With this set of recent data, the Jefferson Lab Angular Momentum (JAM) collaboration managed to obtain the first ever information about the quark-gluon-quark fragmentation function $\tilde{H}(z) $ within a global QCD analysis \cite{Gamberg2022Htilde}. In the same work, transversity has been extracted including lattice QCD data and proper constraints regarding the Soffer bound, giving the smallest uncertainty on the function so far. With these ingredients, we are now in a position to perform some order of magnitude estimates of the NLO corrections we calculated. We anticipate the fact that our curves cannot be interpreted as real theoretical predictions, since the twist-3 fragmentation functions $\Im\hat{H}_{FU}^{qg}(z,\zeta)$ and $\Im\hat{H}_{FU}^{\bar{q}q}(z,\zeta)$ are essentially unknown (besides symmetry and few other constraints).
+
+Before dealing with the NLO corrections to the asymmetry, it is useful to visualize the most recent exctractions for both the transversity PDF $h_1^q(x)$ and the quark-gluon-quark fragmentation function $\tilde{H}^q(z)$.  As shown in Fig.XXX, transversity is extracted BLA BLA. More interestingly, the $\tilde{H}(z)$ fragmentation function turns out to behave similarly to the first moment of the Collins FF $H_1^{\perp(1)}(z)$. This is not entirely surprising since the two functions are related to each other via an EoMR (Eq.~\eqref{eq:eomr H}) and they are essentially derived from the same underlying quark-gluon-quark correlator \cite{kanazawa_operator_2016}. In \cite{Gamberg2022Htilde}, they extracted favored $\tilde{H}^{\rm fav}$ and unfavored $\tilde{H}^{\rm unf}$ fragmentation functions. These two extractions differ by a sign and describe effects roughly equal in size. By favored hadronization we simply mean the case of a positive quark decaying into a positive pion, or a negative quark into a negative pion. Explicitly, it is $\tilde{H}^{\rm fav}=\tilde{H}^{u\to \pi^+}=\tilde{H}^{\bar{d}\to \pi^+}=\tilde{H}^{\bar{u}\to \pi^-}=\tilde{H}^{d\to \pi^-}$. Similarly, the unfavored decay channel refers to a "sign flip" between the outgoing quark and the detected hadron, i.e. $\tilde{H}^{\rm unf}=\tilde{H}^{u\to \pi^-}=\tilde{H}^{\bar{d}\to \pi^-}=\tilde{H}^{\bar{u}\to \pi^+}=\tilde{H}^{d\to \pi^+}$. Very interestingly, unfavored fragmentation seems to be the dominant effect between the two when it comes to the $A_{UT}^{\sin\phi_S}$ asymmetry, as clearly showcased later.
+
+ADD FIGURE h1 Ht\\
+
+In order to compare the $A_{UT}^{\sin\phi_S}$ theoretical prediction against 3D-binned HERMES data we need to point several important aspects. The first being the fact that we are interested in an observable which is integrated over $P_{h\perp}$, the transverse momentum of the detected hadron. As seen in Chap.~\ref{chap:LO}, the only term in the structure function $F_{UT}^{\sin\phi_S}$ that survives the integration over the transverse momentum is the one coupling the transversity PDF $h_1(x)$ and the FF $\tilde{H}(z)$. Hence, in order to be directly sensitive to $\tilde{H}(z)$ in an experiment, one should in principle integrate over all possible transverse hadronic momenta. This could not be done experimentally at HERMES, however. For this precise reason, we make the assumption that taking only the $x_B$ and $z_h$ projections of the $A_{UT}^{\sin\phi_S}$ HERMES data is a reasonable approximation \cite{Gamberg2022Htilde}. In practice, we set all the kinematical variables (except the projected one) to their experimental average, easily found in Table 10 Ref.~\cite{hermescollaboration2020azimuthalsingledoublespinasymmetries}. Another important point concerns the (de)polarization factors entering the spin asymmetry. Recalling Chap.~\ref{chap:LO},  the asymmetry can be written as CHECK
+\begin{equation}
+    A_{UT}^{\sin\phi_S} = \sqrt{2\varepsilon(1+\varepsilon)}\frac{\int d^2P_{h\perp}\,F_{UT}^{\sin\phi_S}(x_B,z_h,P_{h\perp},Q^2)}{\int d^2P_{h\perp}\, F_{UU}(x_B,z_h,P_{h\perp},Q^2)},
+\end{equation}
+where the $ \sqrt{2\varepsilon(1+\varepsilon)}$ term is the depolarization factor for this polarization case. Conveniently, HERMES asymmetry data is presented both including or excluding this factor. For simplicity, we use the scaled data in which the polarization factor is divided away. Hence, the observable we are going to numerically study is simply given by the ratio of the ($P_{h\perp}$-integrated) structure functions, i.e.
+\begin{equation}
+    \left(A_{UT}^{\sin\phi_S}\right)_{\rm exp} =\frac{\int d^2P_{h\perp}\,F_{UT}^{\sin\phi_S}(x_B,z_h,P_{h\perp},Q^2)}{\int d^2P_{h\perp}\, F_{UU}(x_B,z_h,P_{h\perp},Q^2)}.
+\end{equation}
+We stress the fact that the unpolarized structure function at LO is simply given by $F_{UU}=F_{UU,T}$, meaning only transverse photons contribute. However, at NLO more partonic channels become available and therefore the asymmetry denominator becomes $F_{UU}=F_{UU,T}+\varepsilon F_{UU,L}$.\\
+In order to perform a NLO exploratory study, we need one last ingredient: input fragmentation functions $\Im \hat{H}^{qg}_{FU}(z,\zeta)$ and  $\Im \hat{H}^{\bar{q}q}_{FU}(z,\zeta)$ for all flavors $q$. Since these functions are currently unknown, a real prediction is clearly not possible. We can, though, build some models respecting the currently known constraints and plot the resulting curves for different choices of parameters. A typical parametrization for collinear PDFs and FFs is given by the formula \cite{Gamberg2022Htilde}
+\begin{equation}
+    P^q(x) \equiv \frac{N^q\, x^{a_q} (1-x)^{b_q}\left( 1+\gamma^q x^{\tilde{a}_q}(1-x)^{\tilde{b}_q}\right)}{\mathbb{B}(a_q+2,b_q+1) + \gamma^q \mathbb{B}(a_q+\tilde{a}_q+2 , b_q + \tilde{b}_q +1)},
+\end{equation} 
+where $\mathbb{B}(a,b)$ is the Euler beta function. Based on this, we construct some simple models for the fragmentation functions of interest. For simplicity, we set to zero the $\gamma,\tilde{a},\tilde{b}$ parameters, only allowing others to vary. We set
+\begin{equation}
+    \begin{aligned}
+        \Im \hat{H}^{qg}_{FU}(z,\zeta) &= \frac{\tilde{H}(z)}{2 z} \frac{\zeta^{a_q} (1-\zeta)^{b_q}}{\mathbb{B}(1+a_q,b_q)},\\
+        \Im \hat{H}^{\bar{q}q}_{FU}(z,\zeta) &= \frac{\tilde{H}(z)}{2 z} \frac{N^q \,\zeta^{c_q} (1-\zeta)^{c_q}}{\mathbb{B}(1+c_q,1+c_q)}.
+    \end{aligned}
+\end{equation}
+It is important to note that in the $qg$ case, our model is guaranteed to satisfy the EoM relation $\tilde{H}(z)/2z=\int\dd\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)/(1-\zeta)$ by construction. This is the case also for the boundary conditions presented in Chap.~\ref{chap:matrixelements}, such as $\Im \hat{H}^{qg}_{FU}(z,0)=\Im \hat{H}^{qg}_{FU}(z,1)= \partial_\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)|_{\zeta\to 0}=\partial_\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)|_{\zeta\to 1}=0$, provided we choose appropriate model parameters. When it comes to the $\bar{q}q$ correlator, it is completely unconstrained. We choose however to model it such that the $z$-dependence precisely matches the quark-gluon-quark FF $\tilde{H}(z)$. After all, these twist-3 objects are all interconnected to one another, and we regard it as a reasonable and very simple assumption. We would expect the $\bar{q}q$ correlator to be symmetric(??) under the exchange of quarks and antiquarks, hence why we set the exponents of $\zeta$ and $(1-\zeta)$ to be equal for a given $q$. 
+In order to compare LO and NLO $x$ and $z$ projections, we generate various so called scenarios. We define a scenario as one specific set of model parameters including both fragmentation functions. Meaning, the $k$-th scenario is described by the set $S_k=\{a_u,a_{\bar{u}},a_d,a_{\bar{d}},b_u,b_{\bar{u}},\dots \}$.
 
 
-It is interesting to perform a numerical analysis of the leading-twist NLO cross section presented so far. In order to do so, one needs to access the relevant PDFs and FFs that show up in the formulae. When it comes to unpolarized PDFs, we use the MSTW 2008 PDF set presented in \cite{Martin2009}. For unpolarized fragmentation, we employ the DSS FF set \cite{deFlorian2007}. In Fig.~\ref{fig:f1D1}, curves for $f_1(x)$ and $D_1(z)$ are presented, showcasing different flavors contributions.
-\begin{figure}
-    \centering
-    \subfigure[]{\centering
-                \includegraphics[width=0.45\linewidth]{fig/f1.pdf}
-    }
-    \hfill
-        \subfigure[]{\centering
-                    \includegraphics[width=0.45\linewidth]{fig/D1.pdf}
-    }
-    \caption{Leading-twist unpolarized $f_1$ PDF and $D_1$ FF as a function of $x_B$ and $z_h$, respectively. Different colors represent different flavors. The scale variation is supposed to give an idea on how much these distributions vary if evaluated at different scales.}
-    \label{fig:f1D1}
-\end{figure}
-It is also interesting to study the leading-twist, unpolarized, triple differential cross section $\dd \sigma/\dd x_B \dd y \dd z_h$ at NLO. A plot of this cross section as a function of the different kinematical variables is shown in Fig.~\ref{fig:plotNLOUUU}. We observe sizable NLO corrections to the LO cross section, especially at the edges of the phase space of the three kinematical variables. This is a common feature of NLO corrections in QCD.
-\begin{figure}
-    \centering
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(x).pdf}
-    }
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(y).pdf}
-    }
-    \subfigure[]{
-    \includegraphics[width=0.92\textwidth]{fig/sigmaUUU_NLO(z).pdf}
-    }
-    \caption{Unpolarized leading-twist cross section at LO and NLO accuracy as a function of $x_B$ (panel a), $y$ (panel b) and $z_h$ (panel c).}
-    \label{fig:plotNLOUUU}
-\end{figure} 
 
-Add pheno of transversity with jam3d. Add curves for asymmetry/polarized structure functions
-%cherednikova van der veken parton densities in quantum chromodynamics free pdf
+
+
+
+
+
 
 \clearpage
-

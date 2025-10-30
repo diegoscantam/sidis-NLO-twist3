@@ -40,7 +40,7 @@ Once we have done that (might not be necessary for everyone!), we can compile an
 
     g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I/MODIFYHEREYOURPATH/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
  
-    ./sidis
+    ./sidis 0
 
 */
 
@@ -72,7 +72,7 @@ using namespace LHAPDF;
 // Declare some global variables
 double Mpi = 0.1396; // GeV, pion mass
 int which_pion; // 1 for pi+, 0 for pi0, -1 for pi-. Modified in the main when needed!
-int is_JAM_D1; // +1 yes, 0 no
+int is_D1_pip_only; // +1 yes, 0 no
 int id; // file id, identifies the run with given model parameters, aka scenario
 double  au, ad, bu, bd, cu, cd, Nu, Nd;
 double pi = M_PI; // pi =  3.1415...
@@ -313,6 +313,7 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
     xf1bb = f1->xfxQ2(-5,x,mu2);
 
 
+    
     zD1u = D1->xfxQ2(2,z,mu2);
     zD1ub = D1->xfxQ2(-2,z,mu2);
     zD1d = D1->xfxQ2(1,z,mu2);
@@ -324,28 +325,36 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
     zD1b = D1->xfxQ2(5,z,mu2);
     zD1bb = D1->xfxQ2(-5,z,mu2);
 
-    if(is_JAM_D1 == 0){
+    if(is_D1_pip_only == 0){
         // Return weigthed sum
-        resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1u/z)+(xf1ub/x)*(zD1ub/z)+(xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z) );
-        resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1d/z)+ (xf1db/x)*(zD1db/z)+(xf1s/x)*(zD1s/z)+(xf1sb/x)*(zD1sb/z)+(xf1b/x)*(zD1b/z)+(xf1bb/x)*(zD1bb/z) );
+        resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1u/z)+(xf1ub/x)*(zD1ub/z));
+        resultA += ( pow((2./3.),2) )*(+ (xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z) +(xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z) );
+        
+        resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1d/z)+ (xf1db/x)*(zD1db/z)+(xf1s/x)*(zD1s/z)+(xf1sb/x)*(zD1sb/z));
+        resultB += ( pow((1./3.),2) )*( +(xf1b/x)*(zD1b/z)+(xf1bb/x)*(zD1bb/z) );
+    
     
         return resultA+resultB;
     }
 
-    if(is_JAM_D1 == 1){
+    if(is_D1_pip_only == 1){
         if(which_pion == +1){
             // Return weigthed sum
-            resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1u/z)+(xf1ub/x)*(zD1ub/z)+(xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z) );
-            resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1d/z)+ (xf1db/x)*(zD1db/z)+(xf1s/x)*(zD1s/z)+(xf1sb/x)*(zD1sb/z)+(xf1b/x)*(zD1b/z)+(xf1bb/x)*(zD1bb/z) );
-    
+            resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1u/z)+(xf1ub/x)*(zD1ub/z) );
+            resultA += ( pow((2./3.),2) )*( (xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z)+(xf1c/x)*(zD1c/z)+(xf1cb/x)*(zD1cb/z) );
+            
+            resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1d/z)+ (xf1db/x)*(zD1db/z)+(xf1s/x)*(zD1s/z)+(xf1sb/x)*(zD1sb/z) );
+            resultB += ( pow((1./3.),2) )*( +(xf1b/x)*(zD1b/z)+(xf1bb/x)*(zD1bb/z) );
+            
             return resultA+resultB;
         }
         if(which_pion == -1){
             // Return weigthed sum
-            resultA =  ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z)+(xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
-            resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1db/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z)+(xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
-            //resultA = ( pow((2./3.),2) )*( (xf1u/x)*(zD1d/z)+(xf1ub/x)*(zD1db/z)+(xf1c/x)*(zD1s/z)+(xf1cb/x)*(zD1c/z) );
-            //resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1u/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z)+(xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
+            resultA =  ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z) );
+            resultA +=  ( pow((2./3.),2) )*((xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
+            
+            resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1db/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z) );
+            resultB += ( pow((1./3.),2) )*( (xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
             
     
             return resultA+resultB;
@@ -357,7 +366,7 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
 
     }
     else{
-        std::cout << "is_JAM_D1 variable not correctly set! Exiting..." << std::endl;
+        std::cout << "is_D1_pip_only variable not correctly set! Exiting..." << std::endl;
         exit(1);
     }
 
@@ -436,7 +445,7 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
     zD1b = D1->xfxQ2(5,z,mu2);
     zD1bb = D1->xfxQ2(-5,z,mu2);
 
-    if(is_JAM_D1 == 0){
+    if(is_D1_pip_only == 0){
         // Return weigthed sum
         resultA = ( pow((2./3.),2) )*( (zD1u/z)+(zD1ub/z)+(zD1c/z)+(zD1cb/z) );
         resultB = ( pow((1./3.),2) )*( (zD1d/z)+ (zD1db/z)+(zD1s/z)+(zD1sb/z)+(zD1b/z)+(zD1bb/z) );
@@ -444,7 +453,7 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
         return (resultA+resultB)*xf1g/x;
 
     }
-    if(is_JAM_D1 == +1){
+    if(is_D1_pip_only == +1){
         // Return weigthed sum
         resultA = ( pow((2./3.),2) )*( (zD1u/z)+(zD1ub/z)+(zD1c/z)+(zD1cb/z) );
         resultB = ( pow((1./3.),2) )*( (zD1d/z)+ (zD1db/z)+(zD1s/z)+(zD1sb/z)+(zD1b/z)+(zD1bb/z) );
@@ -453,7 +462,7 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
         
     }
     else{
-        std::cout << "is_JAM_D1 variable not correctly set! Exiting..." << std::endl;
+        std::cout << "is_D1_pip_only variable not correctly set! Exiting..." << std::endl;
         exit(1);
     }
 
@@ -475,11 +484,14 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
     double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result, resultp, resultm ;
 
     mu2 = mu*mu;
+    mu2 = 4.;
 
     // Evaluate PDF & FF at x, z and mu. 
-    //WHAT ABOUT ANTIQURKS? Zero since h^qbar = 0
+   
     xh1u = h1->xfxQ2(2,x,mu2);
+    xh1ub = h1->xfxQ2(-2,x,mu2);
     xh1d = h1->xfxQ2(1,x,mu2);
+    xh1db = h1->xfxQ2(-1,x,mu2);
     zHtu = Ht->xfxQ2(2,z,mu2); // fav
     zHtub = Ht->xfxQ2(-2,z,mu2); //unfav
     zHtd = Ht->xfxQ2(1,z,mu2); //unfav
@@ -489,11 +501,11 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
 
     
     if(which_pion == +1){
-            result = ( pow((2./3.),2)  )*(xh1u/x)*(zHtu/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtd/z);
+            result = ( pow((2./3.),2)  )*( (xh1u/x)*(zHtu/z) +  (xh1ub/x)*(zHtub/z) ) + ( pow((1./3.),2) )*( (xh1d/x)*(zHtd/z) + (xh1db/x)*(zHtdb/z)  );
             return result;
     }
     else if(which_pion == -1){
-            result = ( pow((2./3.),2)  )*(xh1u/x)*(zHtub/z) + ( pow((1./3.),2) )*(xh1d/x)*(zHtdb/z);
+            result = ( pow((2./3.),2)  )*( (xh1u/x)*(zHtub/z) +  (xh1ub/x)*(zHtu/z)  ) + ( pow((1./3.),2) )*( (xh1d/x)*(zHtdb/z) + (xh1db/x)*(zHtd/z)  );
             return result;
     }
     else{ // pi0 not there yet
@@ -615,7 +627,6 @@ struct vegas_params_unpol {
         const LHAPDF::PDF* f1;
         const LHAPDF::PDF* D1;
 };
-
 
 
 /**
@@ -920,7 +931,6 @@ double AuxF_UT4vegas(double *X, size_t dim, void *params){
 
     return result;
     
-
 };
 
 
@@ -1376,16 +1386,21 @@ int main(int argc, char** argv){
     // Declare the PDFs/FFs that we are going to use as LHAPDF::PDF objects
 
     // Import f1 PDF
-    const PDF* f1 = LHAPDF::mkPDF("JAM22-PDF_proton_nlo",0); // 0 is the member number
+    const PDF* f1 = LHAPDF::mkPDF("CJ15lo",0); // 0 is the member number
+    const PDF* f1nlo = LHAPDF::mkPDF("JAM22-PDF_proton_nlo",0); // 0 is the member number
+    //const PDF* f1 = LHAPDF::mkPDF("MSTW2008lo68cl",0); // 0 is the member number
+
 
     //const PDFSet f1set = LHAPDF::mkPDF("JAM22-PDF_proton_nlo", 0)
 
     // Import h1 PDF
-    const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",0); // 0 is the member number
+    const PDF* h1 = LHAPDF::mkPDF("JAM23-transversity_proton_lo",0); // 0 is the member number
     
     // Import D1 FF
-    is_JAM_D1 = 1;
-    const PDF* D1 = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member number
+    is_D1_pip_only = 1;
+    const PDF* D1nlo = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member number
+    const PDF* D1 = LHAPDF::mkPDF("dsspipLO", 0); // 0 is the member number
+    
     //const PDF* D1 = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
     //const PDF* D1m = LHAPDF::mkPDF("NNFF10_PIm_lo", 0); // 0 is the member number
     
@@ -1419,21 +1434,27 @@ int main(int argc, char** argv){
     Npoints = 100;
 
     // Import h1 PDF
-    const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
+    //const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
-    test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1orig0000,"out/h1_test_0000original.txt");
+    //test_h1_0000(fill_xz_vector(min,max,Npoints), sqrt(avgQ2));
     
-
 
     ////////////////////////////////////////////////////
     // HERMES 9066. pi+, z dependence
-    // Average values obtained from 9066 data set
+    // Average values obtained from data subset
     avgQ2 = 2.445;
-    avgxB = 0.09699999999999999;
+    avgxB = 0.097;
     avgy =  0.535;
-   
+
+    // Average values obtained from HERMES paper
+    avgQ2 = 2.445;
+    avgxB = 0.095;
+    avgy =  0.544;
+
+
+
     min = 0.1;
-    max = 0.7;
+    max = 0.8;
     Npoints = 10;
 
     which_pion = +1; // It is a pi+
@@ -1443,17 +1464,21 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pp);
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
     z_sample.clear();
     x_sample.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
-    // Average values obtained from 9055 data set
-    avgQ2 = 3.0383333333333336;
+    // Average values obtained from data subset
+    avgQ2 = 3.03833;
     avgzh = 0.3715;
-    avgy =  0.48899999999999993;
+    avgy =  0.4889999;
+    // Average values obtained from HERMES paper
+    avgQ2 = 2.445;
+    avgzh = 0.362;
+    avgy =  0.544;
 
     min = 0.01;
     max = 0.4;
@@ -1468,20 +1493,25 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pp);
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
     z_sample.clear();
     x_sample.clear();
     
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
-    // Average values obtained from 10032 data set
-    avgQ2 = 2.36;
-    avgxB = 0.09366666666666666;
-    avgy =  0.5368333333333334;
+    // Average values obtained from data subset
+    avgQ2 = 2.36;// 2.35;//
+    avgxB = 0.093666;//0.093666667;//0.092;
+    avgy =  0.536833;//0.536833;//
+
+    // Average values obtained from HERMES paper
+    avgQ2 = 2.366;// 2.35;//
+    avgxB = 0.092;//0.093666667;//0.092;
+    avgy =  0.548;//0.536833;//
 
     min = 0.1;
-    max = 0.7;
+    max = 0.8;
     Npoints = 10;
 
     z_sample = fill_xz_vector(min,max,Npoints);
@@ -1492,17 +1522,23 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTz_NLO_pm);
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
     z_sample.clear();
     x_sample.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
-    // Average values obtained from 10021 data set
-    avgQ2 = 3.021666666666667;
-    avgzh=  0.36283333333333334;
-    avgy =  0.4876666666666667;
+
+    // Average values obtained from HERMES paper
+    avgQ2 = 3.02166667;// 3.021;//
+    avgzh=  0.362833;//0.3628;//
+    avgy =  0.48766667;//0.48766;//0.548;
+
+    // Average values obtained from HERMES paper
+    avgQ2 = 2.366;// 3.021;//
+    avgzh=  0.354;//0.3628;//
+    avgy =  0.548;//0.48766;//0.548;
 
     min = 0.01;
     max = 0.4;
@@ -1516,7 +1552,7 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,1,1,fname_AUTx_NLO_pm);
+    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
 
     z_sample.clear();
     x_sample.clear();
