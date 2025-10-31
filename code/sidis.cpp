@@ -180,10 +180,12 @@ void test_h1(std::vector<double> x_sample, double mu, const PDF* h1,std::string 
     for (double x : x_sample){
                  //xh1db = -h1->xfxQ2(2,-x,mu2);
         xh1u = h1->xfxQ2(2,x,mu2);
+        xh1ub = h1->xfxQ2(-2,x,mu2);
         xh1d = h1->xfxQ2(1,x,mu2);
+        xh1db = h1->xfxQ2(-1,x,mu2);
                 
         // Write to file
-        ofile << x << " " << xh1u/x << " " << xh1d/x << std::endl;
+        ofile << x << " " << xh1u/x<< " " << xh1ub/x  << " " << xh1d/x<< " " << xh1db/x  << std::endl;
                 
         
     }
@@ -489,9 +491,9 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
     // Evaluate PDF & FF at x, z and mu. 
    
     xh1u = h1->xfxQ2(2,x,mu2);
-    xh1ub = h1->xfxQ2(-2,x,mu2);
+    xh1ub = 0.;// h1->xfxQ2(-2,x,mu2);
     xh1d = h1->xfxQ2(1,x,mu2);
-    xh1db = h1->xfxQ2(-1,x,mu2);
+    xh1db = 0.;// h1->xfxQ2(-1,x,mu2);
     zHtu = Ht->xfxQ2(2,z,mu2); // fav
     zHtub = Ht->xfxQ2(-2,z,mu2); //unfav
     zHtd = Ht->xfxQ2(1,z,mu2); //unfav
@@ -1394,7 +1396,7 @@ int main(int argc, char** argv){
     //const PDFSet f1set = LHAPDF::mkPDF("JAM22-PDF_proton_nlo", 0)
 
     // Import h1 PDF
-    const PDF* h1 = LHAPDF::mkPDF("JAM23-transversity_proton_lo",0); // 0 is the member number
+    const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",0); // 0 is the member number
     
     // Import D1 FF
     is_D1_pip_only = 1;
@@ -1419,11 +1421,11 @@ int main(int argc, char** argv){
     ////////////////////////////////////////////////////
     // Test Ht
     avgQ2 = 4;
-    min = 0.05;
-    max = 0.95;
-    Npoints = 10;
+    min = 0.01;
+    max = 0.99;
+    Npoints = 100;
     
-    //test_Ht_0000(fill_xz_vector(min,max,Npoints), sqrt(avgQ2));
+    test_Ht(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),Ht,"out/Ht.txt");
     
 
     ////////////////////////////////////////////////////
@@ -1436,7 +1438,7 @@ int main(int argc, char** argv){
     // Import h1 PDF
     //const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
-    //test_h1_0000(fill_xz_vector(min,max,Npoints), sqrt(avgQ2));
+    test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
     
 
     ////////////////////////////////////////////////////
@@ -1454,8 +1456,8 @@ int main(int argc, char** argv){
 
 
     min = 0.1;
-    max = 0.8;
-    Npoints = 10;
+    max = 0.95;
+    Npoints = 20;
 
     which_pion = +1; // It is a pi+
 
@@ -1464,7 +1466,7 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
     z_sample.clear();
     x_sample.clear();
@@ -1493,7 +1495,7 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
     z_sample.clear();
     x_sample.clear();
@@ -1511,8 +1513,8 @@ int main(int argc, char** argv){
     avgy =  0.548;//0.536833;//
 
     min = 0.1;
-    max = 0.8;
-    Npoints = 10;
+    max = 0.95;
+    Npoints = 20;
 
     z_sample = fill_xz_vector(min,max,Npoints);
     x_sample.push_back(avgxB);
@@ -1522,7 +1524,7 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
     z_sample.clear();
     x_sample.clear();
@@ -1552,7 +1554,7 @@ int main(int argc, char** argv){
 
     // Write to file LO and NLO
     write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
 
     z_sample.clear();
     x_sample.clear();
