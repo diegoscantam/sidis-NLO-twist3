@@ -353,10 +353,10 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
         if(which_pion == -1){
             // Return weigthed sum
             resultA =  ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z) );
-            resultA +=  ( pow((2./3.),2) )*((xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
+            //resultA +=  ( pow((2./3.),2) )*((xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
             
             resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1db/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z) );
-            resultB += ( pow((1./3.),2) )*( (xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
+            //resultB += ( pow((1./3.),2) )*( (xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
             
     
             return resultA+resultB;
@@ -491,7 +491,7 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
     // Evaluate PDF & FF at x, z and mu. 
    
     xh1u = h1->xfxQ2(2,x,mu2);
-    xh1ub = 0.;// h1->xfxQ2(-2,x,mu2);
+    xh1ub =  0.;//h1->xfxQ2(-2,x,mu2);
     xh1d = h1->xfxQ2(1,x,mu2);
     xh1db = 0.;// h1->xfxQ2(-1,x,mu2);
     zHtu = Ht->xfxQ2(2,z,mu2); // fav
@@ -500,7 +500,6 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
     zHtdb = Ht->xfxQ2(-1,z,mu2); //fav
 
     // Return weigthed sum
-
     
     if(which_pion == +1){
             result = ( pow((2./3.),2)  )*( (xh1u/x)*(zHtu/z) +  (xh1ub/x)*(zHtub/z) ) + ( pow((1./3.),2) )*( (xh1d/x)*(zHtd/z) + (xh1db/x)*(zHtdb/z)  );
@@ -1335,6 +1334,44 @@ void write_A_UT_to_file(std::vector<double> x_sample, double y, std::vector<doub
 
 };
 
+/**
+ * @brief Writes down to file the asymmetry A_UT^sin(phi_S) as a function of kinematic variables. 
+ * Note: x, z, mu and Q vectors should be same size!!!
+ * @param x_sample Vector of x values in which A_UT is meant to be evaluated
+ * @param z_sample Vector of z values in which A_UT is meant to be evaluated
+ * @param mu Vector of mu values in which A_UT is meant to be evaluated
+ * @param Q Vector of Q values in which A_UT is meant to be evaluated
+ * @param f1 Pointer to f1 PDF
+ * @param D1 Pointer to D1 FF
+ * @param h1 Pointer to h1 PDF
+ * @param Ht Pointer to Ht FF
+ * @param accuracyFUT = 0 LO, = 1 LO+NLO
+ * @param accuracyFUU = 0 LO, = 1 LO+NLO
+ */
+void write_A_UT_proj_to_file(std::vector<double> x, std::vector<double> y, std::vector<double> z,std::vector<double> mu, std::vector<double> Q, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU, std::string fname){
+
+    // Declare ofstream object (file in which we are going to store our data points)
+    std::ofstream ofile;
+    
+
+    // Open it
+    ofile.open(fname);
+
+    for(int i = 0; i< x.size(); i++ ){
+                            
+        // Write to file
+        ofile << x[i] << " "<< y[i] << " "<< z[i] << " "<< mu[i] << " "<< Q[i] << " " << A_UT(x[i], y[i], z[i], mu[i], Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU)  << std::endl;
+                
+    }
+
+    // Close the file
+    ofile.close();
+
+
+
+}
+
+
 // THIS IS THE MAIN PROGRAM
 int main(int argc, char** argv){
 
@@ -1389,7 +1426,9 @@ int main(int argc, char** argv){
 
     // Import f1 PDF
     const PDF* f1 = LHAPDF::mkPDF("CJ15lo",0); // 0 is the member number
-    const PDF* f1nlo = LHAPDF::mkPDF("JAM22-PDF_proton_nlo",0); // 0 is the member number
+    const PDF* f1nlo = LHAPDF::mkPDF("CJ15nlo",0); // 0 is the member number
+    //const PDF* f1nlo = LHAPDF::mkPDF("CJ15lo",0); // 0 is the member number
+    //LHAPDF::mkPDF("JAM22-PDF_proton_nlo",0); // 0 is the member number
     //const PDF* f1 = LHAPDF::mkPDF("MSTW2008lo68cl",0); // 0 is the member number
 
 
@@ -1398,13 +1437,10 @@ int main(int argc, char** argv){
     // Import h1 PDF
     const PDF* h1 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",0); // 0 is the member number
     
-    // Import D1 FF
+    // Import D1 FF (pi+)
     is_D1_pip_only = 1;
     const PDF* D1nlo = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member number
     const PDF* D1 = LHAPDF::mkPDF("dsspipLO", 0); // 0 is the member number
-    
-    //const PDF* D1 = LHAPDF::mkPDF("NNFF10_PIp_lo", 0); // 0 is the member number
-    //const PDF* D1m = LHAPDF::mkPDF("NNFF10_PIm_lo", 0); // 0 is the member number
     
     // Import H tilde FF (pi+)
     const PDF* Ht = LHAPDF::mkPDF("JAM22-Htilde_pion_lo", 0); // 0 is the member number
@@ -1416,7 +1452,6 @@ int main(int argc, char** argv){
     double avgQ2, avgzh,avgxB, avgy;
     double min,max;
     int Npoints;
-    std::vector<double> x_sample, z_sample;
     
     ////////////////////////////////////////////////////
     // Test Ht
@@ -1425,7 +1460,7 @@ int main(int argc, char** argv){
     max = 0.99;
     Npoints = 100;
     
-    test_Ht(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),Ht,"out/Ht.txt");
+    //test_Ht(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),Ht,"out/Ht.txt");
     
 
     ////////////////////////////////////////////////////
@@ -1438,126 +1473,152 @@ int main(int argc, char** argv){
     // Import h1 PDF
     //const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
-    test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
+    //test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
     
 
     ////////////////////////////////////////////////////
     // HERMES 9066. pi+, z dependence
     // Average values obtained from data subset
-    avgQ2 = 2.445;
-    avgxB = 0.097;
-    avgy =  0.535;
+    //avgQ2 = 2.445;
+    //avgxB = 0.097;
+    //avgy =  0.535;
+//
+    //// Average values obtained from HERMES paper
+    //avgQ2 = 2.445;
+    //avgxB = 0.095;
+    //avgy =  0.544;
 
-    // Average values obtained from HERMES paper
-    avgQ2 = 2.445;
-    avgxB = 0.095;
-    avgy =  0.544;
+    std::vector<double> xs_pp_zproj = {0.087, 0.094, 0.098, 0.1, 0.101, 0.102,0.104,0.107,0.108,0.116};
+    std::vector<double> ys_pp_zproj = {0.594, 0.556, 0.533, 0.52, 0.508, 0.499,0.481,0.457,0.434,0.394};
+    std::vector<double> zs_pp_zproj = {0.229, 0.289, 0.349, 0.413, 0.483, 0.558,0.647,0.729,0.798,0.916};
+    std::vector<double> Qs_pp_zproj = {sqrt(2.447), sqrt(2.46), sqrt(2.45), sqrt(2.45), sqrt(2.44), sqrt(2.43),sqrt(2.41),sqrt(2.41),sqrt(2.35),sqrt(2.31)};
 
 
-
-    min = 0.1;
-    max = 0.95;
-    Npoints = 20;
-
-    which_pion = +1; // It is a pi+
-
-    z_sample = fill_xz_vector(min,max,Npoints);
-    x_sample.push_back(avgxB);
+   
 
     // Write to file LO and NLO
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
     //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
-
-    z_sample.clear();
-    x_sample.clear();
+    
+    which_pion = +1; // It is a pi+
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
     // Average values obtained from data subset
-    avgQ2 = 3.03833;
-    avgzh = 0.3715;
-    avgy =  0.4889999;
-    // Average values obtained from HERMES paper
-    avgQ2 = 2.445;
-    avgzh = 0.362;
-    avgy =  0.544;
+    //avgQ2 = 3.03833;
+    //avgzh = 0.3715;
+    //avgy =  0.4889999;
+    //// Average values obtained from HERMES paper
+    //avgQ2 = 2.445;
+    //avgzh = 0.362;
+    //avgy =  0.544;
 
-    min = 0.01;
-    max = 0.4;
-    Npoints = 10;
-    
-   // Here we fill the vectors with the kinematical points we want to evaluate
-    x_sample = fill_xz_vector(min,max,Npoints);
-    z_sample.push_back(avgzh);
+    std::vector<double> xs_pp_xproj = {0.036, 0.056, 0.074, 0.093, 0.118, 0.157, 0.254};
+    std::vector<double> ys_pp_xproj = {0.702, 0.567, 0.516, 0.489, 0.469, 0.456, 0.437};
+    std::vector<double> zs_pp_xproj = {0.336, 0.356, 0.366, 0.374, 0.379, 0.379, 0.375};
+    std::vector<double> Qs_pp_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.34), sqrt(2.87), sqrt(3.69), sqrt(5.71)};
 
 
     which_pion = +1; // It is a pi+
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
+
+    
+    // Here we fill the vectors with the kinematical points we want to evaluate
+    //x_sample = fill_xz_vector(min,max,Npoints);
+    //z_sample.push_back(avgzh);
+
+
+    //which_pion = +1; // It is a pi+
 
     // Write to file LO and NLO
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
     //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
-    z_sample.clear();
-    x_sample.clear();
+    //z_sample.clear();
+    //x_sample.clear();
     
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
     // Average values obtained from data subset
-    avgQ2 = 2.36;// 2.35;//
-    avgxB = 0.093666;//0.093666667;//0.092;
-    avgy =  0.536833;//0.536833;//
+    //avgQ2 = 2.36;// 2.35;//
+    //avgxB = 0.093666;//0.093666667;//0.092;
+    //avgy =  0.536833;//0.536833;//
+//
+    //// Average values obtained from HERMES paper
+    //avgQ2 = 2.366;// 2.35;//
+    //avgxB = 0.092;//0.093666667;//0.092;
+    //avgy =  0.548;//0.536833;//
 
-    // Average values obtained from HERMES paper
-    avgQ2 = 2.366;// 2.35;//
-    avgxB = 0.092;//0.093666667;//0.092;
-    avgy =  0.548;//0.536833;//
+    std::vector<double> xs_pm_zproj = {0.084, 0.091, 0.094, 0.097, 0.098, 0.098, 0.099, 0.099, 0.101, 0.104};
+    std::vector<double> ys_pm_zproj = {0.598, 0.559, 0.536, 0.521, 0.509, 0.498, 0.479, 0.452, 0.432, 0.399};
+    std::vector<double> zs_pm_zproj = {0.229, 0.289, 0.348, 0.413, 0.483, 0.558, 0.646, 0.729, 0.798, 0.906};
+    std::vector<double> Qs_pm_zproj = {sqrt(2.39), sqrt(2.38), sqrt(2.36), sqrt(2.37), sqrt(2.35), sqrt(2.31),sqrt(2.27),sqrt(2.19),sqrt(2.15),sqrt(2.08)};
 
-    min = 0.1;
-    max = 0.95;
-    Npoints = 20;
+    //
+    //min = 0.1;
+    //max = 0.95;
+    //Npoints = 20;
+    //
+    //z_sample = fill_xz_vector(min,max,Npoints);
+    //x_sample.push_back(avgxB);
+    //
+    which_pion = -1; // It is a pi-
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
-    z_sample = fill_xz_vector(min,max,Npoints);
-    x_sample.push_back(avgxB);
     
 
-    which_pion = -1; // It is a pi-
+    
 
     // Write to file LO and NLO
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
+    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
     //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
-    z_sample.clear();
-    x_sample.clear();
+    //z_sample.clear();
+    //x_sample.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
 
     // Average values obtained from HERMES paper
-    avgQ2 = 3.02166667;// 3.021;//
-    avgzh=  0.362833;//0.3628;//
-    avgy =  0.48766667;//0.48766;//0.548;
+    //avgQ2 = 3.02166667;// 3.021;//
+    //avgzh=  0.362833;//0.3628;//
+    //avgy =  0.48766667;//0.48766;//0.548;
+//
+    //// Average values obtained from HERMES paper
+    //avgQ2 = 2.366;// 3.021;//
+    //avgzh=  0.354;//0.3628;//
+    //avgy =  0.548;//0.48766;//0.548;
 
-    // Average values obtained from HERMES paper
-    avgQ2 = 2.366;// 3.021;//
-    avgzh=  0.354;//0.3628;//
-    avgy =  0.548;//0.48766;//0.548;
-
-    min = 0.01;
-    max = 0.4;
-    Npoints = 10;
-
-
-    x_sample = fill_xz_vector(min,max,Npoints);
-    z_sample.push_back(avgzh);
+    std::vector<double> xs_pm_xproj = {0.036, 0.056, 0.074, 0.093, 0.118, 0.156, 0.253};
+    std::vector<double> ys_pm_xproj = {0.704,0.568, 0.515, 0.487, 0.468, 0.454, 0.443};
+    std::vector<double> zs_pm_xproj = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.365};
+    std::vector<double> Qs_pm_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.33), sqrt(2.86), sqrt(3.66), sqrt(5.66)};
 
     which_pion = -1; // It is a pi-
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,0,fname_AUTx_NLO_pm);
 
-    // Write to file LO and NLO
-    write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
-
-    z_sample.clear();
-    x_sample.clear();
+    
+    //min = 0.01;
+    //max = 0.4;
+    //Npoints = 10;
+//
+//
+    //x_sample = fill_xz_vector(min,max,Npoints);
+    //z_sample.push_back(avgzh);
+//
+    //which_pion = -1; // It is a pi-
+//
+    //// Write to file LO and NLO
+    ////write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
+    ////write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
+//
+    //z_sample.clear();
+    //x_sample.clear();
     
 
 
