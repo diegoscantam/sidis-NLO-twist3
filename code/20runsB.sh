@@ -1,0 +1,21 @@
+#!/bin/bash
+./sidis 101;
+./sidis 102;
+./sidis 103;
+./sidis 104;
+./sidis 105;
+./sidis 106;
+./sidis 107;
+./sidis 108;
+./sidis 109;
+./sidis 110;
+./sidis 111;
+./sidis 112;
+./sidis 113;
+./sidis 114;
+./sidis 115;
+./sidis 116;
+./sidis 117;
+./sidis 118;
+./sidis 119;
+./sidis 120;

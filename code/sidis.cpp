@@ -75,6 +75,7 @@ int which_pion; // 1 for pi+, 0 for pi0, -1 for pi-. Modified in the main when n
 int is_D1_pip_only; // +1 yes, 0 no
 int id; // file id, identifies the run with given model parameters, aka scenario
 double  au, ad, bu, bd, cu, cd, Nu, Nd;
+double atu,atd, btu,btd, ctu, ctd, gu, gd, ggu, ggd;
 double pi = M_PI; // pi =  3.1415...
 
 
@@ -114,6 +115,16 @@ void write_model_params_to_file(std::string fname){
     ofile << "cd" << " " << cd << std::endl;
     ofile << "Nu" << " " << Nu << std::endl;
     ofile << "Nd" << " " << Nd << std::endl;
+    ofile << "atu" << " " << atu << std::endl;
+    ofile << "atd" << " " << atd << std::endl;
+    ofile << "btu" << " " << btu << std::endl;
+    ofile << "btd" << " " << btd << std::endl;
+    ofile << "ctu" << " " << ctu << std::endl;
+    ofile << "ctd" << " " << ctd << std::endl;
+    ofile << "gu" << " " << gu << std::endl;
+    ofile << "gd" << " " << gd << std::endl;
+    ofile << "ggu" << " " << ggu << std::endl;
+    ofile << "ggd" << " " << ggd << std::endl;
 
     // Close the file
     ofile.close();
@@ -124,15 +135,23 @@ void write_model_params_to_file(std::string fname){
 void initialize_model_params(){
         // Model parameters (a and b exponents) are random numbers between rd_lo and rd_hi
         double rd_lo = 1.2;
-        double rd_hi = 10.0;
+        double rd_hi = 2.5;
+        // Model parameters (at and bt exponents) are random numbers between rdt_lo and rdt_hi
+        double rdt_lo = 0; // 0.
+        double rdt_hi = 1.; // 1.
+        // Model parameters (gu and gd coefficients) are random numbers between rdg_lo and rdg_hi
+        double rdg_lo = -4.5;
+        double rdg_hi = -1.5;
         // Model parameters (normalizations Nu and Nd) are random numbers between rdN_lo and rdN_hi
-        double rdN_lo = 0.5;
-        double rdN_hi = 1.5;
+        double rdN_lo = 0.25;
+        double rdN_hi = 4.;
 
-        // Here we setup the ranodm number generator
+        // Here we setup the random number generator
         std::random_device rr;
         std::mt19937 gen(rr());
         std::uniform_real_distribution<> rnd(rd_lo, rd_hi);
+        std::uniform_real_distribution<> rndt(rdt_lo, rdt_hi);
+        std::uniform_real_distribution<> rndg(rdg_lo, rdg_hi);
         std::uniform_real_distribution<> rndN(rdN_lo, rdN_hi);
         
 
@@ -144,6 +163,18 @@ void initialize_model_params(){
         cd = rnd(gen);
         Nu = rndN(gen);
         Nd = rndN(gen);
+
+        atu = rndt(gen);
+        atd = rndt(gen);
+        btu = rndt(gen);
+        btd = rndt(gen);
+        ctu = rndt(gen);
+        ctd = rndt(gen);
+        gu  = rndg(gen);
+        gd  = rndg(gen);
+        ggu = rndg(gen);
+        ggd = rndg(gen);
+
 
 }
 void initialize_model_params(double au_,double ad_,double bu_,double bd_,double cu_,double cd_,double Nu_,double Nd_){
@@ -247,7 +278,7 @@ void test_Ht(std::vector<double> z_sample, double mu, const PDF* Ht,std::string 
         zHtdb = Ht->xfxQ2(-1,z,mu2);
                 
         // Write to file
-        ofile << z << " " << zHtu/z << " " << zHtub/z << " " <<zHtd/z << " " <<zHtdb/z << std::endl;
+        ofile << z << " " << zHtu/z << " " << zHtub/z << " " << zHtd/z << " " <<zHtdb/z << std::endl;
                 
         
     }
@@ -350,13 +381,13 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
             
             return resultA+resultB;
         }
-        if(which_pion == -1){
+        if(which_pion == -1){   
             // Return weigthed sum
             resultA =  ( pow((2./3.),2) )*( (xf1u/x)*(zD1ub/z)+(xf1ub/x)*(zD1u/z) );
-            //resultA +=  ( pow((2./3.),2) )*((xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
+            resultA +=  ( pow((2./3.),2) )*((xf1c/x)*(zD1cb/z)+(xf1cb/x)*(zD1c/z) );
             
             resultB = ( pow((1./3.),2) )*( (xf1d/x)*(zD1db/z)+ (xf1db/x)*(zD1d/z)+(xf1s/x)*(zD1sb/z)+(xf1sb/x)*(zD1s/z) );
-            //resultB += ( pow((1./3.),2) )*( (xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
+            resultB += ( pow((1./3.),2) )*( (xf1b/x)*(zD1bb/z)+(xf1bb/x)*(zD1b/z) );
             
     
             return resultA+resultB;
@@ -548,14 +579,17 @@ double weighted_sum_h1ImHFUqg(double x, double z, double zeta, double mu,double 
     
     // Return weigthed sum
     if(which_pion == +1){
-        ImHFUug = (zHtu/z)*(1./(2.*z))  * pow(zeta,au) * pow(1.-zeta,bu) * std::tgamma(1.+au+bu)/std::tgamma(1.+au)/std::tgamma(bu);
-        ImHFUdg = (zHtd/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) * std::tgamma(1.+ad+bd)/std::tgamma(1.+ad)/std::tgamma(bd);
-
+        ImHFUug = (zHtu/z)*(1./(2.*z))  * pow(zeta,au) * pow(1.-zeta,bu) *(1. + gu*pow(zeta,atu) * pow(1.-zeta,btu) ) /(std::tgamma(1.+au)*std::tgamma(bu)/std::tgamma(1.+au+bu) 
+            + gu * std::tgamma(1.+au+atu)*std::tgamma(bu+btu)/std::tgamma(1.+au+atu+bu+btu));
+        ImHFUdg = (zHtd/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) *(1. + gd*pow(zeta,atd) * pow(1.-zeta,btd) ) /(std::tgamma(1.+ad)*std::tgamma(bd)/std::tgamma(1.+ad+bd) 
+            + gd * std::tgamma(1.+ad+atd)*std::tgamma(bd+btd)/std::tgamma(1.+ad+atd+bd+btd));
         result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUug + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdg;
     }
     else if(which_pion == -1){
-        ImHFUubg = (zHtub/z)*(1./(2.*z)) * pow(zeta,au) * pow(1.-zeta,bu) * std::tgamma(1.+au+bu)/std::tgamma(1.+au)/std::tgamma(bu);
-        ImHFUdbg = (zHtdb/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) * std::tgamma(1.+ad+bd)/std::tgamma(1.+ad)/std::tgamma(bd);
+        ImHFUubg = (zHtub/z)*(1./(2.*z)) * pow(zeta,au) * pow(1.-zeta,bu) *(1. + gu*pow(zeta,atu) * pow(1.-zeta,btu) ) /(std::tgamma(1.+au)*std::tgamma(bu)/std::tgamma(1.+au+bu) 
+            + gu * std::tgamma(1.+au+atu)*std::tgamma(bu+btu)/std::tgamma(1.+au+atu+bu+btu));
+        ImHFUdbg = (zHtdb/z)*(1./(2.*z)) * pow(zeta,ad) * pow(1.-zeta,bd) *(1. + gd*pow(zeta,atd) * pow(1.-zeta,btd) ) /(std::tgamma(1.+ad)*std::tgamma(bd)/std::tgamma(1.+ad+bd) 
+            + gd * std::tgamma(1.+ad+atd)*std::tgamma(bd+btd)/std::tgamma(1.+ad+atd+bd+btd));
 
         result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUubg + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdbg;
     
@@ -600,14 +634,16 @@ double weighted_sum_h1ImHFUqbarq(double x, double z, double zeta, double mu,doub
     zHtdb = Ht->xfxQ2(-1,z,mu2);
 
     if(which_pion == 1){
-        ImHFUubaru = (zHtu/z)*(1./(2.*z)) *Nu* pow(zeta,cu) * pow(1.-zeta,cu) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
-        ImHFUdbard = (zHtd/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        ImHFUubaru = (zHtu/z)*(1./(2.*z)) *Nu* pow(zeta,cu) * pow(1.-zeta,cu)*(1. + ggu*pow(zeta,ctu) * pow(1.-zeta,ctu)) /(std::tgamma(1.+cu)*std::tgamma(1.+cu)/std::tgamma(2.+2.*cu) 
+            + ggu*std::tgamma(1.+cu+ctu)*std::tgamma(1.+cu+ctu)/std::tgamma(2.+2.*cu+2*ctu) );
+        ImHFUdbard = (zHtd/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) *(1. + ggd*pow(zeta,ctd) * pow(1.-zeta,ctd)) /(std::tgamma(1.+cd)*std::tgamma(1.+cd)/std::tgamma(2.+2.*cd) 
+            + ggd*std::tgamma(1.+cd+ctd)*std::tgamma(1.+cd+ctd)/std::tgamma(2.+2.*cd+2*ctd) );
         // Return weigthed sum
         result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUubaru + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdbard;
     }
     else if(which_pion == -1){
         ImHFUubaru = (zHtub/z)*(1./(2.*z)) *Nu* pow(zeta,cu) * pow(1.-zeta,cu) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
-        ImHFUdbard = (zHtdb/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) * std::tgamma(2.+2.*cu)/std::tgamma(1.+cu)/std::tgamma(1.+cu);
+        ImHFUdbard = (zHtdb/z)*(1./(2.*z)) *Nd* pow(zeta,cd) * pow(1.-zeta,cd) * std::tgamma(2.+2.*cd)/std::tgamma(1.+cd)/std::tgamma(1.+cd);
         // Return weigthed sum
         result = ( pow((2./3.),2)  )*(xh1u/x)*ImHFUubaru + ( pow((1./3.),2) )*(xh1d/x)*ImHFUdbard;
     }
@@ -1416,9 +1452,11 @@ int main(int argc, char** argv){
     // Here we initalize the parameters at random (see specific function...)
     // One can also initialize with specific values using initialize_model_params(au,ad,bu,bd,cu,cd,Nu,Nd) 
     initialize_model_params();
+    //initialize_model_params(2,2,1.5,1.5,2,2,1,1);
 
 
-    // Here we store to file the model parameters used for the specific run
+
+    // Here we store to file the model parameters used for the specific NLO run
     write_model_params_to_file(fname_p);
     
 
@@ -1478,42 +1516,21 @@ int main(int argc, char** argv){
 
     ////////////////////////////////////////////////////
     // HERMES 9066. pi+, z dependence
-    // Average values obtained from data subset
-    //avgQ2 = 2.445;
-    //avgxB = 0.097;
-    //avgy =  0.535;
-//
-    //// Average values obtained from HERMES paper
-    //avgQ2 = 2.445;
-    //avgxB = 0.095;
-    //avgy =  0.544;
+    // Average bin values obtained from data set
 
     std::vector<double> xs_pp_zproj = {0.087, 0.094, 0.098, 0.1, 0.101, 0.102,0.104,0.107,0.108,0.116};
     std::vector<double> ys_pp_zproj = {0.594, 0.556, 0.533, 0.52, 0.508, 0.499,0.481,0.457,0.434,0.394};
     std::vector<double> zs_pp_zproj = {0.229, 0.289, 0.349, 0.413, 0.483, 0.558,0.647,0.729,0.798,0.916};
-    std::vector<double> Qs_pp_zproj = {sqrt(2.447), sqrt(2.46), sqrt(2.45), sqrt(2.45), sqrt(2.44), sqrt(2.43),sqrt(2.41),sqrt(2.41),sqrt(2.35),sqrt(2.31)};
+    std::vector<double> Qs_pp_zproj = {sqrt(2.44), sqrt(2.46), sqrt(2.45), sqrt(2.45), sqrt(2.44), sqrt(2.43),sqrt(2.41),sqrt(2.41),sqrt(2.35),sqrt(2.31)};
 
-
-   
-
-    // Write to file LO and NLO
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
-    
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
     write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
-    // Average values obtained from data subset
-    //avgQ2 = 3.03833;
-    //avgzh = 0.3715;
-    //avgy =  0.4889999;
-    //// Average values obtained from HERMES paper
-    //avgQ2 = 2.445;
-    //avgzh = 0.362;
-    //avgy =  0.544;
+    // Average bin values obtained from data set
+    
 
     std::vector<double> xs_pp_xproj = {0.036, 0.056, 0.074, 0.093, 0.118, 0.157, 0.254};
     std::vector<double> ys_pp_xproj = {0.702, 0.567, 0.516, 0.489, 0.469, 0.456, 0.437};
@@ -1525,101 +1542,34 @@ int main(int argc, char** argv){
     write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
     write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
-    
-    // Here we fill the vectors with the kinematical points we want to evaluate
-    //x_sample = fill_xz_vector(min,max,Npoints);
-    //z_sample.push_back(avgzh);
-
-
-    //which_pion = +1; // It is a pi+
-
-    // Write to file LO and NLO
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
-
-    //z_sample.clear();
-    //x_sample.clear();
-    
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
-    // Average values obtained from data subset
-    //avgQ2 = 2.36;// 2.35;//
-    //avgxB = 0.093666;//0.093666667;//0.092;
-    //avgy =  0.536833;//0.536833;//
-//
-    //// Average values obtained from HERMES paper
-    //avgQ2 = 2.366;// 2.35;//
-    //avgxB = 0.092;//0.093666667;//0.092;
-    //avgy =  0.548;//0.536833;//
+    // Average bin values obtained from data set
 
     std::vector<double> xs_pm_zproj = {0.084, 0.091, 0.094, 0.097, 0.098, 0.098, 0.099, 0.099, 0.101, 0.104};
     std::vector<double> ys_pm_zproj = {0.598, 0.559, 0.536, 0.521, 0.509, 0.498, 0.479, 0.452, 0.432, 0.399};
     std::vector<double> zs_pm_zproj = {0.229, 0.289, 0.348, 0.413, 0.483, 0.558, 0.646, 0.729, 0.798, 0.906};
     std::vector<double> Qs_pm_zproj = {sqrt(2.39), sqrt(2.38), sqrt(2.36), sqrt(2.37), sqrt(2.35), sqrt(2.31),sqrt(2.27),sqrt(2.19),sqrt(2.15),sqrt(2.08)};
 
-    //
-    //min = 0.1;
-    //max = 0.95;
-    //Npoints = 20;
-    //
-    //z_sample = fill_xz_vector(min,max,Npoints);
-    //x_sample.push_back(avgxB);
-    //
+    
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
     write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
-    
-
-    
-
-    // Write to file LO and NLO
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    //write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
-
-    //z_sample.clear();
-    //x_sample.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
 
-    // Average values obtained from HERMES paper
-    //avgQ2 = 3.02166667;// 3.021;//
-    //avgzh=  0.362833;//0.3628;//
-    //avgy =  0.48766667;//0.48766;//0.548;
-//
-    //// Average values obtained from HERMES paper
-    //avgQ2 = 2.366;// 3.021;//
-    //avgzh=  0.354;//0.3628;//
-    //avgy =  0.548;//0.48766;//0.548;
+    // Average bin values obtained from data set
 
     std::vector<double> xs_pm_xproj = {0.036, 0.056, 0.074, 0.093, 0.118, 0.156, 0.253};
-    std::vector<double> ys_pm_xproj = {0.704,0.568, 0.515, 0.487, 0.468, 0.454, 0.443};
-    std::vector<double> zs_pm_xproj = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.365};
+    std::vector<double> ys_pm_xproj = {0.704,0.568, 0.515, 0.487, 0.468, 0.454, 0.434};
+    std::vector<double> zs_pm_xproj = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.364};
     std::vector<double> Qs_pm_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.33), sqrt(2.86), sqrt(3.66), sqrt(5.66)};
 
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,0,fname_AUTx_NLO_pm);
-
-    
-    //min = 0.01;
-    //max = 0.4;
-    //Npoints = 10;
-//
-//
-    //x_sample = fill_xz_vector(min,max,Npoints);
-    //z_sample.push_back(avgzh);
-//
-    //which_pion = -1; // It is a pi-
-//
-    //// Write to file LO and NLO
-    ////write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1,D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    ////write_A_UT_to_file(x_sample, avgy, z_sample, sqrt(avgQ2), sqrt(avgQ2), f1nlo,D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
-//
-    //z_sample.clear();
-    //x_sample.clear();
-    
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
 
 
     return 0;
