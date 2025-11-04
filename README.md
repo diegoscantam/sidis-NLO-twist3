@@ -26,11 +26,14 @@ Included in this repository, inside `LHAPDF_tables`, there are some sets useful 
 export LHAPDF_DATA_PATH=/MODIFYHEREYOURPATHTOTHISCLONEDREPO/sidis-NLO-twist3/code/LHAPDF_tables
 ```
 
-In the directory `code` there is a `gsl` folder which contains the GNU scientific routines (including our VEGAS monte carlo integrator that we need here). Nothing needs to be done here, besides adding the appropriate flags to the compilation (see next lines).
-
-Once we have done that (might not be necessary for everyone!), we can compile with
+In the directory `code` there is a `gsl` folder which contains the GNU scientific routines (including our VEGAS monte carlo integrator that we need here). To install the library (more details in `gsl-2.8/INSTALL` file), go in the `gsl-2.8` folder and run the command
 ```bash
-g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I/MODIFYHEREYOURPATH/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
+./configure && make && make install
+```
+
+Once we have done that, we can compile with
+```bash
+g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -lgsl -lgslcblas -lm
  ```
 You might need to add the  `-std=gnu++11` flag if you are a Mac user. 
 

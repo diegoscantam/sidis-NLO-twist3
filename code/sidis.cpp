@@ -36,9 +36,11 @@ In the working directory where sidis.cpp lives, there is a gsl folder which cont
 
 Once we have done that (might not be necessary for everyone!), we can compile and run the code with:
 
-    g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I/home/diego/sidis/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
+    g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I /home/diego/sidis/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
 
-    g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I/MODIFYHEREYOURPATH/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
+    g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I gsl-2.8 -lgsl -lgslcblas -lm
+
+    g++ sidis.cpp -o sidis `lhapdf-config --cflags --ldflags` -I MODIFYHEREYOURPATH/sidis-NLO-twist3/code -lgsl -lgslcblas -lm
  
     ./sidis 0
 
@@ -59,8 +61,6 @@ Once we have done that (might not be necessary for everyone!), we can compile an
 #include <numeric>
 #include <filesystem>
 #include "LHAPDF/LHAPDF.h"
-#include "LHAPDF/GridPDF.h"
-#include <LHAPDF/PDFSet.h>
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_monte.h>
 #include <gsl/gsl_monte_vegas.h>
@@ -338,12 +338,12 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
     xf1ub = f1->xfxQ2(-2,x,mu2);
     xf1d = f1->xfxQ2(1,x,mu2);
     xf1db = f1->xfxQ2(-1,x,mu2);
-    xf1c = f1->xfxQ2(4,x,mu2);
-    xf1cb = f1->xfxQ2(-4,x,mu2);
+    xf1c = 0.;//f1->xfxQ2(4,x,mu2);
+    xf1cb = 0.;//f1->xfxQ2(-4,x,mu2);
     xf1s = f1->xfxQ2(3,x,mu2);
     xf1sb = f1->xfxQ2(-3,x,mu2);
-    xf1b = f1->xfxQ2(5,x,mu2);
-    xf1bb = f1->xfxQ2(-5,x,mu2);
+    xf1b = 0.;//f1->xfxQ2(5,x,mu2);
+    xf1bb = 0.;//f1->xfxQ2(-5,x,mu2);
 
 
     
@@ -351,12 +351,12 @@ double weighted_sum_f1D1(double x, double z, double mu, const PDF* f1, const PDF
     zD1ub = D1->xfxQ2(-2,z,mu2);
     zD1d = D1->xfxQ2(1,z,mu2);
     zD1db = D1->xfxQ2(-1,z,mu2);
-    zD1c = D1->xfxQ2(4,z,mu2);
-    zD1cb = D1->xfxQ2(-4,z,mu2);
+    zD1c = 0.;//D1->xfxQ2(4,z,mu2);
+    zD1cb = 0.;//D1->xfxQ2(-4,z,mu2);
     zD1s = D1->xfxQ2(3,z,mu2);
     zD1sb = D1->xfxQ2(-3,z,mu2);
-    zD1b = D1->xfxQ2(5,z,mu2);
-    zD1bb = D1->xfxQ2(-5,z,mu2);
+    zD1b = 0.;//D1->xfxQ2(5,z,mu2);
+    zD1bb = 0.;//D1->xfxQ2(-5,z,mu2);
 
     if(is_D1_pip_only == 0){
         // Return weigthed sum
@@ -429,12 +429,12 @@ double weighted_sum_f1_times_D1g(double x, double z, double mu, const PDF* f1, c
     xf1ub = f1->xfxQ2(-2,x,mu2);
     xf1d = f1->xfxQ2(1,x,mu2);
     xf1db = f1->xfxQ2(-1,x,mu2);
-    xf1c = f1->xfxQ2(4,x,mu2);
-    xf1cb = f1->xfxQ2(-4,x,mu2);
+    xf1c = 0.;//f1->xfxQ2(4,x,mu2);
+    xf1cb = 0.;//f1->xfxQ2(-4,x,mu2);
     xf1s = f1->xfxQ2(3,x,mu2);
     xf1sb = f1->xfxQ2(-3,x,mu2);
-    xf1b = f1->xfxQ2(5,x,mu2);
-    xf1bb = f1->xfxQ2(-5,x,mu2);
+    xf1b = 0.;//f1->xfxQ2(5,x,mu2);
+    xf1bb = 0.;//f1->xfxQ2(-5,x,mu2);
 
     zD1g = D1->xfxQ2(21,z,mu2);
     
@@ -471,12 +471,12 @@ double weighted_sum_D1_times_f1g(double x, double z, double mu, const PDF* f1, c
     zD1ub = D1->xfxQ2(-2,z,mu2);
     zD1d = D1->xfxQ2(1,z,mu2);
     zD1db = D1->xfxQ2(-1,z,mu2);
-    zD1c = D1->xfxQ2(4,z,mu2);
-    zD1cb = D1->xfxQ2(-4,z,mu2);
+    zD1c = 0.;//D1->xfxQ2(4,z,mu2);
+    zD1cb = 0.;//D1->xfxQ2(-4,z,mu2);
     zD1s = D1->xfxQ2(3,z,mu2);
     zD1sb = D1->xfxQ2(-3,z,mu2);
-    zD1b = D1->xfxQ2(5,z,mu2);
-    zD1bb = D1->xfxQ2(-5,z,mu2);
+    zD1b = 0.;//D1->xfxQ2(5,z,mu2);
+    zD1bb = 0.;//D1->xfxQ2(-5,z,mu2);
 
     if(is_D1_pip_only == 0){
         // Return weigthed sum
