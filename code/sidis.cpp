@@ -517,7 +517,6 @@ double weighted_sum_h1Ht(double x, double z, double mu, const PDF* h1, const PDF
     double xh1u, xh1d, zHtu, zHtd,xh1ub,xh1db,zHtub,zHtdb, mu2, result, resultp, resultm ;
 
     mu2 = mu*mu;
-    mu2 = 4.;
 
     // Evaluate PDF & FF at x, z and mu. 
    
