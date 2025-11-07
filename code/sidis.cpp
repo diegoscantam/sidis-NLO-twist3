@@ -709,14 +709,14 @@ double AuxF_UUT4vegas(double *X, size_t dim, void *params){
 
     softq2q_del1mwdel1mv = (xB)* weighted_sum_f1D1(xB,zh,mu,f1,D1);
     softq2q_del1mw = (xB)* weighted_sum_f1D1(xB,zh/v,mu,f1,D1);
-    softq2q_del1mv = (xB/w)*  weighted_sum_f1D1(xB/w,zh,mu,f1,D1);
-    softq2q = (xB/w)*  weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
+    softq2q_del1mv = (xB)*  weighted_sum_f1D1(xB/w,zh,mu,f1,D1);
+    softq2q = (xB)*  weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
 
-    softg2q_del1mv = (xB/w)* weighted_sum_D1_times_f1g(xB/w,zh,mu,f1,D1);
-    softg2q = (xB/w)* weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
+    softg2q_del1mv = (xB)* weighted_sum_D1_times_f1g(xB/w,zh,mu,f1,D1);
+    softg2q = (xB)* weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
 
     softq2g_del1mw = (xB)*  weighted_sum_f1_times_D1g(xB,zh/v,mu,f1,D1);
-    softq2g = (xB/w)* weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
+    softq2g = (xB)* weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
 
     // q2q channel
     double resultq2q,resultg2q,resultq2g;
@@ -815,11 +815,11 @@ double AuxF_UUL4vegas(double *X, size_t dim, void *params){
     double  softg2q;
     double  softq2g;
 
-    softq2q = (xB/w)*weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
+    softq2q = (xB)*weighted_sum_f1D1(xB/w,zh/v,mu,f1,D1);
 
-    softg2q =(xB/w)* weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
+    softg2q =(xB)* weighted_sum_D1_times_f1g(xB/w,zh/v,mu,f1,D1);
 
-    softq2g =(xB/w)* weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
+    softq2g =(xB)* weighted_sum_f1_times_D1g(xB/w,zh/v,mu,f1,D1);
 
 
     result = 0.;
@@ -893,14 +893,14 @@ double AuxF_UT4vegas(double *X, size_t dim, void *params){
     // qg channel
     softqg_del1mwdel1mv = (-xB*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB,zh,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
     softqg_del1mw = (-xB*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB,zh/v,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
-    softqg_del1mv = (-(xB/w)*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB/w,zh,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
-    softqg = (-(xB/w)*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB/w,zh/v,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+    softqg_del1mv = (-(xB)*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB/w,zh,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
+    softqg = (-(xB)*4*Mpi/Q)*weighted_sum_h1ImHFUqg(xB/w,zh/v,zeta,mu,au,ad,bu,bd,h1,Ht)/(1.-zeta);
 
     // qbarq channel
     softqbarq_del1mwdel1mv = (-xB*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB,zh,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
     softqbarq_del1mw = (-xB*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB,zh/v,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
-    softqbarq_del1mv = (-(xB/w)*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB/w,zh,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
-    softqbarq = (-(xB/w)*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB/w,zh/v,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+    softqbarq_del1mv = (-(xB)*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB/w,zh,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
+    softqbarq = (-(xB)*4*Mpi/Q)*weighted_sum_h1ImHFUqbarq(xB/w,zh/v,zeta,mu,cu,cd,Nu,Nd,h1,Ht);
 
     
     result = 0. ;
