@@ -140,8 +140,8 @@ void initialize_model_params(){
         double rdt_lo = 0; // 0.
         double rdt_hi = 1.; // 1.
         // Model parameters (gu and gd coefficients) are random numbers between rdg_lo and rdg_hi
-        double rdg_lo = -4.5;
-        double rdg_hi = -1.5;
+        double rdg_lo = -5;
+        double rdg_hi = -2;
         // Model parameters (normalizations Nu and Nd) are random numbers between rdN_lo and rdN_hi
         double rdN_lo = 0.25;
         double rdN_hi = 4.;
@@ -177,7 +177,8 @@ void initialize_model_params(){
 
 
 }
-void initialize_model_params(double au_,double ad_,double bu_,double bd_,double cu_,double cd_,double Nu_,double Nd_){
+void initialize_model_params(double au_,double ad_,double bu_,double bd_,double cu_,double cd_,double Nu_,double Nd_,
+    double atu_,double atd_,double btu_,double btd_,double ctu_,double ctd_,double gu_,double gd_,double ggu_,double ggd_){
     
     au = au_;
     ad = ad_;
@@ -187,6 +188,16 @@ void initialize_model_params(double au_,double ad_,double bu_,double bd_,double 
     cd = cd_;
     Nu = Nu_;
     Nd = Nd_;
+    atu = atu_;
+    atd = atd_;
+    btu = btu_;
+    btd = btd_;
+    ctu = ctu_;
+    ctd = ctd_;
+    gu = gu_;
+    gd = gd_;
+    ggu = ggu_;
+    ggd = ggd_;
     
 }
 
@@ -1416,18 +1427,42 @@ int main(int argc, char** argv){
 
     // Construct filenames for the output based on the run id
     std::string fname_AUTz_NLO_pp,fname_AUTz_NLO_pm,fname_AUTx_NLO_pp,fname_AUTx_NLO_pm;
+    std::string fname_AUTz_NLO2Q_pp,fname_AUTz_NLO2Q_pm,fname_AUTx_NLO2Q_pp,fname_AUTx_NLO2Q_pm;
+    std::string fname_AUTz_NLOQd2_pp,fname_AUTz_NLOQd2_pm,fname_AUTx_NLOQd2_pp,fname_AUTx_NLOQd2_pm;
+    
     std::stringstream out_AUTz_NLO_pp,out_AUTz_NLO_pm,out_AUTx_NLO_pp,out_AUTx_NLO_pm;
+    std::stringstream out_AUTz_NLO2Q_pp,out_AUTz_NLO2Q_pm,out_AUTx_NLO2Q_pp,out_AUTx_NLO2Q_pm;
+    std::stringstream out_AUTz_NLOQd2_pp,out_AUTz_NLOQd2_pm,out_AUTx_NLOQd2_pp,out_AUTx_NLOQd2_pm;
 
     out_AUTz_NLO_pp << "out/run"<<  id << "/AUTz_NLO_pp.txt";
     out_AUTz_NLO_pm << "out/run"<<  id << "/AUTz_NLO_pm.txt";
     out_AUTx_NLO_pp << "out/run"<<  id << "/AUTx_NLO_pp.txt";
     out_AUTx_NLO_pm << "out/run"<<  id << "/AUTx_NLO_pm.txt";
 
-
     fname_AUTz_NLO_pp = out_AUTz_NLO_pp.str();
     fname_AUTz_NLO_pm = out_AUTz_NLO_pm.str();
     fname_AUTx_NLO_pp = out_AUTx_NLO_pp.str();
     fname_AUTx_NLO_pm = out_AUTx_NLO_pm.str();
+
+    out_AUTz_NLO2Q_pp << "out/run"<<  id << "/AUTz_NLO2Q_pp.txt";
+    out_AUTz_NLO2Q_pm << "out/run"<<  id << "/AUTz_NLO2Q_pm.txt";
+    out_AUTx_NLO2Q_pp << "out/run"<<  id << "/AUTx_NLO2Q_pp.txt";
+    out_AUTx_NLO2Q_pm << "out/run"<<  id << "/AUTx_NLO2Q_pm.txt";
+
+    fname_AUTz_NLO2Q_pp = out_AUTz_NLO2Q_pp.str();
+    fname_AUTz_NLO2Q_pm = out_AUTz_NLO2Q_pm.str();
+    fname_AUTx_NLO2Q_pp = out_AUTx_NLO2Q_pp.str();
+    fname_AUTx_NLO2Q_pm = out_AUTx_NLO2Q_pm.str();
+
+    out_AUTz_NLOQd2_pp << "out/run"<<  id << "/AUTz_NLOQd2_pp.txt";
+    out_AUTz_NLOQd2_pm << "out/run"<<  id << "/AUTz_NLOQd2_pm.txt";
+    out_AUTx_NLOQd2_pp << "out/run"<<  id << "/AUTx_NLOQd2_pp.txt";
+    out_AUTx_NLOQd2_pm << "out/run"<<  id << "/AUTx_NLOQd2_pm.txt";
+
+    fname_AUTz_NLOQd2_pp = out_AUTz_NLOQd2_pp.str();
+    fname_AUTz_NLOQd2_pm = out_AUTz_NLOQd2_pm.str();
+    fname_AUTx_NLOQd2_pp = out_AUTx_NLOQd2_pp.str();
+    fname_AUTx_NLOQd2_pm = out_AUTx_NLOQd2_pm.str();
 
     // create directory for run_id
     std::string dirname_p;
@@ -1450,8 +1485,64 @@ int main(int argc, char** argv){
     // This function initalized the model parameters for the twist-3 dynamical functions
     // Here we initalize the parameters at random (see specific function...)
     // One can also initialize with specific values using initialize_model_params(au,ad,bu,bd,cu,cd,Nu,Nd) 
-    initialize_model_params();
-    //initialize_model_params(2,2,1.5,1.5,2,2,1,1);
+    //initialize_model_params();
+
+    if(id ==1){
+        // scenario 1 (similar to LO)
+        initialize_model_params(1.51144,1.25165,1.85767,1.8877,2.30223,1.48352,2.13928,3.06289,
+        0.356698, 0.945353,0.16721,0.329541,0.309482, 0.755566,-1.53989,-2.49045,-1.56937,-1.87964 );
+    }
+    else if(id == 2){
+    // scenario 2 (bad)
+
+    initialize_model_params(
+    1.55369,
+    1.84554,
+    1.35699,
+    1.65182,
+    1.38473,
+    1.25835,
+    2.57606,
+    0.616133,
+    0.51049,
+    0.17926,
+    0.00728,
+    0.16352,
+    0.15409,
+    0.69479,
+    -1.4658,
+    -3.32761,
+    -2.2493,
+    -3.44681);
+    
+    }
+    else if(id == 3){
+    // scenario 3 (bad 2.0)
+
+    initialize_model_params(
+    2.46379,
+    2.49643,
+    1.32511,
+    1.91064,
+    2.05349,
+    1.76027,
+    2.49403,
+    3.81452,
+    0.285674,
+    0.393305,
+    0.553469,
+    0.719077,
+    0.926388,
+    0.133709,
+    -3.63738,
+    -1.96654,
+    -2.26326,
+    -2.59241);
+    
+    }
+    else{
+        initialize_model_params();
+    }
 
 
 
@@ -1476,7 +1567,8 @@ int main(int argc, char** argv){
     
     // Import D1 FF (pi+)
     is_D1_pip_only = 1;
-    const PDF* D1nlo = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member number
+    const PDF* D1nlo = LHAPDF::mkPDF("JAM22-FF_pion_nlo", 0); // 0 is the member numberJAM20-SIDIS_FF_pion_nlo
+    //const PDF* D1nlo = LHAPDF::mkPDF("NNFF10_PIp_nlo", 0); // 0 is the member numberJAM20-SIDIS_FF_pion_nlo
     const PDF* D1 = LHAPDF::mkPDF("dsspipLO", 0); // 0 is the member number
     
     // Import H tilde FF (pi+)
@@ -1511,7 +1603,8 @@ int main(int argc, char** argv){
     //const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
     //test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
-    
+
+    std::vector<double> mu_2Q, mu_Qd2;
 
     ////////////////////////////////////////////////////
     // HERMES 9066. pi+, z dependence
@@ -1522,10 +1615,20 @@ int main(int argc, char** argv){
     std::vector<double> zs_pp_zproj = {0.229, 0.289, 0.349, 0.413, 0.483, 0.558,0.647,0.729,0.798,0.916};
     std::vector<double> Qs_pp_zproj = {sqrt(2.44), sqrt(2.46), sqrt(2.45), sqrt(2.45), sqrt(2.44), sqrt(2.43),sqrt(2.41),sqrt(2.41),sqrt(2.35),sqrt(2.31)};
 
+    for (double Q_ : Qs_pp_zproj){
+        mu_2Q.push_back(2. * Q_);
+        mu_Qd2.push_back(Q_ / 2.);
+    }
+
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
     write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, mu_2Q , Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO2Q_pp);
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, mu_Qd2, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLOQd2_pp);
 
+    mu_2Q.clear();
+    mu_Qd2.clear();
+    
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
     // Average bin values obtained from data set
@@ -1535,12 +1638,21 @@ int main(int argc, char** argv){
     std::vector<double> ys_pp_xproj = {0.702, 0.567, 0.516, 0.489, 0.469, 0.456, 0.437};
     std::vector<double> zs_pp_xproj = {0.336, 0.356, 0.366, 0.374, 0.379, 0.379, 0.375};
     std::vector<double> Qs_pp_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.34), sqrt(2.87), sqrt(3.69), sqrt(5.71)};
-
+    
+    for (double Q_ : Qs_pp_xproj){
+        mu_2Q.push_back(2. * Q_);
+        mu_Qd2.push_back(Q_ / 2.);
+    }
 
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
     write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, mu_2Q , Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO2Q_pp);
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, mu_Qd2, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLOQd2_pp);
 
+    mu_2Q.clear();
+    mu_Qd2.clear();
+    
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
     // Average bin values obtained from data set
@@ -1550,11 +1662,19 @@ int main(int argc, char** argv){
     std::vector<double> zs_pm_zproj = {0.229, 0.289, 0.348, 0.413, 0.483, 0.558, 0.646, 0.729, 0.798, 0.906};
     std::vector<double> Qs_pm_zproj = {sqrt(2.39), sqrt(2.38), sqrt(2.36), sqrt(2.37), sqrt(2.35), sqrt(2.31),sqrt(2.27),sqrt(2.19),sqrt(2.15),sqrt(2.08)};
 
+    for (double Q_ : Qs_pm_zproj){
+        mu_2Q.push_back(2. * Q_);
+        mu_Qd2.push_back(Q_ / 2.);
+    }
     
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
     write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, mu_2Q , Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO2Q_pm);
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, mu_Qd2, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLOQd2_pm);
 
+    mu_2Q.clear();
+    mu_Qd2.clear();
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
@@ -1566,10 +1686,18 @@ int main(int argc, char** argv){
     std::vector<double> zs_pm_xproj = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.364};
     std::vector<double> Qs_pm_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.33), sqrt(2.86), sqrt(3.66), sqrt(5.66)};
 
+    for (double Q_ : Qs_pm_xproj){
+        mu_2Q.push_back(2. * Q_);
+        mu_Qd2.push_back(Q_ / 2.);
+    }
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, mu_2Q , Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO2Q_pm);
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, mu_Qd2, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLOQd2_pm);
 
+    mu_2Q.clear();
+    mu_Qd2.clear();
 
     return 0;
     
