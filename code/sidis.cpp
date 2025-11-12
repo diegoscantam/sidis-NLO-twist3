@@ -1385,7 +1385,7 @@ void write_A_UT_to_file(std::vector<double> x_sample, double y, std::vector<doub
  * Note: x, z, mu and Q vectors should be same size!!!
  * @param x_sample Vector of x values in which A_UT is meant to be evaluated
  * @param z_sample Vector of z values in which A_UT is meant to be evaluated
- * @param mu Vector of mu values in which A_UT is meant to be evaluated
+ * @param scale_variation = 0 (mu=Q), = 2 ( Q/2<mu<2Q)
  * @param Q Vector of Q values in which A_UT is meant to be evaluated
  * @param f1 Pointer to f1 PDF
  * @param D1 Pointer to D1 FF
@@ -1394,7 +1394,7 @@ void write_A_UT_to_file(std::vector<double> x_sample, double y, std::vector<doub
  * @param accuracyFUT = 0 LO, = 1 LO+NLO
  * @param accuracyFUU = 0 LO, = 1 LO+NLO
  */
-void write_A_UT_proj_to_file(std::vector<double> x, std::vector<double> y, std::vector<double> z,std::vector<double> mu, std::vector<double> Q, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU, std::string fname){
+void write_A_UT_proj_to_file(std::vector<double> x, std::vector<double> y, std::vector<double> z, int  scale_variation, std::vector<double> Q, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, int accuracyFUT, int accuracyFUU, std::string fname){
 
     // Declare ofstream object (file in which we are going to store our data points)
     std::ofstream ofile;
@@ -1402,13 +1402,27 @@ void write_A_UT_proj_to_file(std::vector<double> x, std::vector<double> y, std::
 
     // Open it
     ofile.open(fname);
+    if(scale_variation > 1){
+        for(int i = 0; i< x.size(); i++ ){
+                                
+            // Write to file
+            ofile << x[i] << " "<< y[i] << " "<< z[i] << " "<< Q[i] << " " << A_UT(x[i], y[i], z[i], Q[i], Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU) << " "
+            << A_UT(x[i], y[i], z[i], scale_variation*Q[i], Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU) << " "
+            << A_UT(x[i], y[i], z[i], Q[i]/scale_variation, Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU)  << std::endl;
+                    
+        }
 
-    for(int i = 0; i< x.size(); i++ ){
-                            
-        // Write to file
-        ofile << x[i] << " "<< y[i] << " "<< z[i] << " "<< mu[i] << " "<< Q[i] << " " << A_UT(x[i], y[i], z[i], mu[i], Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU)  << std::endl;
-                
     }
+    if(scale_variation == 0){
+        for(int i = 0; i< x.size(); i++ ){
+                                
+            // Write to file
+            ofile << x[i] << " "<< y[i] << " "<< z[i] << " "<< Q[i] << " " << A_UT(x[i], y[i], z[i], Q[i], Q[i], f1, D1, h1, Ht, accuracyFUT, accuracyFUU) << std::endl;
+                    
+        }
+
+    }
+
 
     // Close the file
     ofile.close();
@@ -1427,12 +1441,8 @@ int main(int argc, char** argv){
 
     // Construct filenames for the output based on the run id
     std::string fname_AUTz_NLO_pp,fname_AUTz_NLO_pm,fname_AUTx_NLO_pp,fname_AUTx_NLO_pm;
-    std::string fname_AUTz_NLO2Q_pp,fname_AUTz_NLO2Q_pm,fname_AUTx_NLO2Q_pp,fname_AUTx_NLO2Q_pm;
-    std::string fname_AUTz_NLOQd2_pp,fname_AUTz_NLOQd2_pm,fname_AUTx_NLOQd2_pp,fname_AUTx_NLOQd2_pm;
-    
+
     std::stringstream out_AUTz_NLO_pp,out_AUTz_NLO_pm,out_AUTx_NLO_pp,out_AUTx_NLO_pm;
-    std::stringstream out_AUTz_NLO2Q_pp,out_AUTz_NLO2Q_pm,out_AUTx_NLO2Q_pp,out_AUTx_NLO2Q_pm;
-    std::stringstream out_AUTz_NLOQd2_pp,out_AUTz_NLOQd2_pm,out_AUTx_NLOQd2_pp,out_AUTx_NLOQd2_pm;
 
     out_AUTz_NLO_pp << "out/run"<<  id << "/AUTz_NLO_pp.txt";
     out_AUTz_NLO_pm << "out/run"<<  id << "/AUTz_NLO_pm.txt";
@@ -1444,25 +1454,6 @@ int main(int argc, char** argv){
     fname_AUTx_NLO_pp = out_AUTx_NLO_pp.str();
     fname_AUTx_NLO_pm = out_AUTx_NLO_pm.str();
 
-    out_AUTz_NLO2Q_pp << "out/run"<<  id << "/AUTz_NLO2Q_pp.txt";
-    out_AUTz_NLO2Q_pm << "out/run"<<  id << "/AUTz_NLO2Q_pm.txt";
-    out_AUTx_NLO2Q_pp << "out/run"<<  id << "/AUTx_NLO2Q_pp.txt";
-    out_AUTx_NLO2Q_pm << "out/run"<<  id << "/AUTx_NLO2Q_pm.txt";
-
-    fname_AUTz_NLO2Q_pp = out_AUTz_NLO2Q_pp.str();
-    fname_AUTz_NLO2Q_pm = out_AUTz_NLO2Q_pm.str();
-    fname_AUTx_NLO2Q_pp = out_AUTx_NLO2Q_pp.str();
-    fname_AUTx_NLO2Q_pm = out_AUTx_NLO2Q_pm.str();
-
-    out_AUTz_NLOQd2_pp << "out/run"<<  id << "/AUTz_NLOQd2_pp.txt";
-    out_AUTz_NLOQd2_pm << "out/run"<<  id << "/AUTz_NLOQd2_pm.txt";
-    out_AUTx_NLOQd2_pp << "out/run"<<  id << "/AUTx_NLOQd2_pp.txt";
-    out_AUTx_NLOQd2_pm << "out/run"<<  id << "/AUTx_NLOQd2_pm.txt";
-
-    fname_AUTz_NLOQd2_pp = out_AUTz_NLOQd2_pp.str();
-    fname_AUTz_NLOQd2_pm = out_AUTz_NLOQd2_pm.str();
-    fname_AUTx_NLOQd2_pp = out_AUTx_NLOQd2_pp.str();
-    fname_AUTx_NLOQd2_pm = out_AUTx_NLOQd2_pm.str();
 
     // create directory for run_id
     std::string dirname_p;
@@ -1578,6 +1569,7 @@ int main(int argc, char** argv){
     //std::cout << f1->alphasQ2(4) <<" "<<D1->alphasQ2(4)<<" " << h1->alphasQ2(4) <<" "<< Ht->alphasQ2(4) <<" " <<std::endl;
 
     // Declare useful variables
+    int scale= 2;
     double avgQ2, avgzh,avgxB, avgy;
     double min,max;
     int Npoints;
@@ -1615,19 +1607,11 @@ int main(int argc, char** argv){
     std::vector<double> zs_pp_zproj = {0.229, 0.289, 0.349, 0.413, 0.483, 0.558,0.647,0.729,0.798,0.916};
     std::vector<double> Qs_pp_zproj = {sqrt(2.44), sqrt(2.46), sqrt(2.45), sqrt(2.45), sqrt(2.44), sqrt(2.43),sqrt(2.41),sqrt(2.41),sqrt(2.35),sqrt(2.31)};
 
-    for (double Q_ : Qs_pp_zproj){
-        mu_2Q.push_back(2. * Q_);
-        mu_Qd2.push_back(Q_ / 2.);
-    }
 
     which_pion = +1; // It is a pi+
-    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, Qs_pp_zproj, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
-    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, mu_2Q , Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO2Q_pp);
-    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, mu_Qd2, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLOQd2_pp);
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, 0, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
+    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj,scale, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
-    mu_2Q.clear();
-    mu_Qd2.clear();
     
     ////////////////////////////////////////////////////
     // HERMES 9055. pi+, x dependence
@@ -1639,19 +1623,11 @@ int main(int argc, char** argv){
     std::vector<double> zs_pp_xproj = {0.336, 0.356, 0.366, 0.374, 0.379, 0.379, 0.375};
     std::vector<double> Qs_pp_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.34), sqrt(2.87), sqrt(3.69), sqrt(5.71)};
     
-    for (double Q_ : Qs_pp_xproj){
-        mu_2Q.push_back(2. * Q_);
-        mu_Qd2.push_back(Q_ / 2.);
-    }
 
     which_pion = +1; // It is a pi+
-    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, Qs_pp_xproj, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
-    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, mu_2Q , Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO2Q_pp);
-    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj, mu_Qd2, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLOQd2_pp);
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj,0, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
+    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj,scale, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
-    mu_2Q.clear();
-    mu_Qd2.clear();
     
     ////////////////////////////////////////////////////
     // HERMES 10032. pi-, z dependence
@@ -1662,19 +1638,9 @@ int main(int argc, char** argv){
     std::vector<double> zs_pm_zproj = {0.229, 0.289, 0.348, 0.413, 0.483, 0.558, 0.646, 0.729, 0.798, 0.906};
     std::vector<double> Qs_pm_zproj = {sqrt(2.39), sqrt(2.38), sqrt(2.36), sqrt(2.37), sqrt(2.35), sqrt(2.31),sqrt(2.27),sqrt(2.19),sqrt(2.15),sqrt(2.08)};
 
-    for (double Q_ : Qs_pm_zproj){
-        mu_2Q.push_back(2. * Q_);
-        mu_Qd2.push_back(Q_ / 2.);
-    }
-    
     which_pion = -1; // It is a pi-
-    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, Qs_pm_zproj, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
-    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, mu_2Q , Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO2Q_pm);
-    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj, mu_Qd2, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLOQd2_pm);
-
-    mu_2Q.clear();
-    mu_Qd2.clear();
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj,0, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
+    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj,scale, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
@@ -1686,19 +1652,9 @@ int main(int argc, char** argv){
     std::vector<double> zs_pm_xproj = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.364};
     std::vector<double> Qs_pm_xproj = {sqrt(1.29), sqrt(1.64), sqrt(1.98), sqrt(2.33), sqrt(2.86), sqrt(3.66), sqrt(5.66)};
 
-    for (double Q_ : Qs_pm_xproj){
-        mu_2Q.push_back(2. * Q_);
-        mu_Qd2.push_back(Q_ / 2.);
-    }
     which_pion = -1; // It is a pi-
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, Qs_pm_xproj, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, mu_2Q , Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO2Q_pm);
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj, mu_Qd2, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLOQd2_pm);
-
-    mu_2Q.clear();
-    mu_Qd2.clear();
-
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,0, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
+    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,scale, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
     return 0;
     
 };

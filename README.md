@@ -45,4 +45,6 @@ where `1` here is just an example of any positive integer index. This is just a 
 ```bash
 ./20runs.sh
 ```
-For plotting the results, the file `plotC.ipynb` is a simple Jupyter Notebook running python.
+The runs 1, 2 and 3 are fixed models (3 specific scenarios). Any index greater than 3 will produce a random scenario, with parameters sampled from uniform distributions.
+
+For plotting the results (LO + NLO scenarios `run1` + `run2` + `run3`), run the script `python3 plot.py`.
