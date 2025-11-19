@@ -1454,6 +1454,20 @@ int main(int argc, char** argv){
     fname_AUTx_NLO_pp = out_AUTx_NLO_pp.str();
     fname_AUTx_NLO_pm = out_AUTx_NLO_pm.str();
 
+    // Construct filenames for the output based on the run id
+    std::string fname_AUTz_NLO_pp_EIC,fname_AUTz_NLO_pm_EIC,fname_AUTx_NLO_pp_EIC,fname_AUTx_NLO_pm_EIC;
+
+    std::stringstream out_AUTz_NLO_pp_EIC,out_AUTz_NLO_pm_EIC,out_AUTx_NLO_pp_EIC,out_AUTx_NLO_pm_EIC;
+
+    out_AUTz_NLO_pp_EIC << "out/run"<<  id << "/AUTz_NLO_pp_EIC.txt";
+    out_AUTz_NLO_pm_EIC << "out/run"<<  id << "/AUTz_NLO_pm_EIC.txt";
+    out_AUTx_NLO_pp_EIC << "out/run"<<  id << "/AUTx_NLO_pp_EIC.txt";
+    out_AUTx_NLO_pm_EIC << "out/run"<<  id << "/AUTx_NLO_pm_EIC.txt";
+
+    fname_AUTz_NLO_pp_EIC = out_AUTz_NLO_pp_EIC.str();
+    fname_AUTz_NLO_pm_EIC = out_AUTz_NLO_pm_EIC.str();
+    fname_AUTx_NLO_pp_EIC = out_AUTx_NLO_pp_EIC.str();
+    fname_AUTx_NLO_pm_EIC = out_AUTx_NLO_pm_EIC.str();
 
     // create directory for run_id
     std::string dirname_p;
@@ -1581,7 +1595,7 @@ int main(int argc, char** argv){
     max = 0.99;
     Npoints = 100;
     
-    //test_Ht(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),Ht,"out/Ht.txt");
+    test_Ht(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),Ht,"out/Ht.txt");
     
 
     ////////////////////////////////////////////////////
@@ -1594,7 +1608,7 @@ int main(int argc, char** argv){
     // Import h1 PDF
     //const PDF* h1orig0000 = LHAPDF::mkPDF("JAM22-transversity_proton_lo",1);//0001  is the old 0000.dat file (not the mean!) 
     
-    //test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
+    test_h1(fill_xz_vector(min,max,Npoints), sqrt(avgQ2),h1, "out/h1.txt");
 
     std::vector<double> mu_2Q, mu_Qd2;
 
@@ -1655,7 +1669,79 @@ int main(int argc, char** argv){
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,0, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,scale, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
-    return 0;
     
+
+
+
+    ////////////////////////////////////////////////////
+    //  EIC estimates
+
+    double sqrtS = 100; //GeV
+
+    ////////////////////////////////////////////////////
+    // EIC pseudodata. pi+, z dependence
+    
+    std::vector<double> xs_pp_zproj_EIC = {0.087, 0.094, 0.098, 0.1, 0.101, 0.102,0.104,0.107,0.108,0.116};
+    std::vector<double> ys_pp_zproj_EIC = {0.594, 0.556, 0.533, 0.52, 0.508, 0.499,0.481,0.457,0.434,0.394};
+    std::vector<double> zs_pp_zproj_EIC = {0.229, 0.289, 0.349, 0.413, 0.483, 0.558,0.647,0.729,0.798,0.916};
+    std::vector<double> Qs_pp_zproj_EIC;
+
+    for(int i=0; i< xs_pp_zproj_EIC.size(); i++){
+        Qs_pp_zproj_EIC.push_back(sqrtS * sqrt(xs_pp_zproj_EIC[i] * ys_pp_zproj_EIC[i] ));
+    }
+
+    which_pion = +1; // It is a pi+
+    write_A_UT_proj_to_file(xs_pp_zproj_EIC, ys_pp_zproj_EIC, zs_pp_zproj_EIC, 0,    Qs_pp_zproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp_EIC.txt");
+    write_A_UT_proj_to_file(xs_pp_zproj_EIC, ys_pp_zproj_EIC, zs_pp_zproj_EIC,scale, Qs_pp_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp_EIC);
+
+    ////////////////////////////////////////////////////
+    // EIC pseudodata. pi+, x dependence
+
+    std::vector<double> xs_pp_xproj_EIC = {0.036, 0.056, 0.074, 0.093, 0.118, 0.157, 0.254};
+    std::vector<double> ys_pp_xproj_EIC = {0.702, 0.567, 0.516, 0.489, 0.469, 0.456, 0.437};
+    std::vector<double> zs_pp_xproj_EIC = {0.336, 0.356, 0.366, 0.374, 0.379, 0.379, 0.375};
+    std::vector<double> Qs_pp_xproj_EIC ;
+
+    for(int i=0; i< xs_pp_xproj_EIC.size(); i++){
+        Qs_pp_xproj_EIC.push_back(sqrtS * sqrt(xs_pp_xproj_EIC[i] * ys_pp_xproj_EIC[i] ));
+    }
+
+    which_pion = +1; // It is a pi+
+    write_A_UT_proj_to_file(xs_pp_xproj_EIC, ys_pp_xproj_EIC, zs_pp_xproj_EIC,0,     Qs_pp_xproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp_EIC.txt");
+    write_A_UT_proj_to_file(xs_pp_xproj_EIC, ys_pp_xproj_EIC, zs_pp_xproj_EIC,scale, Qs_pp_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp_EIC);
+
+    ////////////////////////////////////////////////////
+    // EIC pseudodata. pi-, z dependence
+
+    std::vector<double> xs_pm_zproj_EIC = {0.084, 0.091, 0.094, 0.097, 0.098, 0.098, 0.099, 0.099, 0.101, 0.104};
+    std::vector<double> ys_pm_zproj_EIC = {0.598, 0.559, 0.536, 0.521, 0.509, 0.498, 0.479, 0.452, 0.432, 0.399};
+    std::vector<double> zs_pm_zproj_EIC = {0.229, 0.289, 0.348, 0.413, 0.483, 0.558, 0.646, 0.729, 0.798, 0.906};
+    std::vector<double> Qs_pm_zproj_EIC;
+
+    for(int i=0; i< xs_pm_zproj_EIC.size(); i++){
+        Qs_pm_zproj_EIC.push_back(sqrtS * sqrt(xs_pm_zproj_EIC[i] * ys_pm_zproj_EIC[i] ));
+    }
+
+    which_pion = -1; // It is a pi-
+    write_A_UT_proj_to_file(xs_pm_zproj_EIC, ys_pm_zproj_EIC, zs_pm_zproj_EIC,0,     Qs_pm_zproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm_EIC.txt");
+    write_A_UT_proj_to_file(xs_pm_zproj_EIC, ys_pm_zproj_EIC, zs_pm_zproj_EIC,scale, Qs_pm_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm_EIC);
+
+    ////////////////////////////////////////////////////
+    // EIC pseudodata pi-, x dependence
+
+    std::vector<double> xs_pm_xproj_EIC = {0.036, 0.056, 0.074, 0.093, 0.118, 0.156, 0.253};
+    std::vector<double> ys_pm_xproj_EIC = {0.704,0.568, 0.515, 0.487, 0.468, 0.454, 0.434};
+    std::vector<double> zs_pm_xproj_EIC = {0.33, 0.35, 0.359, 0.366, 0.369, 0.369, 0.364};
+    std::vector<double> Qs_pm_xproj_EIC;
+
+    for(int i=0; i< xs_pm_xproj_EIC.size(); i++){
+        Qs_pm_xproj_EIC.push_back(sqrtS * sqrt(xs_pm_xproj_EIC[i] * ys_pm_xproj_EIC[i] ));
+    }
+    which_pion = -1; // It is a pi-
+    write_A_UT_proj_to_file(xs_pm_xproj_EIC, ys_pm_xproj_EIC, zs_pm_xproj_EIC,0,     Qs_pm_xproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm_EIC.txt");
+    write_A_UT_proj_to_file(xs_pm_xproj_EIC, ys_pm_xproj_EIC, zs_pm_xproj_EIC,scale, Qs_pm_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm_EIC);
+    
+
+    return 0;
 };
 
