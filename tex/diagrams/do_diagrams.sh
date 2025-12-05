@@ -30,3 +30,7 @@ gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dALLOWPSTRANSPARENCY -dCompatibilityLeve
 latex VirtNLOTw3.tex
 dvips VirtNLOTw3.dvi -o VirtNLOTw3.ps
 gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dALLOWPSTRANSPARENCY -dCompatibilityLevel=1.4 -sOutputFile=../fig/VirtNLOTw3.pdf VirtNLOTw3.ps
+
+latex VirtNLOTw3_reduced.tex
+dvips VirtNLOTw3_reduced.dvi -o VirtNLOTw3_reduced.ps
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dALLOWPSTRANSPARENCY -dCompatibilityLevel=1.4 -sOutputFile=../fig/VirtNLOTw3_reduced.pdf VirtNLOTw3_reduced.ps
