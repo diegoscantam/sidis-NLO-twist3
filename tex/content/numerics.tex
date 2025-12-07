@@ -37,13 +37,13 @@ The asymmetry at leading-order in $\alpha_S$ is shown in Fig.~\ref{fig:A_UT_LO}.
 
 In order to perform a NLO exploratory study, we need one last ingredient: input fragmentation functions $\Im \hat{H}^{qg}_{FU}(z,\zeta)$ and  $\Im \hat{H}^{\bar{q}q}_{FU}(z,\zeta)$ for all flavors $q$. Since these functions are currently unknown, a real prediction is clearly not possible. We can, though, build some models respecting the currently known constraints and plot the resulting curves for different choices of parameters. A typical parametrization for collinear PDFs and FFs is given by the formula \cite{Gamberg2022Htilde}
 \begin{equation}
-    P^q(x) \equiv \frac{N^q\, x^{a_q} (1-x)^{b_q}\left( 1+\gamma^q x^{\tilde{a}_q}(1-x)^{\tilde{b}_q}\right)}{\mathbb{B}(a_q+2,b_q+1) + \gamma^q \mathbb{B}(a_q+\tilde{a}_q+2 , b_q + \tilde{b}_q +1)},
+    \mathcal{F}^q\left(\xi;\,N_q,a_q,b_q,\gamma_q,\tilde{a}_q,\tilde{b}_q\right) \equiv \frac{N_q\, \xi^{a_q} (1-\xi)^{b_q}\left( 1+\gamma_q\, \xi^{\tilde{a}_q}(1-\xi)^{\tilde{b}_q}\right)}{\mathbb{B}(a_q+2,b_q+1) + \gamma^q \mathbb{B}(a_q+\tilde{a}_q+2 , b_q + \tilde{b}_q +1)},
 \end{equation} 
-where $\mathbb{B}(a,b)$ is the Euler beta function. Based on this, we construct some simple models for the fragmentation functions of interest. For simplicity, we set to zero the $\gamma,\tilde{a},\tilde{b}$ parameters, only allowing others to vary. We set
+where $\mathbb{B}(a,b)$ is the Euler beta function and $\xi$ is a generic fractional momentum variable. Based on this, we construct some simple models for the fragmentation functions of interest. We set
 \begin{equation}
     \begin{aligned}
-        \Im \hat{H}^{qg}_{FU}(z,\zeta) &= \frac{\tilde{H}(z)}{2 z} \frac{\zeta^{a_q} (1-\zeta)^{b_q}}{\mathbb{B}(1+a_q,b_q)},\\
-        \Im \hat{H}^{\bar{q}q}_{FU}(z,\zeta) &= \frac{\tilde{H}(z)}{2 z} \frac{N^q \,\zeta^{c_q} (1-\zeta)^{c_q}}{\mathbb{B}(1+c_q,1+c_q)}.
+        \Im \hat{H}^{qg}_{FU}(z,\zeta) &= \frac{\tilde{H}^q(z)}{2 z}\,\mathcal{F}^q\left(\zeta;\,N_q,a_q,b_q,\gamma_q,\tilde{a}_q,\tilde{b}_q\right)\\
+        \Im \hat{H}^{\bar{q}q}_{FU}(z,\zeta) &= \frac{\tilde{H}^q(z)}{2 z}\,\mathcal{F}^q\left(\zeta;\,\bar{N}_q,c_q,c_q,\bar{\gamma}_q,\tilde{c}_q,\tilde{c}_q\right).
     \end{aligned}
 \end{equation}
 It is important to note that in the $qg$ case, our model is guaranteed to satisfy the EoM relation $\tilde{H}(z)/2z=\int\dd\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)/(1-\zeta)$ by construction. This is the case also for the boundary conditions presented in Chap.~\ref{chap:matrixelements}, such as $\Im \hat{H}^{qg}_{FU}(z,0)=\Im \hat{H}^{qg}_{FU}(z,1)= \partial_\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)|_{\zeta\to 0}=\partial_\zeta \Im \hat{H}^{qg}_{FU}(z,\zeta)|_{\zeta\to 1}=0$, provided we choose appropriate model parameters. When it comes to the $\bar{q}q$ correlator, it is completely unconstrained. We choose however to model it such that the $z$-dependence precisely matches the quark-gluon-quark FF $\tilde{H}(z)$. After all, these twist-3 objects are all interconnected to one another, and we regard it as a reasonable and very simple assumption. We would expect the $\bar{q}q$ correlator to be symmetric(??) under the exchange of quarks and antiquarks, hence why we set the exponents of $\zeta$ and $(1-\zeta)$ to be equal for a given $q$. 

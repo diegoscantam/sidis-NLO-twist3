@@ -1,11 +1,15 @@
 \chapter{Hadronic matrix elements at sub-leading twist}\label{chap:matrixelements}
 
+Describing high-energy scattering processes involving hadrons is an outstanding challenge in modern particle physics. Hadrons are composite particles made up of quarks and gluons (collectively called partons), which are the fundamental constituents of matter according to the theory of quantum chromodynamics (QCD). Understanding the behavior of hadrons in high-energy collisions therefore requires a deep understanding of the inner structure of these composite particles, how they form and how they interact. However, due to the non-perturbative nature of QCD at low energies, directly calculating hadronic properties from first principles is extremely challenging. To overcome this difficulty, physicists have developed factorization theorems that separate the short-distance, perturbative partonic interactions from the long-distance, non-perturbative hadronic structure. This separation allows us to express cross sections for high-energy processes as convolutions of perturbatively calculable hard scattering coefficients and non-perturbative matrix elements that encode the hadronic structure. This separation works because QCD is an asymptotically free gauge theory, meaning that the strong interaction becomes perturbative at sufficiently small distances, with an effective coupling that becomes weaker and weaker with higher energies.
 
-In order to obtain a factorized spin-dependent cross section for SIDIS, involving twist-3 contributions, we will need several so called \textit{soft} matrix elements. The "nucleon-to-parton" process, as well as the "parton-to-hadron" hadronization phenomenon, are typically described through non-perturbative matrix elements of certain QCD operators. In principle, they contain all relevant information about the distribution of quarks and gluons inside the nucleon, as well as the decay process from "free" quarks and gluons into color-neutral states such as baryons and mesons. The inner hadronic structure is therefore encoded in these non-perturbative objects. Since they are non-perturbative, they cannot be computed from first principles in QCD. However, they can be extracted from experimental data \cite{} or computed using non-perturbative methods such as lattice QCD or QCD sum rules \cite{}. It is therefore clear that a thorough understanding of these matrix elements is essential in order to study high-energy scattering processes involving hadrons.
-For the study of unpolarized cross sections, the relevant matrix elements are closely related to the so called parton distribution functions (PDFs) and fragmentation functions (FFs). PDFs describe the distribution of partons inside a hadron, while FFs describe the hadronization of partons into hadrons. Both PDFs and FFs can be classified according to their twist, which is a measure of their relevance in high-energy processes. Leading-twist PDF s and FFs are the most important ones, as they dominate the cross section at high energies. However, sub-leading twist PDFs and FFs also play a significant role in certain processes, especially when spin degrees of freedom are involved. In this chapter, we will introduce the relevant twist-3 PDFs and FFs that will be used in the following chapters to derive a factorized expression for the SIDIS cross section involving twist-3 contributions. We will also discuss some important relations among these functions that will be crucial in our analysis.
+In order to obtain a factorized spin-dependent cross section for semi-inclusive deep inelastic scattering, we will need several so called \textit{soft hadronic matrix elements}. The "nucleon-to-parton" process, as well as the "parton-to-hadron" hadronization phenomenon, are typically described through non-perturbative matrix elements of certain QCD operators. In principle, they contain all relevant information about the distribution of quarks and gluons inside the nucleon, as well as the decay process from "free" quarks and gluons into color-neutral states such as baryons and mesons. The inner hadronic structure is therefore encoded in these non-perturbative objects. Since they are non-perturbative, they cannot be computed from first principles in QCD. However, they can be extracted from experimental data CITE or computed using non-perturbative methods such as lattice QCD or QCD sum rules CITE. It is therefore clear that a thorough understanding of these matrix elements is essential in order to study high-energy scattering processes involving hadrons. For the study of unpolarized cross sections, the relevant matrix elements are closely related to the so called parton distribution functions (PDFs) and fragmentation functions (FFs). PDFs describe the distribution of partons inside a hadron, while FFs describe the hadronization of partons into hadrons. Both PDFs and FFs can be classified according to their twist, which is a measure of their relevance in high-energy processes. Leading-twist PDFs and FFs are the most important ones, as they dominate the cross section at high energies. However, sub-leading twist PDFs and FFs also play a significant role in certain processes, especially when spin degrees of freedom are involved. 
+
+In this chapter, after a short introduction on the concept of twist, we will introduce the relevant twist-3 matrix elements that will be used in the following chapters to describe non-perturbative effects. Some important relations among these functions, crucial in our analysis, are also presented.
 
 \section{What is twist anyway?}
-The concept of twist finds its formal definition through a very powerful field theoretical tool: the operator product expansion (OPE). We will quickly discuss this formal definition, since it is very useful to understand the meaning of twist from a more formal point of view. The OPE is a general method in quantum field theory (QFT) that allows us to express the product of two local operators at nearby spacetime points as a sum of local operators multiplied by coefficient functions. This expansion is particularly useful when dealing with non-local operators, which often arise in the context of high-energy scattering processes. Originally, a very succesful application of the OPE concerns the treatment of the bilocal operator appearing in the hadronic tensor in deep inelastic scattering (DIS) CITE. It is
+In the context of hadronic observables, the term \textit{twist} often appears when classifying parton distributions and fragmentation functions. It finds its formal definition through a very powerful field theoretical tool: the operator product expansion (OPE). We will quickly discuss this formal viewpoint, and soon move on to a more practical and quantitative redefinition.
+
+The OPE is a general method in quantum field theory (QFT) that allows us to express the product of two local operators at nearby spacetime points as a sum of local operators multiplied by coefficient functions. This expansion is particularly useful when dealing with non-local operators, which often arise in the context of high-energy scattering processes. Originally, a very successful application of the OPE concerns the treatment of the bilocal operator appearing in the hadronic tensor in deep inelastic scattering (DIS) CITE. It is
 \begin{equation}\label{eq:WmunuDIS}
     W_{\mu\nu} = \int \dd^4 \xi e^{i q\xi} \mel{P}{\comm{J_\mu(\xi)}{J_\nu(0)}}{P}
 \end{equation}
@@ -32,8 +36,11 @@ where $d_\Theta$ is the dimension and $n_\Theta$ the spin of the operator. In ge
     \caption{Pictorial representation of the decomposition on the two light cone directions ($n_+^\mu$ and $n_-^\mu$) and on the transverse space.}
     \label{fig:lightcone}
 \end{figure}
+ADD LINK TO PDF/FF!!!!
 
-So far we have given a formal definition of twist based on the OPE. We saw that is essentially related to the dimension and the spin of the operator itself, and that it gives us a measure of the $M/Q$ relevance of the operator in the high virtuality limit. However, there is yet another way to define twist. This alternative definition is based on the decomposition of quark fields into so called "good" and "bad" components on the light cone. It turns out that the treatment of both perturbative and non-perturbative quantities in high-energy collisions is much simpler when using light-cone coordinates. This should not be particularly surprising, based on the fact that highly relativistic on--shell particles are described by light--like momentum four--vectors since masses are typically negligible. In fact, in processes where a large momentum scale is involved, such as the virtuality of the exchanged photon in deep inelastic scattering $\ell N\to\ell'X$, it is convenient to decompose four-vectors into components along two light-like directions. These directions are typically chosen to be (anti)aligned with the momenta of the incoming and outgoing hadrons in a given scattering process. In turn, this naturally implies the existence of a two--dimensional space which is transverse to both these two light--like directions. The usual Minkowski four--dimensional spacetime is then partitioned into a "plus" direction $n^{\mu}_+$, a "minus" direction $n_-^\mu$, and a transverse ($\perp$) space. The usual metric tensor $g^{\mu\nu}$ is then related to these directions as
+
+
+So far we have given a formal definition of twist based on the OPE. We saw that is essentially related to the dimension and the spin of the operator itself, and that it gives us a measure of the $M/Q$ relevance of the operator in the high virtuality limit. However, there is yet another way to define twist. This alternative definition is based on the decomposition of quark fields into so called "good" and "bad" components on the light cone. It turns out that the treatment of both perturbative and non-perturbative quantities in high-energy collisions is much simpler when using light-cone coordinates. This should not be particularly surprising, based on the fact that highly relativistic on-shell particles are described by light-like momentum four-vectors since masses are typically negligible. In fact, in processes where a large momentum scale is involved, such as the virtuality of the exchanged photon in deep inelastic scattering $\ell N\to\ell'X$, it is convenient to decompose four-vectors into components along two light-like directions. These directions are typically chosen to be (anti)aligned with the momenta of the incoming and outgoing hadrons in a given scattering process. In turn, this naturally implies the existence of a two-dimensional space which is transverse to both these two light-like directions. The usual Minkowski four-dimensional spacetime is then partitioned into a "plus" direction $n^{\mu}_+$, a "minus" direction $n_-^\mu$, and a transverse ($\perp$) space. The usual metric tensor $g^{\mu\nu}$ is then related to these directions as
 \begin{equation}
     g^{\mu\nu}_\perp=g^{\mu\nu} - n_+^\mu n_-^\nu - n_-^\mu n_+^\mu,
 \end{equation}
@@ -78,17 +85,31 @@ where it is clear that also bad components $\chi$ arise. In the last line we eli
 
 Concluding this introductory section about twist and light cone physics, we can make some important remarks:
 \begin{itemize}
-    \item The twist on an operator is formally defined via the dimension and the spin of the operator itself, in particular via its operator product expansion if the operator is non--local or bi--local. Thanks to dimensional analysis, one soon realizes that twist is also connected to the power in which $M/Q$ factors appear in the expansion. This is important not only on the theory side, but also on the phenomenological and experimental point of view. In fact, a sub-leading twist observable will be power suppressed, especially in high--energy collider experiments.
-    \item From a theoretical viewpoint, hadronic spin degrees of freedom cannot be taken into account at leading twist. There is simply no way of parametrizing a spin--dependent hadronic matrix element without introducing any mass factor to match the dimensions of the QCD operators. Twist--3 factorization is therefore essential when it comes to studying these spin--dependent phenomena.
-    \item Lastly, by decomposing the amplitudes on the light cone, one associates higher--twist effects with distributions that probe also bad light cone components of the fields. Equivalently, since these bad components are not independent fields by themselves, one can transform them away in favor of quark-gluon composites. In this very sense, sub--leading twist effects probe \textit{multi--parton correlations} within hadrons and gives us information about \textit{quark-gluon-quark} matrix elements.
+    \item The twist on an operator is formally defined via the dimension and the spin of the operator itself, in particular via its operator product expansion if the operator is non-local or bi-local. Thanks to dimensional analysis, one soon realizes that twist is also connected to the power in which $M/Q$ factors appear in the expansion. This is important not only on the theory side, but also on the phenomenological and experimental point of view. In fact, a sub-leading twist observable will be power suppressed, especially in high-energy collider experiments.
+    \item From a theoretical viewpoint, hadronic spin degrees of freedom cannot be taken into account at leading twist. There is simply no way of parametrizing a spin-dependent hadronic matrix element without introducing any mass factor to match the dimensions of the QCD operators. Twist-3 factorization is therefore essential when it comes to studying these spin-dependent phenomena.
+    \item Lastly, by decomposing the amplitudes on the light cone, one associates higher-twist effects with distributions that probe also bad light cone components of the fields. Equivalently, since these bad components are not independent fields by themselves, one can transform them away in favor of quark-gluon composites. In this very sense, sub-leading twist effects probe \textit{multi-parton correlations} within hadrons and gives us information about \textit{quark-gluon-quark} hadronic matrix elements.
 \end{itemize}
 
 
-
 \section{Multi-parton correlations}
-ADD HERE DISTINCTION DISTRIBUTION/FRAGMENTATION\\
-Add here fiersz transform
-\subsection{Leading-twist distributions}
+In this section we will discuss in detail the non-perturbative objects appearing in our factorization formulae. We already mentioned that, on one hand, the "nucleon-to-parton" process is described via soft matrix elements of certain QCD operators on the light cone, which are intimately related to parton distribution functions. On the other hand, the "parton-to-hadron" phenomenon is encoded in fragmentation (or decay) functions, also expressed as hadronic matrix elements on the light cone. We also discussed that such bi-local operators can be expanded as a sum of local operators, in which the mass factors appearing in the coefficients gives us information about the twist of the operator. In this work, as many other in the literature, we will organize PDFs into what people call \textit{distribution correlators}, collectively denoted $\Phi(x)$. The term \textit{distribution} will therefore be used solely to refer to non-perturbative functions on the nucleon side. Analogously, FFs are collected in what we call \textit{fragmentation correlators}, often denoted with $\Delta(z)$. As anticipated, in this work we focus on the sub-leading twist effects only coming from the fragmentation process. Since at twist-3 level many conventions concerning matrix elements and functions are used, we believe is crucial that we clearly state which non-perturbative input is employed in our calculation.
+
+The correlators, except when the parton content is purely gluonic, are matrices in Dirac space or, to be specific, Dirac bilinears. A neat way to express the parametrization of these matrix elements is writing them as a sum over the basis Dirac matrices. One can achieve this by performing a so-called Fierz transform. For a distribution correlator $\Phi_{ij}$, it is
+\begin{equation}
+    \begin{aligned}
+            \Phi_{ij}&=\sum_\Gamma \Phi^{[\Gamma]} \,\bar{\Gamma}_{ij}\\
+            \text{with}\quad \Phi^{[\Gamma]}&=\frac{1}{2}\Tr\left[\Phi\,\Gamma\right]\\
+            \Gamma&\in\left\{ \gamma^\mu,\gamma^\mu\gamma_5, i \sigma^{\mu\nu}\gamma_5,1,i\gamma_5\right\}\\
+            \bar{\Gamma}&\in\left\{ \frac{1}{2}\gamma^\mu,-\frac{1}{2}\gamma^\mu\gamma_5, -\frac{i}{4} \sigma^{\mu\nu}\gamma_5,\frac{1}{2}1,-\frac{i}{2}\gamma_5\right\},
+    \end{aligned}
+\end{equation}
+and analogously for the fragmentation correlator $\Delta_{ij}$. Interestingly, the traces $\Phi^{[\Gamma]}$ and $\Delta^{[\Gamma]}$ turns out to be proportional to the various PDFs and FFs, depending on the specific Dirac structure $\Gamma$. In this way, we see that the correlators can be written as a sum of Dirac matrices, where each structure comes with a different non-perturbative parametrization. 
+
+With this notation in mind, we recap the relevant correlators in the next subsections.
+
+\subsection{Distribution functions}
+Starting with the nucleon side, the tratment of PDFs is not particularly tedious since we only deal with leading twist distributions.
+\subsubsection*{Leading twist}
 The relevant hadronic matrix element describing the "nucleon-to-quark" process is given by the so-called quark-quark distribution correlator
 \begin{equation}
     \begin{aligned}
@@ -97,7 +118,7 @@ The relevant hadronic matrix element describing the "nucleon-to-quark" process i
         -\frac{1}{4} \left(\comm{\slashed{P}}{\slashed{S}}\gamma_5\right)_{ij} h^q_1(x)+\cdots .
     \end{aligned}
 \end{equation}
-The different Dirac structures appearing in the correlator are parametrized by the so-called parton distribution functions (PDFs) $f_1(x)$ and $h_1(x)$, which are referred to as the leading-twist unpolarized and transversity parton densities respectively. The former often enters the unpolarized observables, and it has been extensively determined by numerous experimental collaborations throughout the years \cite{}. In other words, $f_1(x)$ is arguably the most constrained and the best understood PDF among all non-perturbative functions in hadronic physics. The latter, on the other hand, is present only if the nucleon is transversely polarized. Although being a leading twist effect, transversity has been known with satisfactory accuracy only in recent years \cite{Gamberg2022Htilde}. This is mainly linked to the fact that it is experimentally challenging to set up and control transversely polarized hadronic targets. This is even more true for transversely polarized beams, which is currently one of the experimental frontiers when it comes to the field of hadronic spin physics.
+The different Dirac structures appearing in the correlator are parametrized by the parton distribution functions $f_1(x)$ and $h_1(x)$, which are referred to as the leading-twist unpolarized and transversity parton densities respectively. The former enters the unpolarized observables, and it has been extensively determined by numerous experimental collaborations throughout the years CITE. In other words, $f_1(x)$ is arguably the most constrained and the best understood PDF among all non-perturbative functions in hadronic physics. The latter, on the other hand, is present only if the nucleon is transversely polarized. Although being a leading twist effect, transversity has been known with satisfactory accuracy only in recent years \cite{Gamberg2022Htilde}. This is mainly linked to the fact that it is experimentally challenging to set up and control transversely polarized hadronic targets. This is even more true for transversely polarized beams, which is currently one of the experimental frontiers when it comes to the field of hadronic spin physics.
 
 One may also have an equivalent hadronic matrix element describing the "nucleon-to-gluon" process, also often appearing in hadronic observables. It is described through the gluon-gluon distribution correlator CHECK
 \begin{equation}
@@ -110,13 +131,16 @@ where $f_1^g(x)$ is the leading-twist unpolarized gluon distribution function. A
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{fig/phi corr.png}
+    \includegraphics[width=0.8\linewidth]{fig/phi.pdf}
     \caption{Quark-quark (left) and gluon-gluon (right) distribution correlators appearing at leading-twist.}
     \label{fig:distribution corr}
 \end{figure}
 
-\subsection{Intrinsic twist-3 fragmentation}
-The first type of sub-leading twist hadronic matrix elements are the so called \textit{intrinsic} twist-3 functions. They are expressed in terms of 2-parton correlations, involving a pair of quark fields or a pair of gluons. The fact that only one parton (on each side of the cut) is participating in the distribution/fragmentation process is a common feature with leading twist correlations.\\
+\subsection{Fragmentation functions}
+Moving on to the fragmentation process (which we describe at twist-3 level), things get slightly more involved. In fact, one typically classifies the different contributions into three main categories: \textit{intrinsic, kinematical} and \textit{dynamical} twist-3 functions. 
+
+\subsubsection*{Intrinsic twist-3 fragmentation}
+The first type of sub-leading twist hadronic matrix elements are the so called \textit{intrinsic} twist-3 functions. They are expressed in terms of 2-parton correlations, involving a pair of quark fields or a pair of gluons. The fact that only one parton (on each side of the cut) is participating in the fragmentation process is a common feature with leading twist correlations.\\
 Starting with the quark-quark case, these quantities are organized into a quark-quark fragmentation correlator
 \begin{equation}
     \begin{aligned}
@@ -137,12 +161,12 @@ where $D_1^g(z)$ is the unpolarized gluon fragmentation function.
 Similarly to distribution matrix elements, also fragmentation correlators are conveniently depicted as cut diagrams, as shown in Fig.~\ref{fig:fragmentation corr I}.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{fig/phi corr.png}
+    \includegraphics[width=0.8\linewidth]{fig/delta_i.pdf}
     \caption{Soft matrix elements relevant for leading twist and intrinsic twist-3 fragmentation. The quark-quark correlator (left) can depict both $D_1(z)$ or $H(z)$ depending on the Dirac structure assumed. The gluon-gluon correlator is also shown (right).}
     \label{fig:fragmentation corr I}
 \end{figure}
 
-\subsection{Kinematical twist-3 fragmentation}
+\subsubsection*{Kinematical twist-3 fragmentation}
 Another kind of two-parton correlation functions are the so called \textit{kinematical} twist-3 functions. Contrary to the intrinsic twist-3 case, these objects incorporate (indirectly) also the transverse momentum dependence of partons. Instead of assuming the hadron and the fragmenting parton to be exactly collinear, now the kinematical approximation to the partonic momentum reads
 \begin{equation}
     p^\mu = \frac{1}{z}P_h^\mu + p_T^\mu,
@@ -173,33 +197,39 @@ Kinematical twist-3 matrix elements are pictorially represented by the same kind
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{fig/phi corr.png}
+    \includegraphics[width=0.8\linewidth]{fig/delta_k.pdf}
     \caption{Soft matrix element relevant for kinematical twist-3 fragmentation.}
     \label{fig:fragmentation corr K}
 \end{figure}
 
-\subsection{Dynamical twist-3 fragmentation}
+\subsubsection*{Dynamical twist-3 fragmentation}
 The last type of twist-3 correlators are described in terms of matrix elements of three partonic fields, typically two quark/anti-quark fields and one gluonic field strength tensor. In general, such structures are composed of an interference of two transition amplitudes: one that is a coherent fragmentation of two partons into a hadron, and another that is the ordinary one-parton fragmentation. These objects are usually called \textit{dynamical} twist-3 correlation functions. Since the partons contributing to the hadron production are two, it makes sense that the matrix element will depend on more than one momentum fraction. The partonic momenta are now approximated as
 \begin{equation}
     p^\mu = \frac{1}{z}P_h^\mu,\qquad p'^\mu = \frac{1}{z'}P_h^\mu.
 \end{equation}
-It is customary to introduce a scaled variable for the $z'$ momentum fraction, $z'= z/\zeta$, since it will simplify the treatment later on.
+It is customary to introduce a scaled variable for the $z'$ momentum fraction,
+\begin{equation}
+    \zeta \equiv \frac{z}{z'},
+\end{equation}
+since it will simplify the treatment later on.
 
 One type of dynamical twist-3 matrix elements are the so called \textit{quark-gluon-quark correlations}. In this case a quark and a gluon contribute to the final state hadronization process. The correlator is written as
-%\begin{equation}
-%    \begin{aligned}
-%        \Phi^\rho_{F,ij}(x,x')&= \int\frac{\dd \lambda}{2\pi}\int\frac{\dd \eta}%{2\pi} \,e^{i\lambda x'+i\eta(x-x')}\mel{N(P,S)}{\bar \psi_j(0)\,i g_S\, %n_\sigma F^{\sigma \rho}(\eta n)\, \psi_i(\lambda n)}{N(P,S)}\\
-%        &= \frac{M}{2}\epsilon^{Pn\rho S}\left(\slashed{P }\right)_{ij}\,i F_{FT}(x,%x')-\frac{M}{2}(S^\rho-(S \cdot n)P^\rho)\left(\slashed{P }\gamma_5\right)_%{ij}G_{FT}(x,x')+\cdots
-%    \end{aligned}
-%\end{equation}
 \begin{equation}
     \begin{aligned}
-        \Delta^{qg,\rho}_{F,ij}(z,\zeta)&= \sum_X\int\frac{\dd \lambda}{2\pi}\int\frac{\dd \eta}{2\pi} \,e^{-i\frac{\lambda }{z}\zeta-i\frac{\eta}{z}\left(1-\zeta\right)}\mel{0}{ig_S \mu^\epsilon m_\sigma F^{\sigma \rho}(\eta m)\psi_i(0)}{h(P_h);X}\\
+        \Delta^{qg,\rho}_{F,ij}(z,\zeta)&= \sum_X\int\frac{\dd \lambda}{2\pi}\int\frac{\dd \eta}{2\pi} \,e^{-i\frac{\lambda }{z}\zeta-i\frac{\eta}{z}\left(1-\zeta\right)}\mel{0}{ig_S \mu^\epsilon m_\sigma G^{\sigma \rho}(\eta m)\psi_i(0)}{h(P_h);X}\\
         &\qquad \qquad \qquad \times\mel{h(P_h);X}{\bar \psi_j(\lambda m)}{0}\\
-        &= z^{2\epsilon}\frac{iM_h}{2z}\left(\comm{\slashed{P}_h}{\gamma^\rho}-\comm{\slashed{P}_h}{\slashed{m}}P_h^\rho\right)_{ij}\,i\left(\hat H^{qg}_{FU}(z,z')\right)^*+\cdots,
+        &= z^{2\epsilon}\frac{iM_h}{2z}\left(\comm{\slashed{P}_h}{\gamma^\rho}-\comm{\slashed{P}_h}{\slashed{m}}P_h^\rho\right)_{ij}\,i\left(\hat H^{qg}_{FU}(z,\zeta)\right)^*+\cdots,
         \end{aligned}
 \end{equation}
-where $\hat{H}_{FU}^{qg}$ is the quark-gluon-quark fragmentation function describing the production of unpolarized hadrons. 
+where $\hat{H}_{FU}^{qg}$ is the quark-gluon-quark fragmentation function describing the production of unpolarized hadrons. It is important to stress that this matrix element contains a gluonic field strength tensor $G^{m\rho}$, rather than a simple gluon field operator. Actually, when writing down the amplitudes, one ends up with a version of the above matrix element, $\Delta^{qg}_{A,ij}(z,\zeta)$, with a gluon field alone instead of the field strength tensor. It turns out that the two matrix elements are related to each other. In fact, in light-cone gauge $m\cdot G=0$, the gluon field-strength tensor satisfies contracted with $m_\mu$, is nothing else but gluon field derivative along the good light-cone direction, i.e. $m_\mu G^{\mu\nu}\sim \pdv{\eta} G^\nu$. Hence, by simple integration by parts, one can show that two must be related to each other via the simple relation
+\begin{equation}
+    \Delta^{qg,\rho}_{A,ij}(z,\zeta)=\frac{(-i)}{1-\zeta}\Delta^{qg,\rho}_{F,ij}(z,\zeta)
+\end{equation}
+for sufficiently well-behaved gluon fields at the boundaries (or asymmetric boundary conditions). In passing, we mention that in twist-3 fragmentation only transverse gluons has to be taken into account in the end \cite{boer_universality_2003}, since 
+\begin{equation}
+    G^\mu=\underbrace{(m\cdot G)}_{=0}P_h^\mu+\underbrace{(P_h \cdot G)}_{\text{twist-4}}m^\mu+G_\perp^\mu\approx G_\perp^\mu=G_\nu g_\perp^{\mu\nu}.
+\end{equation}
+Our parametrization already takes into account this transverse Lorentz structure so we do not need to add this extra projection.
 
 Another kind of dynamical twist-3 matrix element is given by a quark-antiquark-gluon correlation. Intuitively, the fragmentation is initiated from a quark-antiquark pair. The relevant correlator is CHECK
 \begin{equation}
@@ -209,13 +239,20 @@ Another kind of dynamical twist-3 matrix element is given by a quark-antiquark-g
         &= z^{2\epsilon}\frac{iM_h}{2z}\left(\comm{\slashed{P}_h}{\gamma^\rho}-\comm{\slashed{P}_h}{\slashed{m}}P_h^\rho\right)_{ij}\,i\left(\hat H^{q\bar{q}}_{FU}(z,z')\right)^*+\cdots,
         \end{aligned}
 \end{equation}
+where $\hat{H}_{FU}^{q\bar{q}}$ is the quark-antiquark-gluon fragmentation function describing the production of unpolarized hadrons. Similarly to the previous case, we can define an analogous correlator with a gluon field instead of the gluon field-strength tensor. They are related via similar relations to the one presented above.
 
-ADD HERE BOUNDARY CONDITIONS AND SYMMETRIES ETC...\\
-
-Lastly, the diagram notation for these dynamical twist-3 correlations is presented in Fig.~\ref{fig:fragmentation corr D}
+Very importantly, these kinds of fragmentation correlators have been shown to satisfy important constraints concerning their behavior on the support's boundaries. The first being that pole matrix elements vanish \cite{Meissner_2009}. More explicitly, it is
+\begin{equation}
+    \Delta_F(z,0)=\Delta_F(z,1)=0.
+\end{equation}
+Secondly, also the first derivatives must vanish when evaluated at the boundaries \cite{kanazawa_operator_2016}
+\begin{equation}
+    \left.\pdv{\Delta_F(z,\zeta)}{\zeta}\right\rvert_{\zeta\to0}=\left.\pdv{\Delta_F(z,\zeta)}{\zeta}\right\rvert_{\zeta\to1}=0,
+\end{equation}
+but not higher-order derivatives. Lastly, the diagram notation for these dynamical twist-3 correlations is presented in Fig.~\ref{fig:fragmentation corr D}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\linewidth]{fig/phi corr.png}
+    \includegraphics[width=0.8\linewidth]{fig/delta_d.pdf}
     \caption{Soft matrix element relevant for dynamical twist-3 fragmentation. Quark-gluon-quark (right) and quark-antiquark-gluon (left) correlations are shown.}
     \label{fig:fragmentation corr D}
 \end{figure}
@@ -229,13 +266,14 @@ The previously introduced twist-3 fragmentation functions are not independent fr
 \begin{equation}
     \left(i \slashed{D}(x) -m_q \right)\psi^q(x)=0
 \end{equation}
-where $D_\mu^{ab}(x)=\delta^{ab}\partial_\mu -ig_S G_\mu^{ab}(x)$ is the usual covariant derivative in the fundamental representation. Decomposing the above equation on the light-cone and considering the matrix elements appearing in the various correlators \cite{bacchetta_semi-inclusive_2007}, one can derive the following relation \cite{kanazawa_operator_2016}
+where $D_\mu^{ab}(x)=\delta^{ab}\partial_\mu -ig_S G_\mu^{ab}(x)$ is the usual covariant derivative in the fundamental representation. Decomposing the above equation on the light-cone and considering the matrix elements appearing in the various correlators \cite{bacchetta_semi-inclusive_2007}, one can derive the following relations \cite{kanazawa_operator_2016}
 \begin{equation}\label{eq:eomr H}
-    \frac{H^a(z)}{2 z}+H_1^{\perp(1)a}(z)= \mathcal{P}\int_0^1\dd \zeta\frac{\Im[\hat H^a_{FU}(z,z/\zeta)]}{1-\zeta}\qquad \text{(EoMR)}\,.
+    \begin{aligned}
+            (1-\epsilon)2z\mathcal{P}\int_0^1\dd \zeta\frac{\Im[\hat H^{qg}_{FU}(z,z/\zeta)]}{1-\zeta}&=H^q(z)+2z\,H_1^{\perp(1),q}(z)\\
+            (1-\epsilon) (-2z)\,\mathcal{P}\int_0^1\dd \zeta\frac{\Re[\hat H^{qg}_{FU}(z,z/\zeta)]}{1-\zeta}&=E^q(z)-z\frac{m_q}{M_h}D_1^q(z)
+    \end{aligned}
 \end{equation}
 Similar relations hold also for all the other twist-3 fragmentation functions, as well as for twist-3 parton distribution functions. Since other contributions do not enter our spin-dependent SIDIS cross section in the polarization case of interest, such EoMRs are irrelevant for the present work and we omit them here for brevity. At first glance, the above relation may seem redundant since it simply expresses the intrinsic and kinematical twist-3 fragmentation functions in terms of the dynamical one. However, as we will see in the next chapters, this relation is crucial to obtain a gauge invariant and infrared (IR) safe result for the final twist-3 cross section. In fact, when computing the hard scattering coefficients, one finds that they are not separately gauge invariant. Only after combining them according to the above EoMR, one obtains a gauge invariant result. This is a strong indication that the application of the QCD EoMR is not optional but it is rather an important and essential step in this kind of calculations.
-
-\noindent ADD HERE GLUON EOMRs???\\
 
 \noindent We also note in passing that one can find yet another fragmentation function in the literature, often denoted as $\tilde H(z)$. This functions is nothing else but a shorthand for a particular combination of $H$ and $H_1^{\perp(1)}$ or, equivalently, an (integrated) $\hat H_{FU}$ quark-gluon-quark correlation function. It is defined as
 \begin{equation}\label{eq:Htildedefinition}
