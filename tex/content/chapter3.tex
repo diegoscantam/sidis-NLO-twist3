@@ -206,7 +206,9 @@ Here, we employ the same phase-space integration techniques used in the unpolari
 When it come to the $q\bar{q}$ case, real emission of quarks is taken into account. The relevant diagrams are shown in Fig.~\ref{fig:Real NLO tw3}. We observe that the hadronic tensor is $\kappa$-gauge invariant and electromagnetic gauge invariant, since it is the only contribution in this channel. It also $1/\epsilon^2$ poles free, in agreement with the fact that there are no virtual corrections to cancel these double poles emerging from the phase space integration. In this sense, the $q\bar{q}$ channel is significantly simpler compared to the $qg$ one and we regard it as a "stand-alone" channel. This is particularly useful when it comes to renormalization, as we will see in the next section. If the IR behaviour of this channel is in agreement with the evolution equations of the relevant fragmentation functions, then we regard it as a strong clue that our calculation is consistent.
 
 \subsection*{Renormalization}
-Once all the terms are added and combined through the EoMR, we obtain gauge invariant partonic cross sections, free of $1/\epsilon^2$ poles and exhibiting electromagnetic gauge invariance for both channels. We are now left with soft and collinear singularities that can be absorbed, as standard, into renormalized PDFs and FFs. On the nucleon side, the evolution kernels for transversity $h_1^q$ are well known CITE. It is
+Once all the terms are added and combined through the EoMR, we obtain gauge invariant partonic cross sections, free of $1/\epsilon^2$ poles and exhibiting electromagnetic gauge invariance for both channels. We are now left with soft and collinear singularities that can be absorbed into renormalized non-perturbative functions. 
+
+On the nucleon side, the evolution kernels for transversity $h_1^q(x)$ are well known \cite{sha2024}. It is
 \begin{equation}
 \begin{aligned}
     h^q_{1,\text{bare}}(x,\mu^2)&= h^q_{1,\text{ren}}(x,\mu^2)+\frac{\alpha_S(\mu^2)}{2\pi}\frac{S_\epsilon}{\epsilon}\left[P^{h_1}_{qq} \otimes h^q_{1,\text{ren}}\right](x,\mu^2),
@@ -227,24 +229,34 @@ The corresponding poles can be removed in the $\overline{\text{MS}}$ scheme by i
     &+\frac{\alpha_S(\mu^2)}{2\pi}\frac{S_\epsilon}{\epsilon}\left[P^{E}_{qqg} \circ \Re \hat{H}_{FU,\text{ren}}^{qg}+P^E_{q\bar{q}q} \circ \Re \hat{H}_{FU,\text{ren}}^{\bar{q}q}\right](z,\mu^2),
 \end{aligned}
 \end{equation}
-with splitting functions
-\begin{equation}
-    \begin{aligned}
-        P^H_{qqg}(v,\zeta)&= \dots\\
-        P^H_{q\bar{q}q}(v,\zeta)&= \dots\\
-        P^E_{qqg}(v,\zeta)&= \dots\\
-        P^E_{q\bar{q}q}(v,\zeta)&= \dots,
-    \end{aligned}
-\end{equation}
 where the convolution $\circ$ is a short-hand for
 \begin{equation}
-    (P\circ H )(z)\equiv\int_z^1\frac{\dd v}{v}\int_0^1\dd\zeta P(v,\zeta) H\left(\frac{z}{v},\zeta\right).
+    (P\circ H )(z)\equiv\int_z^1\frac{\dd v}{v}\int_0^1\dd\zeta P(v,\zeta) H\left(\frac{z}{v},\zeta\right),
 \end{equation}
+and the splitting functions are found in Ref. \cite{Ma_2017} OR APPENDIX?. 
+
 
 \subsection*{Results}
+Finally, we present the polarized structure functions for transversely polarized nucleons at NLO accuracy in the strong coupling. We stress that the calculation only involved sub-leading twist effects on the fragmentation side. Therefore, as in the case of the $F_{LT}^{\cos\phi_S}$ structure function, we ignore the $\mathcal{O}(\alpha_S)$ corrections stemming from the nucleon side. Our results read
+\begin{equation}\label{eq:F_UT@NLO}
+    \begin{aligned}
+        F_{UT}^{\sin\phi_S}(x_B,z_h,\mu^2)&=- x_B\frac{4 M_h}{Q}\sum_{q,\bar{q}} e_q^2 \Bigg\{h_1^q(x_B,\mu^2)\frac{\tilde{H}^q(z_h,\mu^2)}{2 z_h}\\
+        &+ \frac{\alpha_S(\mu^2)}{2\pi}\int_{x_B}^1\frac{\dd w}{w}\int_{z_h}^1\frac{\dd v}{v}\int_0^1\dd \zeta\,\,h_1^q \left(\frac{x_B}{w},\mu^2\right)\\
+        & \times \Bigg[\mathcal{C}_{UT}^{q \to qg}(w,v,\zeta,\mu^2) \frac{\Im \hat{H}_{FU}^{qg}\left(\frac{z_h}{v},\zeta,\mu^2\right)}{1-\zeta}\\
+        &\qquad+\mathcal{C}_{UT}^{q \to \bar{q} q}(w,v,\zeta,\mu^2) \Im \hat{H}_{FU}^{\bar{q}q}\left(\frac{z_h}{v},\zeta,\mu^2\right)\Bigg]\Bigg\},
+    \end{aligned}
+\end{equation}
+and
+\begin{equation}\label{eq:F_LT@NLO}
+    \begin{aligned}
+        F_{LT}^{\cos\phi_S}(x_B,z_h,\mu^2)&= +x_B\frac{4 M_h}{Q}\sum_{q,\bar{q}} e_q^2 \Bigg\{
+        -h_1^q(x_B,\mu^2)\frac{\tilde{E}^q(z_h,\mu^2)}{2 z_h}\\
+        &+ \frac{\alpha_S(\mu^2)}{2\pi}\int_{x_B}^1\frac{\dd w}{w}\int_{z_h}^1\frac{\dd v}{v}\int_0^1\dd \zeta \,\,h_1^q \left(\frac{x_B}{w},\mu^2\right)\\
+        &\times\Bigg[\mathcal{C}_{LT}^{q \to qg}(w,v,\zeta,\mu^2)  \frac{\Re \hat{H}_{FU}^{qg}\left(\frac{z_h}{v},\zeta,\mu^2\right)}{1-\zeta}\\
+        &\qquad+\mathcal{C}_{LT}^{q \to \bar{q} q}(w,v,\zeta,\mu^2) \Re \hat{H}_{FU}^{\bar{q}q}\left(\frac{z_h}{v},\zeta,\mu^2\right)\Bigg]\\
+        &-x_B\frac{M}{M_h} \,g_T^q(x_B,\mu^2)D_1^q(z_h,\mu^2)+\mathcal{O}(\alpha_S) \Bigg\}.
+    \end{aligned}
+\end{equation}
+Crucially, we observe that collinear twist-3 factorization holds at NLO in QCD for these $P_{h\perp}$-integrated observables in SIDIS. Similarly to the unpolarized case, the structure functions are described as convolutions of perturbative hard scattering coefficients and twist-3 fragmentation functions. Here, the convolution involves not only the integrations over $w=x_B/x$ and $v=z_h/z$, but also an extra integral over the partonic variable $\zeta=z/z'$. For the interested reader, we point out that the explicit expressions for the coefficients can be found in Appendix \ref{appendix:polarized}.
 
-
-
-
-
-
+The proof that collinear twist-3 factorization at NLO holds, together with the formulae in Eq. \eqref{eq:F_UT@NLO} and \eqref{eq:F_LT@NLO}, is the main result of this work. As pointed out before, this is a non-trivial result. Although some twist-3 NLO calculations have been pursued in the past CITE, they mostly focused on $P_{h\perp}$-weigthed or fully differential SIDIS observables. This is a big difference compared to our calculation, where very few structure functions survive the $P_{h\perp}$ integration. This is also true on a technical point of view, where the treatment of the phase space and the momentum-conserving delta functions are quite different. Furthermore, our calculation is particularly useful in the eye of the upcoming precision colliders such as the EIC, LHCSpin and the JLab $22\,\rm{GeV}$ upgrade. This is because it paves the way to precision calculations of single and double spin asymmetries, which are central observables for the upcoming work of the mentioned experimental collaborations. 

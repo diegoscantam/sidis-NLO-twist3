@@ -1,7 +1,7 @@
 
-\documentclass[12pt,oneside,openany]{report}
-\usepackage{geometry}
-\geometry{left=30mm,right=30mm, top=40mm,bottom=40mm}
+\documentclass[12pt,twoside]{book}
+\usepackage[twoside, inner=3.5cm, outer=3cm, bindingoffset=0.5cm]{geometry}
+%\geometry{left=30mm,right=30mm, top=40mm,bottom=40mm}
 \usepackage{import}
 \usepackage{slashed}
 \usepackage[english]{babel}
@@ -31,25 +31,29 @@
 
 %\title{formal title}
 %\author{Diego Scantamburlo\\\textit{University of Tübingen}}
-
+%\renewcommand{\chaptermark}[1]{%
+%  \markboth{#1}{}%
+%  }
 
 \begin{document}
 
-
-
-
 \import{./content/}{titlepage.tex}
 
-
 \setstretch{1.1}
-\pagestyle{fancy}
-\fancyhead{} 
-\fancyhead[C]{Transverse spin effects at NLO accuracy in semi-inclusive deep inelastic scattering}
-\fancyfoot{}
-\fancyfoot[C]{\thepage}
-
 \import{./content/}{intro.tex}
+
+%\pagestyle{fancy}
+%\fancyhead{} 
+%\fancyhead[RO]{\chaptername\quad\thechapter}
+%\fancyhead[LE]{\thechapter. \chaptername}
+%
+%\fancyfoot{}
+%\fancyfoot[C]{\thepage}
+
 \import{./content/}{chapter1.tex}
+
+
+
 \import{./content/}{chapter2.tex}
 \import{./content/}{chapter3.tex}
 
