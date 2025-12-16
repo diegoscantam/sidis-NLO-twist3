@@ -1431,7 +1431,44 @@ void write_A_UT_proj_to_file(std::vector<double> x, std::vector<double> y, std::
 
 }
 
+/**
+ * @brief Writes down to file the asymmetry A_UT^sin(phi_S) as a function of kinematic variables, at LO. 
+ * Note: x, z vectors should be same size!!!
+ * @param x_sample Vector of x values in which A_UT is meant to be evaluated
+ * @param z_sample Vector of z values in which A_UT is meant to be evaluated
+ * @param Q  Q value in which A_UT is meant to be evaluated
+ * @param f1 Pointer to f1 PDF
+ * @param D1 Pointer to D1 FF
+ * @param h1 Pointer to h1 PDF
+ * @param Ht Pointer to Ht FF
+ * @param fname filename
+ */
+void write_A_UT_2Dscan_to_file(std::vector<double> x, std::vector<double> z, double  Q, const PDF* f1, const PDF* D1,const PDF* h1, const PDF* Ht, std::string fname){
 
+    // Declare ofstream object (file in which we are going to store our data points)
+    std::ofstream ofile;
+    
+
+    // Open it
+    ofile.open(fname);
+    
+    for(int i = 0; i< x.size(); i++ ){
+        for(int j = 0; j < z.size(); j++){
+            // Write to file
+            ofile << x[i] << " "<< z[j] << " "<< Q << " " << A_UT(x[i], 0.1, z[j], Q, Q, f1, D1, h1, Ht, 0, 0) << std::endl;
+
+        }
+                                
+                    
+    }
+
+
+    // Close the file
+    ofile.close();
+
+
+
+}
 // THIS IS THE MAIN PROGRAM
 int main(int argc, char** argv){
 
@@ -1624,7 +1661,7 @@ int main(int argc, char** argv){
 
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj, 0, Qs_pp_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp.txt");
-    write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj,scale, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
+    //write_A_UT_proj_to_file(xs_pp_zproj, ys_pp_zproj, zs_pp_zproj,scale, Qs_pp_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp);
 
     
     ////////////////////////////////////////////////////
@@ -1640,7 +1677,7 @@ int main(int argc, char** argv){
 
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj,0, Qs_pp_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp.txt");
-    write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj,scale, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
+    //write_A_UT_proj_to_file(xs_pp_xproj, ys_pp_xproj, zs_pp_xproj,scale, Qs_pp_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp);
 
     
     ////////////////////////////////////////////////////
@@ -1654,7 +1691,7 @@ int main(int argc, char** argv){
 
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj,0, Qs_pm_zproj, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm.txt");
-    write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj,scale, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
+    //write_A_UT_proj_to_file(xs_pm_zproj, ys_pm_zproj, zs_pm_zproj,scale, Qs_pm_zproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm);
 
     ////////////////////////////////////////////////////
     // HERMES 10021. pi-, x dependence
@@ -1668,7 +1705,7 @@ int main(int argc, char** argv){
 
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,0, Qs_pm_xproj, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm.txt");
-    write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,scale, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
+    //write_A_UT_proj_to_file(xs_pm_xproj, ys_pm_xproj, zs_pm_xproj,scale, Qs_pm_xproj, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm);
     
 
 
@@ -1692,7 +1729,7 @@ int main(int argc, char** argv){
 
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_zproj_EIC, ys_pp_zproj_EIC, zs_pp_zproj_EIC, 0,    Qs_pp_zproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pp_EIC.txt");
-    write_A_UT_proj_to_file(xs_pp_zproj_EIC, ys_pp_zproj_EIC, zs_pp_zproj_EIC,scale, Qs_pp_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp_EIC);
+    //write_A_UT_proj_to_file(xs_pp_zproj_EIC, ys_pp_zproj_EIC, zs_pp_zproj_EIC,scale, Qs_pp_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pp_EIC);
 
     ////////////////////////////////////////////////////
     // EIC pseudodata. pi+, x dependence
@@ -1708,7 +1745,7 @@ int main(int argc, char** argv){
 
     which_pion = +1; // It is a pi+
     write_A_UT_proj_to_file(xs_pp_xproj_EIC, ys_pp_xproj_EIC, zs_pp_xproj_EIC,0,     Qs_pp_xproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pp_EIC.txt");
-    write_A_UT_proj_to_file(xs_pp_xproj_EIC, ys_pp_xproj_EIC, zs_pp_xproj_EIC,scale, Qs_pp_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp_EIC);
+    //write_A_UT_proj_to_file(xs_pp_xproj_EIC, ys_pp_xproj_EIC, zs_pp_xproj_EIC,scale, Qs_pp_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pp_EIC);
 
     ////////////////////////////////////////////////////
     // EIC pseudodata. pi-, z dependence
@@ -1724,7 +1761,7 @@ int main(int argc, char** argv){
 
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_zproj_EIC, ys_pm_zproj_EIC, zs_pm_zproj_EIC,0,     Qs_pm_zproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTz_LO_pm_EIC.txt");
-    write_A_UT_proj_to_file(xs_pm_zproj_EIC, ys_pm_zproj_EIC, zs_pm_zproj_EIC,scale, Qs_pm_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm_EIC);
+    //write_A_UT_proj_to_file(xs_pm_zproj_EIC, ys_pm_zproj_EIC, zs_pm_zproj_EIC,scale, Qs_pm_zproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTz_NLO_pm_EIC);
 
     ////////////////////////////////////////////////////
     // EIC pseudodata pi-, x dependence
@@ -1739,8 +1776,32 @@ int main(int argc, char** argv){
     }
     which_pion = -1; // It is a pi-
     write_A_UT_proj_to_file(xs_pm_xproj_EIC, ys_pm_xproj_EIC, zs_pm_xproj_EIC,0,     Qs_pm_xproj_EIC, f1, D1,h1,Ht,0,0,"out/AUTx_LO_pm_EIC.txt");
-    write_A_UT_proj_to_file(xs_pm_xproj_EIC, ys_pm_xproj_EIC, zs_pm_xproj_EIC,scale, Qs_pm_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm_EIC);
+    //write_A_UT_proj_to_file(xs_pm_xproj_EIC, ys_pm_xproj_EIC, zs_pm_xproj_EIC,scale, Qs_pm_xproj_EIC, f1nlo, D1nlo,h1,Ht,1,1,fname_AUTx_NLO_pm_EIC);
     
+    ////////////////////////////////////////////////////
+    //  2D scans
+
+    std::vector<double> xs_2D = fill_xz_vector(0.01,0.4,100);
+    std::vector<double> zs_2D = fill_xz_vector(0.1,0.8,100);
+
+    double Q_2D = 1.5;
+    which_pion = +1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pp_Q1.txt");
+    which_pion = -1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pm_Q1.txt");
+
+    Q_2D = 5;
+    which_pion = +1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pp_Q5.txt");
+    which_pion = -1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pm_Q5.txt");
+
+    Q_2D = 10;
+    which_pion = +1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pp_Q10.txt");
+    which_pion = -1;
+    write_A_UT_2Dscan_to_file(xs_2D,zs_2D,Q_2D,f1, D1,h1,Ht,"out/AUTxz_LO_pm_Q10.txt");
+
 
     return 0;
 };
