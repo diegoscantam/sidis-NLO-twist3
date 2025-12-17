@@ -3,7 +3,8 @@
 In this chapter, we present the leading order (LO) calculation of the semi-inclusive deep inelastic scattering (SIDIS) cross section within the collinear twist-3 formalism. This calculation serves as a foundation for the more complex next-to-leading order (NLO) analysis that will be carried out in the subsequent chapter. We begin by introducing the kinematics of the SIDIS process, defining the relevant scaling variables and frames of reference. We then outline the factorization procedure, which allows us to separate the perturbatively calculable hard scattering coefficients from the non-perturbative hadronic matrix elements. Finally, we present the explicit LO results for both unpolarized and transversely polarized structure functions, setting the stage for the NLO calculations to follow.
 
 We are particularly interested in the calculation of the $A_{UT}^{\sin\phi_S}$ and $A_{LT}^{\cos\phi_S}$ spin asymmetries. Roughly speaking, these are nothing else but the ratio of the polarized structure functions $F_{UT}^{\sin\phi_S}$ and $F_{LT}^{\cos\phi_S}$ with the unpolarized one $F_{UU}$.
-\section{Kinematics, frame and factorization}
+
+\section{Kinematics, frames and factorization setup}
 \noindent As anticipated, we study the semi-inclusive lepton-nucleon inelastic process $\ell(l)+N^\uparrow(P) \rightarrow \ell(l')+h(P_h)+X$. Defining the space-like momentum of the virtual photon as $q^\mu=l^\mu-l'^\mu$, the usual SIDIS kinematical variables are given by
 \begin{equation}
     \begin{aligned}
@@ -28,11 +29,11 @@ With this conventions, a transverse vector will be simply denoted as $a_T^\mu=g^
     \end{aligned}
 \end{equation}
 where $Q_T=\sqrt{-q_T^2}$. 
-%It is often useful to express the virtual photon momentum as a combination of the hadronic momenta
-%\begin{equation}
-%    q^\mu = -x_B(1-\chi^2_T)P^\mu+\frac{1}{z_h}P_h^\mu + q_T^\mu
-%\end{equation}
-%where for convenience we introduced the positive parameter $\chi_T^2\equiv Q_T^2/Q^2$.
+It is often useful to express the virtual photon momentum as a combination of the hadronic momenta
+\begin{equation}
+    q^\mu = -x_B(1-\chi^2_T)P^\mu+\frac{1}{z_h}P_h^\mu + q_T^\mu
+\end{equation}
+where for convenience we introduced the positive parameter $\chi_T^2\equiv Q_T^2/Q^2$.
 It is therefore clear that in a frame where the nucleon and the outgoing hadron are collinear, a light-cone decomposition is possible and the meaning of "transverse" with respect to the hadron momenta is clearly understood. The 4-dimensional space is hence partitioned in a "plus" direction, a "minus" direction and a 2-dimensional transverse space. For a generic 4-vector $a^\mu$, the following decomposition holds
 \begin{equation}
     a^\mu = (a\cdot n)P^\mu + (a \cdot P)n^\mu+a_T^\mu=(a\cdot m)P_h^\mu + (a \cdot P_h)m^\mu+a_T^\mu.
@@ -40,67 +41,148 @@ It is therefore clear that in a frame where the nucleon and the outgoing hadron 
 By denoting as $k^\mu$ the momentum of the parton coming from the nucleon, and $p^\mu$ the fragmenting partonic momentum,  we have
 \begin{equation}
     \begin{aligned}
-        k^\mu &= xP^\mu + k_T^\mu+(k\cdot P)n^\mu\approx xP^\mu + k_T^\mu,\\
+        k^\mu &= xP^\mu + k_T^\mu+(k\cdot P)n^\mu\approx xP^\mu,\\
         p^\mu &= \frac{1}{z}P_h^\mu + p_T^\mu+(p\cdot P_h)m^\mu\approx \frac{1}{z}P_h^\mu + p_T^\mu,
     \end{aligned}
 \end{equation}
-where, as typical, we neglected contributions of order two or higher in the transverse momenta. Note that this approximation is consistent with the application of the collinear twist-3 formalism, since we will need only linear terms in $k_T$ or $p_T$ to fully derive a factorized spin-dependent cross section.
+where, as typical, we neglected contributions of order two or higher in the transverse momenta. Note that this approximation is consistent with the application of the collinear twist-3 formalism, since we will need only linear terms in $p_T$ to fully derive a factorized spin-dependent cross section involving twist-3 fragmentation functions. Note that since we deal with leading twist distribution functions only, we can neglect $k_T$ altogether and approximate the partonic momentum $k$ as exactly collinear to the nucleon momentum $P$.
 
-\noindent The relevant Feynman diagrams for SIDIS at LO are given in Fig.~\ref{fig:amplitudes SIDIS LO}. The lower and upper colored blobs are nothing else but non-perturbative matrix elements introduced in the previous chapter. For a direct generalization to NLO, we isolate the hard-scattering amplitude $\hat{\mathcal{M}}$ of the partonic subprocess with the virtual photon.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{fig/SIDIS q2q v2.png}
-    \caption{Caption}
-    \label{fig:amplitudes SIDIS LO}
-\end{figure}
-\noindent The differential cross section is then obtained by employing QCD and QED Feynman rules and hadronic matrix elements \cite{Weinberg_1995}. For direct generalization to a NLO case, we perform the calculation in dimensional regularization in $d=4-2\epsilon$ dimensions. We obtain
+\noindent The differential cross section is then obtained by employing QCD and QED Feynman rules and hadronic matrix elements \cite{Weinberg_1995}. For direct generalization to a NLO case, we perform the calculation in dimensional regularization in $d=4-2\epsilon$ dimensions. Assuming one photon exchange between the letpon and the nucleon, we obtain the fully differential cross section, already separated into a leptonic and an hadronic part
 \begin{equation}\label{eq:dsigma general master formula}
 \begin{aligned}
-        \dd \sigma = &\frac{1}{F}\frac{\dd ^{d-1}\boldsymbol l'}{(2\pi)^{d-1} 2E'}\frac{\dd^{d-1}\boldsymbol {P_h}}{(2\pi)^{d-1} 2E_h}\frac{(4\pi)^2\alpha_{em}^2}{Q^4}L^{\mu\nu} \,W_{\mu\nu},
+        \dd \sigma = &\frac{1}{2s}\frac{\dd ^{d-1}\boldsymbol l'}{(2\pi)^{d-1} 2E'}\frac{\dd^{d-1}\boldsymbol {P_h}}{(2\pi)^{d-1} 2E_h}\frac{(4\pi)^2\alpha_{em}^2}{Q^4}L^{\mu\nu}(l,l') \,W_{\mu\nu}(P,S,q,P_h),
 \end{aligned}
 \end{equation}
-with the leptonic tensor $L^{\mu\nu}$ defined as
+with $s=(l+P)^2$ the usual Mandelstam variable and $\alpha_{em}$ the QED electromagnetic coupling constant. The leptonic tensor $L^{\mu\nu}$ is defined as
 \begin{equation}
-            L^{\mu\nu}=\frac{1}{2}\Tr[(1+\lambda_e\gamma_5)\slashed{l}\gamma^\nu \slashed{l}'\gamma^\mu],
+            L^{\mu\nu}(l,l')=\frac{1}{2}\Tr[(1+\lambda_e\gamma_5)\slashed{l}\gamma^\nu \slashed{l}'\gamma^\mu],
 \end{equation}
-where $\lambda_e$ denotes the helicity of the incoming lepton. The hadronic tensor $W_{\mu\nu}$, evidently, assumes different forms depending on the reaction channel. We derive 
+where $\lambda_e$ denotes the helicity of the incoming lepton. Typically, it is convenient to separate the leptonic tensor into a symmetric $L_{(\mu\nu)}$ tensor (lepton-spin independent) and an antisymmetric part $L_{[\mu\nu]}$ (lepton-spin dependent). The hadronic tensor $W_{\mu\nu}$, evidently, assumes different forms depending on the reaction channel. It depends on the nucleon momentum $P^\mu$ and the hadron momentum $P_h^\mu$, as well as the nucleon spin four vector $S^\mu$ and the virtual photon momentum $q^\mu$. We choose $S^\mu$ such that it satisfies the normalization $S^2=-1$ and $P\cdot S=0$. Interestingly, the leptonic tensor can be computed in perturbation theory to all orders. On the other hand, the hadronic tensor is intrinsically a more complicated object, since it involves both short-range, perturbative information about the partonic scattering process, as well as long-range non-perturbative quantities encoded in hadronic matrix elements. Luckily, if the virtuality of the photons sets an hard scale $Q^2\gg \Lambda_{QCD}$, factorization theorems to the SIDIS cross section can be applied CITE. This allows us to separate short-distance and long-distance physics, expressing the cross section of the scattering process as a convolution of perturbatively calculable hard-scattering coefficients and non-perturbative hadronic matrix elements, related to PDFs and FFs. It is common to start from the following formula for the hadronic tensor, already factorized in terms of hard scattering amplitudes $\hat{\mathcal{M}}$ and fully-unintegrated correlators
 \begin{equation}
 \begin{aligned}
-        W_{\mu\nu}^{q \to q}&=\sum_a  e_a^2\int\dd^d k\int \dd^{d}p\,\delta^{(d)}(q+k-p)\Tr[\hat{\mathcal{M}}_\mu^{q\to q} \Phi^a\hat{\bar{\mathcal{M}}}_\nu^{q\to q}\Delta^a]\\
-        W_{\mu\nu}^{gq \to q}&=\sum_a e_a^2\int\dd^d k\int \dd^{d}p\int \dd^{d}k'\,\delta^{(d)}(q+k-p)\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{gq\to q}}{g_S T^\alpha} \Phi_A^{\sigma,a}\hat{\bar{\mathcal{M}}}_\nu^{q\to q}\Delta^a]\\
-        W_{\mu\nu}^{q \to gq}&= \sum_a e_a^2\int\dd^d k\int \dd^{d}p\int \dd^{d}p'\,\delta^{(d)}(q+k-p)\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{q\to g q}}{g_S T^\alpha} \Phi^{a}\hat{\bar{\mathcal{M}}}_\nu^{q\to q}\Delta_A^{\sigma,a}]
+        W_{\mu\nu}^{q \to q}&=\sum_q  e_q^2\int\dd^d k\int \dd^{d}p \sum_{n=0}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
+        &\times\Tr[\hat{\mathcal{M}}_\mu^{q\to q}(q,k,p,\{r_n\})\, \Phi^q(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,k,p,\{r_n\})\,\Delta^q(p)]\\
+        W_{\mu\nu}^{q \to qg}&= \sum_q e_q^2\int\dd^d k\int \dd^{d}p\int \dd^{d}p'\sum_{n=0}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
+        &\times\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{q\to q g}(q,k,p,p',\{r_n\})}{g_S T^\alpha} \,\Phi^{q}(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,k,p,\{r_n\})\Delta_A^{\sigma,q}(p,p')] + \text{c.c.}
         \end{aligned}
 \end{equation}
-with $\Phi^a, \Delta^a,\Phi_A^{\sigma,a}\Delta_A^{\sigma,a}$ the correlators introduced in the previous chapter, but in their fully-unintegrated versions. Here, the $\sum_a$ really just means a sum over quarks and anti-quarks flavours ($a=q,\bar{q}$). All momenta are now decomposed through the light-cone decomposition introduced before. Performing the (trivial) integrations over $\dd (k \cdot P)$ and $\dd (p\cdot P_h)$, one sees that the integral measures and the delta function arrange in the following way
+ADD HERE $q \to g$ and $g \to q$ CHANNELS ??\\
+Here, the $\sum_q$ really just means a sum over quark and anti-quark flavors. We perform the $d$-dimensional phase space integration over $n$ unobserved massless particles produced in the hard scattering process
+\begin{equation}
+    \int \dd\Pi_{{\rm{LIPS}}_n}=\Theta(n-1)\prod_{i=1}^n \int \frac{\dd^d r_i}{(2\pi)^{d-1}}\delta^+(r_i^2) \,\delta^{(d)}\left(q+k - p - \sum_{i=1}^n r_i\right),
+\end{equation}
+with $\Theta$ being the Heaviside step function and $\delta^+(a^2)\equiv \Theta((a^2)^0) \delta(a^2)$. Note that $\sum_{I_n}$ stands for the sum over all remaining quantum numbers such as color, helicity, etc. . For the leading order cross section, as well as the NLO virtual corrections, we set $n=0$ since there are no unobserved partons coming out of the hard scattering process. For NLO real emission graphs, we set $n=1$. No other values for $n$ besides $n=0$ and $n=1$ are needed for the purposes of this work. The relevant diagrams for the hadronic tensor are shown in Figs.~\ref{fig:W_n0} , \ref{fig:W_n1_2parton} and \ref{fig:W_n1_3parton}. 
+
+\begin{figure}[h!] % Use [h!] to try and keep it here
+    \centering
+    % --- First Figure (a) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2q_n0.pdf} % Use actual image file
+        %\caption{(a).}
+        %\label{fig:first}
+    \end{minipage}
+    \vfill % Pushes minipages apart
+    % --- Second Figure (b) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2qg_n0.pdf} % Use actual image file
+        %\caption{This is the second figure.}
+        %\label{fig:second}
+    \end{minipage}
+    \caption{Hadronic tensor for $n=0$ unobserved partons, 2-parton fragmentation (top) and 3-parton fragmentation (bottom).} % Optional overall caption
+    \label{fig:W_n0}
+\end{figure}
+\begin{figure}[h!] % Use [h!] to try and keep it here
+    \centering
+    % --- First Figure (a) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2q_n1.pdf} % Use actual image file
+        %\caption{(a).}
+        %\label{fig:first}
+    \end{minipage}
+    \vfill % Pushes minipages apart
+    % --- Second Figure (b) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2g_n1.pdf} % Use actual image file
+        %\caption{This is the second figure.}
+        %\label{fig:second}
+    \end{minipage}
+    \vfill % Pushes minipages apart
+    % --- Second Figure (b) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_g2q_n1.pdf} % Use actual image file
+        %\caption{This is the second figure.}
+        %\label{fig:second}
+    \end{minipage}
+    \caption{2-parton fragmentation contributions to the hadronic tensor for $n=1$ unobserved partons. We show $W_{\mu\nu}^{q \to q}$ (top). $W_{\mu\nu}^{q \to g}$ (middle) and $W_{\mu\nu}^{g \to q}$ (bottom).} % Optional overall caption
+    \label{fig:W_n1_2parton}
+\end{figure}
+\begin{figure}[h!] % Use [h!] to try and keep it here
+    \centering
+    % --- First Figure (a) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2qg_n1.pdf} % Use actual image file
+        %\caption{(a).}
+        %\label{fig:first}
+    \end{minipage}
+    \vfill % Pushes minipages apart
+    % --- Second Figure (b) ---
+    \begin{minipage}[b]{0.6\textwidth} % [b] aligns bottoms, 0.48*textwidth for width
+        \centering
+        \includegraphics[width=\linewidth]{fig/V2_W_q2qqbar_n1.pdf} % Use actual image file
+        %\caption{This is the second figure.}
+        %\label{fig:second}
+    \end{minipage}
+    \caption{3-parton fragmentation contributions to the hadronic tensor for $n=1$ unobserved partons. We show $W_{\mu\nu}^{q \to qg}$ (top). $W_{\mu\nu}^{q \to q\bar{1}}$ (bottom)} % Optional overall caption
+    \label{fig:W_n1_3parton}
+\end{figure}
+
+All momenta are now decomposed through the light-cone decomposition in the collinear hadron frame introduced before. Performing the (trivial) integrations over $\dd (k \cdot P)$ and $\dd (p\cdot P_h)$, one sees that the integral measures and the delta function arrange in the following way
 \begin{equation}
     \begin{aligned}
         \dd^d k \,\dd^d p &\,\delta^{(d)}(q+k-p) \sim\dd x\, \dd^{d-2}k_T\, \frac{\dd z}{z^2}\, \dd^{d-2}p_T\, \\
-        & \times\frac{2x_B z_h}{Q^2}\delta(x-x_B(1-\chi_T^2))\delta(z-z_h)\delta^{(d-2)}(\vec q_T+\vec k_T-\vec p_T).        
+        & \times\frac{2x_B z_h}{Q^2}\delta(x-x_B(1-\chi_T^2))\delta(z-z_h)\delta^{(d-2)}(\boldsymbol{q_T}-\boldsymbol{p_T}).        
     \end{aligned}
 \end{equation}
-We stress that the separation of the delta function in such a way makes sense only in a frame where the nucleon and the hadron are collinear, i.e. the $PP_h$ frame used so far. In this case, the transverse vectors are indeed 2-dimensional and this kind of $(+,-,T)$ separation makes sense.
 
-Our goal is to study the differential cross section integrated over transverse momentum of the observed hadron. However, in a collinear frame such as the one used so far, the momentum $P_h$ is fixed and it has no transverse component by construction. A possible approach would be to integrate over the transverse momentum $q_T$ of the virtual photon. However, the leptonic tensor $L^{\mu\nu}$ clearly will depend on this transverse momentum, making a clean separation between leptonic and hadronic parts impossible. A common procedure is then to change frame in such a way that this separation is possible \cite{meng_semi-inclusive_1992,mulders_complete_1996, bacchetta_semi-inclusive_2007}. \\
-ADD HERE DISCUSSION OF BOER03\\
-It turns out that the Breit frame in which the virtual photon and the nucleon are collinear is an appropriate choice. In this new frame, the photon momentum doesn't have a temporal component (which is possible since in SIDIS $q^\mu$ is always a space-like vector). The hadron momentum  now acquires a perpendicular component. We then construct the Lorentz transformation from the $PP_h$ frame to the Breit frame. It turns out to be
+It is therefore clear that in a frame where the nucleon and the outgoing hadron are collinear, a light-cone decomposition is possible and the meaning of "transverse" with respect to the hadron momenta is clearly understood. The 4-dimensional space is hence partitioned in a "plus" direction, a "minus" direction and a 2-dimensional transverse space. For a generic 4-vector $a^\mu$, the following Sudakov decomposition holds
 \begin{equation}
-    \Lambda^\mu_\nu=\mqty(1+\frac{Q_T^2}{2Q^2} & -\frac{Q_T}{Q}\cos\phi_q & -\frac{Q_T}{Q}\sin\phi_q & -\frac{Q_T^2}{2Q^2}\\
+    a^\mu = (a\cdot n)P^\mu + (a \cdot P)n^\mu+a_T^\mu=(a\cdot m)P_h^\mu + (a \cdot P_h)m^\mu+a_T^\mu.
+\end{equation} 
+We stress that the separation of the particle momenta in such a way makes sense only in a frame where the nucleon and the hadron are collinear, i.e. the $PP_h$ frame used so far. In this case, the transverse vectors are indeed 2-dimensional and this kind of $(+,-,T)$ separation makes sense.
+Our goal, though, is to study the differential cross section integrated over the transverse momentum of the observed hadron. However, in a collinear frame such as the one introduced so far, the momentum $P_h$ is fixed and it has no transverse component by construction (EQ REF). A possible approach would be to integrate over the transverse momentum $q_T$ of the virtual photon. This $q_T$ integration makes a clean separation between leptonic and hadronic parts impossible, since the leptonic tensor $L^{\mu\nu}$  will clearly depend on this transverse momentum. A common procedure is then to change frame in such a way that this separation is possible \cite{mulders_complete_1996}. It turns out that the Breit frame in which the virtual photon and the nucleon are collinear is an appropriate choice. In this new frame, the photon momentum does not have a temporal component (which is possible since in SIDIS $q^\mu$ is always a space-like vector). The hadron momentum now acquires a perpendicular component. We then construct the Lorentz transformation from the collinear hadron frame to the Breit frame. It turns out to be
+\begin{equation}
+    \Lambda^\mu_\nu=\left(\begin{array}{c c c c}
+    1+\frac{Q_T^2}{2Q^2} & -\frac{Q_T}{Q}\cos\phi_q & -\frac{Q_T}{Q}sin\phi_q & -\frac{Q_T^2}{2Q^2}\\
     -\frac{Q_T}{Q}\cos\phi_q  & 1 & 0 & \frac{Q_T}{Q}\cos\phi_q \\
     -\frac{Q_T}{Q}\sin\phi_q  & 0 & 1 & \frac{Q_T}{Q}\sin\phi_q \\
-    \frac{Q_T^2}{2Q^2} & -\frac{Q_T}{Q}\cos\phi_q & -\frac{Q_T}{Q}\sin\phi_q & 1-\frac{Q_T^2}{2Q^2}
-    )
+    \frac{Q_T^2}{2Q^2} & -\frac{Q_T}{Q}\cos\phi_q & -\frac{Q_T}{Q}sin\phi_q & 1-\frac{Q_T^2}{2Q^2}
+    \end{array}\right).
 \end{equation}
-We note that this transformation satisfies the usual Lorentz transformation properties $\det\Lambda=1$ and $\Lambda^T g \Lambda=g$. In this frame, the momenta read
-\begin{equation}\label{eq:momenta in BF}
+We note that this transformation satisfies the usual Lorentz transformation properties $\det\Lambda=1$ and $\Lambda^T g \Lambda=g$. 
+In this frame, the momenta read \cite{kanazawa_contribution_2013}
+\begin{equation}
     \begin{aligned}
-        P^\mu&=\Big(\frac{Q}{2x_B},0,0,\frac{Q}{2x_B}\Big)\\
+                P^\mu&=\Big(\frac{Q}{2x_B},0,0,\frac{Q}{2x_B}\Big)\\
         P_h^\mu&=\frac{z_hQ}{2}\Big(1+\chi_T^2,-2\chi_T\cos\phi_q,-2\chi_T\sin\phi_q,-1+\chi_T^2\Big)\\
         q^\mu&=\Big(0,0,0,-Q\Big)\\
         l^\mu&=\frac{Q}{2}\Big(\frac{2-y}{y},\frac{2}{y}\sqrt{1-y}\cos\phi_l, \frac{2}{y}\sqrt{1-y}\sin\phi_l,-1\Big)\\
         l'^\mu&=\frac{Q}{2}\Big(\frac{2-y}{y},\frac{2}{y}\sqrt{1-y}\cos\phi_l, \frac{2}{y}\sqrt{1-y}\sin\phi_l,+1\Big)
     \end{aligned}
 \end{equation}
-where $\phi_l$ is an azimuthal angle around the $z$-axis \cite{kanazawa_contribution_2013}. A sketch of the lepton and hadron planes, along with the conventions for the different angles is shown in Fig.~\ref{fig:Breit frame}. It turns out that our results are particularly simple when expressed in terms of the difference $\phi_S-\phi_l$, where $\phi_S$ is the azimuthal angle of the transverse spin vector $\boldsymbol{S}_\perp$ of the nucleon. In fact, one can define such angle through the following Lorentz-invariant expression, adhering to the Trento conventions \cite{bacchetta_single-spin_2004}
+where $\phi_l$ is an azimuthal angle around the $z$-axis and for convenience we introduced the parameter $\chi_T^2\equiv Q_T^2/Q^2$. Accordingly, one of the light cone vectors remains unchanged $m ^\mu\to m^\mu=\frac{2x_B}{z_hQ^2}P^\mu$ while the other is modified $n^\mu\to n^\mu=\frac{2x_B}{Q^2}(x_BP^\mu+q^\mu)+\mathcal{O}(k_\perp,p_\perp)$. We note the important fact that in one frame transverse 4-momenta are actually just 2-dimensional vectors, but in the Breit frame the perpendicular 4-vector also acquires a component in the + direction due to the Lorentz   transformation. This will play a fundamental role in the emergence of twist-3 effects, since this correction in the + direction is only $1/Q$ suppressed. Furthermore, it is clear that the temporal and $z$ directions are determined by the momenta $P$ and $q$. It makes sense to introduce another projector 
+\begin{equation}
+    g_\perp^{\mu\nu}=g^{\mu\nu}-\frac{1}{P\cdot q}[P^\mu(q+x_BP)^\nu + P^\nu(q+x_BP)^\mu],
+\end{equation}
+which has the same role of projecting out the perpendicular components but now in the Breit frame. We note the important fact that $g_\perp^{\mu\nu}$ acquires the same form as $g_T^{\mu\nu}$, thus justifying the frequent SIDIS identification $\vec P_{h\perp}=-z_h\vec q_T$. Also, the transformation leaves the perpendicular/transverse component invariant, so we can identify simply $\vec k_T=\vec k_\perp$ and $\vec p_T =\vec p_\perp$ where $\vec a_T=(a_1,a_2)$. This is true for the 2-dimensional transverse vector but, again, not at the level of 4-vectors. In the Breit frame, the meaning of the integration over $\vec P_{h\perp}$ is now clear. We note that the leptonic part is now independent of $\vec P_{h\perp}$ and it can be separated from the hadronic component. To conclude, this integration subtlety originates from the fact that we are interested in sub-leading twist effects which, as already pointed out, are $1/Q$-suppressed. In fact, at leading power in $Q$, one may safely integrate over the transverse momentum of the virtual photon. But as soon as the $\mathcal{O}(1/Q)$ terms are kept (which is needed for spin observables), this is no longer true since the differences of using the light-cone vector $n_\mu(P,P_h)$ or $n'_\mu(P,q)$ matter \cite{boer_universality_2003}. It is also important CANCELLATION pT in detail....    \\
+
+
+A sketch of the lepton and hadron planes, along with the conventions for the different angles is shown in Fig.~\ref{fig:Breit frame}. It turns out that our results are particularly simple when expressed in terms of the difference $\phi_S-\phi_l$, where $\phi_S$ is the azimuthal angle of the transverse spin vector $\boldsymbol{S}_\perp$ of the nucleon. In fact, one can define such angle through the following Lorentz-invariant expression, adhering to the Trento conventions \cite{bacchetta_single-spin_2004}
 \begin{equation}
 \begin{aligned}
      \sin(\phi_S-\phi_l)=& -\frac{\epsilon_\perp^{\mu\nu}l_\mu S_\nu}{\sqrt{-g^{\mu\nu}_\perp l_\mu l_\nu}}=-\frac{2x_By}{Q^3\sqrt{1-y}}\epsilon^{lPqS}=+\frac{2x_By}{Q^3\sqrt{1-y}}\epsilon^{lPl'S}\\
@@ -127,11 +209,6 @@ where $P$ and $P_h$ are in the Breit frame, of course. We anticipate that at LO,
 \begin{equation}
     P_h^\mu= z_h(x_BP^\mu+q^\mu)+z_hx_B\frac{(\vec k_\perp - \vec p_\perp)^2}{Q^2}P^\mu+z_h(\vec k_\perp-\vec p_\perp)^\mu.
 \end{equation}
-Accordingly, one of the light cone vectors remain unchanged $m ^\mu\to m^\mu=\frac{2x_B}{z_hQ^2}P^\mu$ while the other is modified $n^\mu\to n^\mu=\frac{2x_B}{Q^2}(x_BP^\mu+q^\mu)+\mathcal{O}(k_\perp,p_\perp)$. We note the important fact that in one frame transverse 4-momenta are actually just 2-dimensional vectors, but in the Breit frame the perpendicular 4-vector also acquires a component in the + direction due to the Lorentz transformation. This will play a fundamental role in the emergence of twist-3 effects, since this correction in the + direction is only $1/Q$ suppressed. Furthermore, it is clear that the temporal and $z$ directions are determined by the momenta $P$ and $q$. It makes sense to introduce another projector 
-\begin{equation}
-    g_\perp^{\mu\nu}=g^{\mu\nu}-\frac{1}{P\cdot q}[P^\mu(q+x_BP)^\nu + P^\nu(q+x_BP)^\mu],
-\end{equation}
-which has the same role of projecting out the perpendicular components but now in the Breit frame. We note the important fact that $g_\perp^{\mu\nu}$ acquires the same form as $g_T^{\mu\nu}$, thus justifying the frequent SIDIS identification $\vec P_{h\perp}=-z_h\vec q_T$. Also, the transformation leaves the perpendicular/transverse component invariant, so we can identify simply $\vec k_T=\vec k_\perp$ and $\vec p_T =\vec p_\perp$ where $\vec a_T=(a_1,a_2)$. This is true for the 2-dimensional transverse vector but, again, not at the level of 4-vectors. In the Breit frame, the meaning of the integration over $\vec P_{h\perp}$ is now clear. We note that the leptonic part is now independent of $\vec P_{h\perp}$ and it can be separated from hadronic component.
 
 From now on, we carry on the calculation in the Breit frame. Going back to Eq. \eqref{eq:dsigma general master formula} and performing the Lorentz transformation we get the following Jacobian factors
 \begin{equation}
@@ -149,7 +226,7 @@ ADD STUFF HERE ON DETAILS OF DERIVATION + CHECK WHAT MARC WRITES IN PAPER!
 
 
 
-\subsection{Results}
+\section{Cross section as structure functions}
 Following the prescription outlined above, we derive the LO SIDIS cross section in the unpolarized nucleon case, as well as the transversely polarized proton case. We remark that the produced hadron $h(P_h)$ is always assumed to be unpolarized. The result is
 \begin{equation}\label{eq:UTU cross section LO}
     \begin{aligned}
