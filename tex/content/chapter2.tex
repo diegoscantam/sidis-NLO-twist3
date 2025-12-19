@@ -38,14 +38,21 @@ It is therefore clear that in a frame where the nucleon and the outgoing hadron 
 \begin{equation}
     a^\mu = (a\cdot n)P^\mu + (a \cdot P)n^\mu+a_T^\mu=(a\cdot m)P_h^\mu + (a \cdot P_h)m^\mu+a_T^\mu.
 \end{equation}  
-By denoting as $k^\mu$ the momentum of the parton coming from the nucleon, and $p^\mu$ the fragmenting partonic momentum,  we have
+By denoting as $k^\mu$ the momentum of the parton coming from the nucleon, and $p^\mu$ the fragmenting partonic momentum,  we have the following decomposition on the light-cone
 \begin{equation}
     \begin{aligned}
-        k^\mu &= xP^\mu + k_T^\mu+(k\cdot P)n^\mu\approx xP^\mu,\\
-        p^\mu &= \frac{1}{z}P_h^\mu + p_T^\mu+(p\cdot P_h)m^\mu\approx \frac{1}{z}P_h^\mu + p_T^\mu,
+        k^\mu &= xP^\mu + k_T^\mu+(k\cdot P)n^\mu\\
+        p^\mu &= \frac{1}{z}P_h^\mu + p_T^\mu+(p\cdot P_h)m^\mu,
     \end{aligned}
 \end{equation}
-where, as typical, we neglected contributions of order two or higher in the transverse momenta. Note that this approximation is consistent with the application of the collinear twist-3 formalism, since we will need only linear terms in $p_T$ to fully derive a factorized spin-dependent cross section involving twist-3 fragmentation functions. Note that since we deal with leading twist distribution functions only, we can neglect $k_T$ altogether and approximate the partonic momentum $k$ as exactly collinear to the nucleon momentum $P$.
+where, as typical, we assume the component of $k^\mu$ along $P^\mu$ to be the largest, as well as the component of $p^\mu$ along $P_h^\mu$. This is what is commonly referred as \textit{collinear expansion} of the partonic momenta. For both the parton coming from the nucleon and the fragmenting one, we assume their virtualities to vanish, meaning $k^2=p^2=0$. Since this work focuses on sub-leading twist effects only on the fragmentation side, $k^\mu$ can be conveniently set exactly collinear to $P^\mu$ and $k_T^\mu$ can be neglected
+\begin{equation}
+    \bar{k}^\mu \approx x P^\mu.
+\end{equation}
+In order to take into account twist-3 effects in the fragmentation process we need to be more careful in treating the momentum $p^\mu$. We keep in fact the transverse component of the momentum in the hard scattering part
+\begin{equation}
+    \bar{p}^\mu = \frac{1}{z}P_h^\mu + p_T^\mu - \frac{z p_T^2}{2} m^\mu
+\end{equation}
 
 \noindent The differential cross section is then obtained by employing QCD and QED Feynman rules and hadronic matrix elements \cite{Weinberg_1995}. For direct generalization to a NLO case, we perform the calculation in dimensional regularization in $d=4-2\epsilon$ dimensions. Assuming one photon exchange between the letpon and the nucleon, we obtain the fully differential cross section, already separated into a leptonic and an hadronic part
 \begin{equation}\label{eq:dsigma general master formula}
@@ -63,13 +70,23 @@ where $\lambda_e$ denotes the helicity of the incoming lepton. Typically, it is 
         W_{\mu\nu}^{q \to q}&=\sum_q  e_q^2\int\dd^d k\int \dd^{d}p \sum_{n=0}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
         &\times\Tr[\hat{\mathcal{M}}_\mu^{q\to q}(q,k,p,\{r_n\})\, \Phi^q(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,k,p,\{r_n\})\,\Delta^q(p)]\\
         W_{\mu\nu}^{q \to qg}&= \sum_q e_q^2\int\dd^d k\int \dd^{d}p\int \dd^{d}p'\sum_{n=0}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
-        &\times\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{q\to q g}(q,k,p,p',\{r_n\})}{g_S T^\alpha} \,\Phi^{q}(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,k,p,\{r_n\})\Delta_A^{\sigma,q}(p,p')] + \text{c.c.}
+        &\times\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{q\to q g}(q,k,p,p',\{r_n\})}{g_S T^\alpha} \,\Phi^{q}(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,k,p,\{r_n\})\Delta_A^{\sigma,qg}(p,p')].
         \end{aligned}
 \end{equation}
-ADD HERE $q \to g$ and $g \to q$ CHANNELS ??\\
+It is interesting to mention that at NLO, as explained in detail in Chap.~\ref{chap:NLO}, more partonic channels become available for real emission graphs (with $n=1$ unobserved partons). We therefore also have
+\begin{equation}
+\begin{aligned}
+        W_{\mu\nu}^{q \to g}&=\sum_q  e_q^2\int\dd^d k\int \dd^{d}p \sum_{n=1}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
+        &\times\Tr[\hat{\mathcal{M}}_{\mu\lambda}^{q\to g}(q,k,p,\{r_n\})\, \Phi^q(k)\,\hat{\bar{\mathcal{M}}}_{\nu\eta}^{q\to g}(q,k,p,\{r_n\})]\Delta_g^{\lambda\eta}(p)\\
+        W_{\mu\nu}^{g \to q}&=\sum_q  e_q^2\int\dd^d k\int \dd^{d}p \sum_{n=1}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
+        &\times\Tr[\hat{\bar{\mathcal{M}}}_{\nu\eta}^{g\to q}(q,k,p,\{r_n\}) \,\Delta^q(p)\,    \hat{\mathcal{M}}_{\mu\lambda}^{g\to q}(q,k,p,\{r_n\})]\Phi_g^{\lambda\eta}(k)\\
+        W_{\mu\nu}^{q \to q\bar{q}}&= \sum_q e_q^2\int\dd^d k\int \dd^{d}p\int \dd^{d}p'\sum_{n=1}^{\infty}\sum_{I_n} \int \dd\Pi_{{\rm{LIPS}}_n}\\
+        &\times\Tr[\frac{\hat{\mathcal{M}}_{\mu\sigma}^{q\to q \bar{q}}(q,k,p,p',\{r_n\})}{g_S T^\alpha} \,\Phi^{q}(k)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to g}(q,k,p,\{r_n\})\Delta_A^{\sigma,q\bar{q}}(p,p')].
+        \end{aligned}
+\end{equation}
 Here, the $\sum_q$ really just means a sum over quark and anti-quark flavors. We perform the $d$-dimensional phase space integration over $n$ unobserved massless particles produced in the hard scattering process
 \begin{equation}
-    \int \dd\Pi_{{\rm{LIPS}}_n}=\Theta(n-1)\prod_{i=1}^n \int \frac{\dd^d r_i}{(2\pi)^{d-1}}\delta^+(r_i^2) \,\delta^{(d)}\left(q+k - p - \sum_{i=1}^n r_i\right),
+    \int \dd\Pi_{{\rm{LIPS}}_n}=\Theta(n-1)\prod_{i=1}^n \int \frac{\dd^d r_i}{(2\pi)^{d-1}}\delta^+(r_i^2) \,\delta^{(d)}\left(q+k - p - \sum_{j=1}^n r_j\right),
 \end{equation}
 with $\Theta$ being the Heaviside step function and $\delta^+(a^2)\equiv \Theta((a^2)^0) \delta(a^2)$. Note that $\sum_{I_n}$ stands for the sum over all remaining quantum numbers such as color, helicity, etc. . For the leading order cross section, as well as the NLO virtual corrections, we set $n=0$ since there are no unobserved partons coming out of the hard scattering process. For NLO real emission graphs, we set $n=1$. No other values for $n$ besides $n=0$ and $n=1$ are needed for the purposes of this work. The relevant diagrams for the hadronic tensor are shown in Figs.~\ref{fig:W_n0} , \ref{fig:W_n1_2parton} and \ref{fig:W_n1_3parton}. 
 
@@ -138,25 +155,31 @@ with $\Theta$ being the Heaviside step function and $\delta^+(a^2)\equiv \Theta(
         %\caption{This is the second figure.}
         %\label{fig:second}
     \end{minipage}
-    \caption{3-parton fragmentation contributions to the hadronic tensor for $n=1$ unobserved partons. We show $W_{\mu\nu}^{q \to qg}$ (top). $W_{\mu\nu}^{q \to q\bar{1}}$ (bottom)} % Optional overall caption
+    \caption{3-parton fragmentation contributions to the hadronic tensor for $n=1$ unobserved partons. We show $W_{\mu\nu}^{q \to qg}$ (top). $W_{\mu\nu}^{q \to q\bar{q}}$ (bottom)} % Optional overall caption
     \label{fig:W_n1_3parton}
 \end{figure}
-
-All momenta are now decomposed through the light-cone decomposition in the collinear hadron frame introduced before. Performing the (trivial) integrations over $\dd (k \cdot P)$ and $\dd (p\cdot P_h)$, one sees that the integral measures and the delta function arrange in the following way
-\begin{equation}
-    \begin{aligned}
-        \dd^d k \,\dd^d p &\,\delta^{(d)}(q+k-p) \sim\dd x\, \dd^{d-2}k_T\, \frac{\dd z}{z^2}\, \dd^{d-2}p_T\, \\
-        & \times\frac{2x_B z_h}{Q^2}\delta(x-x_B(1-\chi_T^2))\delta(z-z_h)\delta^{(d-2)}(\boldsymbol{q_T}-\boldsymbol{p_T}).        
-    \end{aligned}
-\end{equation}
 
 It is therefore clear that in a frame where the nucleon and the outgoing hadron are collinear, a light-cone decomposition is possible and the meaning of "transverse" with respect to the hadron momenta is clearly understood. The 4-dimensional space is hence partitioned in a "plus" direction, a "minus" direction and a 2-dimensional transverse space. For a generic 4-vector $a^\mu$, the following Sudakov decomposition holds
 \begin{equation}
     a^\mu = (a\cdot n)P^\mu + (a \cdot P)n^\mu+a_T^\mu=(a\cdot m)P_h^\mu + (a \cdot P_h)m^\mu+a_T^\mu.
 \end{equation} 
-We stress that the separation of the particle momenta in such a way makes sense only in a frame where the nucleon and the hadron are collinear, i.e. the $PP_h$ frame used so far. In this case, the transverse vectors are indeed 2-dimensional and this kind of $(+,-,T)$ separation makes sense.
-Our goal, though, is to study the differential cross section integrated over the transverse momentum of the observed hadron. However, in a collinear frame such as the one introduced so far, the momentum $P_h$ is fixed and it has no transverse component by construction (EQ REF). A possible approach would be to integrate over the transverse momentum $q_T$ of the virtual photon. This $q_T$ integration makes a clean separation between leptonic and hadronic parts impossible, since the leptonic tensor $L^{\mu\nu}$  will clearly depend on this transverse momentum. A common procedure is then to change frame in such a way that this separation is possible \cite{mulders_complete_1996}. It turns out that the Breit frame in which the virtual photon and the nucleon are collinear is an appropriate choice. In this new frame, the photon momentum does not have a temporal component (which is possible since in SIDIS $q^\mu$ is always a space-like vector). The hadron momentum now acquires a perpendicular component. We then construct the Lorentz transformation from the collinear hadron frame to the Breit frame. It turns out to be
-\begin{equation}
+We stress that the separation of the particle momenta in such a way makes sense only in a frame where the nucleon and the hadron are collinear, i.e. the collinear hadron frame used so far. In this case, the transverse vectors are indeed 2-dimensional and this kind of $(+,-,T)$ separation makes sense. One sees that the integral measures and the delta function separate in a clean way
+\begin{equation}\label{eq:int measure + delta}
+    \begin{aligned}
+        \dd^d k \,\dd^d p &\,\delta^{(d)}(q+k-p) \sim\dd x\, \dd^{d-2}k_T\,\dd (k \cdot P)\, \frac{\dd z}{z^2}\, \dd^{d-2}p_T\,\dd (p\cdot P_h)
+         \\
+        & \times\frac{2x_B z_h}{Q^2}\delta(x-x_B(1-\chi_T^2))\delta(z-z_h)\delta^{(d-2)}(\boldsymbol{q_T}-\boldsymbol{p_T}).        
+    \end{aligned}
+\end{equation}
+As an example of factorized hadronic tensor in the collinear hadron frame where collinear matrix elements appear, we present the $q \to q $ channel contribution for $n=0$ unobserved partons. It is particularly important to discuss this since kinematical contributions appear in a non-trivial way in our calculation. It is
+\begin{equation}\label{eq:Wq2q_CHF}
+    \begin{aligned}
+            W_{\mu\nu}^{q \to q}&=\int \dd^{d-2}\boldsymbol{p_T}\,\delta^{(d-2)}(\boldsymbol{q_T} - \boldsymbol{p_T})\frac{2x_B}{z_h Q^2}\sum_q e_q^2 \\
+            &\times\Tr[\hat{\mathcal{M}}_\mu^{q\to q}(q,\bar{k},\bar{p})\, \Phi^q(x_B)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q,\bar{k},\bar{p})\,\Delta^q(z_h,\boldsymbol{p_T})],
+    \end{aligned}
+\end{equation}
+where all the integrations have been performed or eliminated by use of the delta function in Eq.~\eqref{eq:int measure + delta} except the one over $\boldsymbol{p_T}$. Our goal, though, is to study the differential cross section integrated over the transverse momentum of the observed hadron $P_{h\perp}$. However, in a collinear frame such as the one introduced so far, the momentum $P_h$ is fixed and it has no transverse component by construction. A possible approach would be to integrate over the transverse momentum $q_T$ of the virtual photon. This $q_T$ integration, however, makes a clean separation between leptonic and hadronic parts impossible, since the leptonic tensor $L^{\mu\nu}$  will clearly depend on this transverse momentum $q_T$. A common procedure is then to change frame in such a way that this separation is possible \cite{mulders_complete_1996}. It turns out that the Breit frame in which the virtual photon and the nucleon are collinear is an appropriate choice. In this new frame, the photon momentum does not have a temporal component (which is possible since in SIDIS $q^\mu$ is always a space-like vector). The hadron momentum now acquires a perpendicular component. We then construct the Lorentz transformation from the collinear hadron frame to the Breit frame. It turns out to be
+\begin{equation}\label{eq:LT}
     \Lambda^\mu_\nu=\left(\begin{array}{c c c c}
     1+\frac{Q_T^2}{2Q^2} & -\frac{Q_T}{Q}\cos\phi_q & -\frac{Q_T}{Q}sin\phi_q & -\frac{Q_T^2}{2Q^2}\\
     -\frac{Q_T}{Q}\cos\phi_q  & 1 & 0 & \frac{Q_T}{Q}\cos\phi_q \\
@@ -175,14 +198,64 @@ In this frame, the momenta read \cite{kanazawa_contribution_2013}
         l'^\mu&=\frac{Q}{2}\Big(\frac{2-y}{y},\frac{2}{y}\sqrt{1-y}\cos\phi_l, \frac{2}{y}\sqrt{1-y}\sin\phi_l,+1\Big)
     \end{aligned}
 \end{equation}
-where $\phi_l$ is an azimuthal angle around the $z$-axis and for convenience we introduced the parameter $\chi_T^2\equiv Q_T^2/Q^2$. Accordingly, one of the light cone vectors remains unchanged $m ^\mu\to m^\mu=\frac{2x_B}{z_hQ^2}P^\mu$ while the other is modified $n^\mu\to n^\mu=\frac{2x_B}{Q^2}(x_BP^\mu+q^\mu)+\mathcal{O}(k_\perp,p_\perp)$. We note the important fact that in one frame transverse 4-momenta are actually just 2-dimensional vectors, but in the Breit frame the perpendicular 4-vector also acquires a component in the + direction due to the Lorentz   transformation. This will play a fundamental role in the emergence of twist-3 effects, since this correction in the + direction is only $1/Q$ suppressed. Furthermore, it is clear that the temporal and $z$ directions are determined by the momenta $P$ and $q$. It makes sense to introduce another projector 
+where $\phi_l$ is an azimuthal angle around the $z$-axis and for convenience we introduced the parameter $\chi_T^2\equiv Q_T^2/Q^2$. Accordingly, one of the light cone vectors remains unchanged $m ^\mu\to m^\mu=\frac{2x_B}{z_hQ^2}P^\mu$ while the other is modified $n^\mu\to n^\mu=\frac{2x_B}{Q^2}(x_BP^\mu+q^\mu)$. We note the important fact that in one frame transverse four momenta are actually just two-dimensional vectors, but in the Breit frame transverse four vectors also acquire a component in the plus direction due to the Lorentz transformation. This plays a fundamental role in the emergence of twist-3 effects, since this correction in the plus direction is only $1/Q$ suppressed. Furthermore, it is clear that the temporal and $z$ directions can be written solely in terms of the momenta $P$ and $q$. It therefore makes sense to introduce another projector 
 \begin{equation}
     g_\perp^{\mu\nu}=g^{\mu\nu}-\frac{1}{P\cdot q}[P^\mu(q+x_BP)^\nu + P^\nu(q+x_BP)^\mu],
 \end{equation}
-which has the same role of projecting out the perpendicular components but now in the Breit frame. We note the important fact that $g_\perp^{\mu\nu}$ acquires the same form as $g_T^{\mu\nu}$, thus justifying the frequent SIDIS identification $\vec P_{h\perp}=-z_h\vec q_T$. Also, the transformation leaves the perpendicular/transverse component invariant, so we can identify simply $\vec k_T=\vec k_\perp$ and $\vec p_T =\vec p_\perp$ where $\vec a_T=(a_1,a_2)$. This is true for the 2-dimensional transverse vector but, again, not at the level of 4-vectors. In the Breit frame, the meaning of the integration over $\vec P_{h\perp}$ is now clear. We note that the leptonic part is now independent of $\vec P_{h\perp}$ and it can be separated from the hadronic component. To conclude, this integration subtlety originates from the fact that we are interested in sub-leading twist effects which, as already pointed out, are $1/Q$-suppressed. In fact, at leading power in $Q$, one may safely integrate over the transverse momentum of the virtual photon. But as soon as the $\mathcal{O}(1/Q)$ terms are kept (which is needed for spin observables), this is no longer true since the differences of using the light-cone vector $n_\mu(P,P_h)$ or $n'_\mu(P,q)$ matter \cite{boer_universality_2003}. It is also important CANCELLATION pT in detail....    \\
+which has the same role of projecting out the perpendicular components of four vectors but now in the Breit frame. We note the important fact that $g_\perp^{\mu\nu}$ acquires the same form as $g_T^{\mu\nu}$, thus justifying the frequent SIDIS identification
+\begin{equation}
+    (\boldsymbol{P_{h\perp}})_{\rm{BF}}=-z_h  (\boldsymbol{q_T})_{\rm{CHF}} 
+\end{equation}
+which is derived by simply reading off the $d-2$ dimensional transverse vectors in the parametrization of the vectors $q^\mu$ and $P_{h\perp}^\mu$ in the two frames. We stress the fact that the above equation is to be understood in the Breit frame (BF) for the LHS and in the collinear hadron frame (CHF) for the RHS. Also, the transformation leaves the two-dimensional transverse component invariant, so we can identify simply $ \boldsymbol{k_T}=\boldsymbol{k_\perp}$ and $\boldsymbol{p_T} =\boldsymbol{p_\perp}$ where $\boldsymbol{a_T}=(a_1,a_2)$. This is true for the two-dimensional transverse vector but, again, not at the level of four vectors. In the Breit frame, the meaning of the integration over $\boldsymbol{P_{h\perp}}$ is now clear. We note that the leptonic part is now independent of $\boldsymbol{P_{h\perp}}$ and it can be separated from the hadronic component, which is exactly what we wanted to achieve. Interestingly, also the kinematical prefactor of the cross section is completely independent of $P_{h\perp}$, meaning that collinear twist-3 factorization for $P_{h\perp}$-integrated observables can be studied directly at the level of the hadronic tensor. The tensor in Eq.~\eqref{eq:Wq2q_CHF} can be transformed to the Breit frame
+\begin{equation}\label{eq:Wq2q_BF}
+    \begin{aligned}
+            &\left(W_{\mu\nu}^{q \to q}\right)_{\rm{BF}}=\int \dd^{d-2}\boldsymbol{p_\perp}\,\delta^{(d-2)}\left(\frac{\boldsymbol{P_{h\perp}}}{z_h}+ \boldsymbol{p_\perp}\right)\frac{2x_B}{z_h Q^2}\sum_q e_q^2 \\
+            &\qquad\times\Tr[\hat{\mathcal{M}}_\mu^{q\to q}(q_{\rm{BF}},\bar{k}_{\rm{BF}},\bar{p}_{\rm{BF}})\, \Phi^q_{\rm{BF}}(x_B)\,\hat{\bar{\mathcal{M}}}_\nu^{q\to q}(q_{\rm{BF}},\bar{k}_{\rm{BF}},\bar{p}_{\rm{BF}})\,\Delta^q_{\rm{BF}}(z_h,\boldsymbol{p_\perp})],
+    \end{aligned}
+\end{equation}
+and now the integration over $P_{h\perp}$ can be easily performed by use of the delta function. To conclude, this integration subtlety originates from the fact that we are interested in sub-leading twist effects which, as already pointed out, are $1/Q$-suppressed. In fact, at leading power in $Q$, one may safely integrate over the transverse momentum of the virtual photon. But as soon as the $\mathcal{O}(1/Q)$ terms are kept (which is needed for spin observables), this is no longer true since the differences of using the light-cone vector $n_\mu(P,P_h)$ or $n'_\mu(P,q)$ matter \cite{boer_universality_2003}.
 
+It is also important to point out that the Lorentz transformation and this change of frame significantly affects how kinematical twist-3 effects arise in our framework. In order to extract such kind of contributions, one typically performs a collinear expansion of the hard scattering process
+\begin{equation}
+    \hat{\sigma}(p_T)=\hat{\sigma}(0) + p_T^\rho \left.\pdv{\hat{\sigma}(p_T)}{p_T^\rho}\right\rvert_{p_T\to 0} + \mathcal{O}(p_T^2).
+\end{equation}
+Then, the $p_T^\rho$ term is absorbed into a $p_T$-weigthed kinematical twist-3 correlator such that
+\begin{equation}
+    \begin{aligned}
+        \int \dd^{d-2}p_T\, \hat{\sigma}(p_T)\,\Delta(z,\boldsymbol{p_T})&=\hat{\sigma}(0) \int \dd^{d-2}p_T\,\Delta(z,\boldsymbol{p_T})\\
+        &+\left. \pdv{\hat{\sigma}(p_T)}{p_T^\rho}\right\rvert_{p_T\to 0}\int \dd^{d-2}p_T\,p_T^\rho\Delta(z,\boldsymbol{p_T})\\
+        &=\hat{\sigma}(0)\,\Delta(z) + \left. \pdv{\hat{\sigma}(p_T)}{p_T^\rho}\right\rvert_{p_T\to 0} \, \Delta_\partial^\rho(z)
+    \end{aligned}
+\end{equation}
+where $\Delta(z)$ and $\Delta_\partial^\rho(z)$ are the intrinsic and kinematical fragmentation correlators, respectively. However, we observe the crucial fact that the partonic momentum $\bar{p}^\mu$, transformed from the CHF to the BF, is simply given by
+\begin{equation}
+    \bar{p}^\mu_{\rm{BF}}=x_B P^\mu_{\rm{BF}} + q^\mu_{\rm{BF}}
+\end{equation}
+where no transverse momentum $\boldsymbol{p_T}$ or $\boldsymbol{p_\perp}$ appears! This is a consequence of the fact that the transverse four vector in the BF is given by
+\begin{equation}
+    p_{T,\rm{BF}}^\mu = (p_T)_\perp^\mu + \frac{2x_B}{Q} (\boldsymbol{\chi_\perp \cdot \boldsymbol{p_\perp} })P_{\rm{BF}}^\mu
+\end{equation}
+and the outgoing hadron momentum can be written as
+\begin{equation}
+    P_{h,\rm{BF}}=jjj.
+\end{equation}
+Here, the condition $\boldsymbol{\chi_\perp}=-\boldsymbol{p_\perp}/Q$ is enforced by the delta function in Eq.~\eqref{eq:Wq2q_BF}. This means that in the Breit frame, the partonic momentum $\bar{p}^\mu$ does not depend on the transverse momentum $\boldsymbol{p_\perp}$ at all. Therefore, performing a collinear expansion of the hard scattering part with respect to $\boldsymbol{p_\perp}$ will not generate any kinematical twist-3 contributions. One may be tempted to simply accept the fact that kinematical twist-3 contributions do not appear in this observable because of this. However, kinematical twist-3 effects do arise in our framework by careful treatment of the TMD fragmentation correlator in the Breit frame, where the transformation of the transverse four vector $p_{T,\rm{BF}}^\mu$ generates a $1/Q$-suppressed plus component. This is a key point of our approach. The object that appears in the factorization ansatz in Eq.~\eqref{eq:Wq2q_CHF} is indeed the TMD fragmentation correlators in the CHF. The discussion of the TMD fragmentation correlator in the CHF has been already carried out in Chap.~\ref{chap:matrixelements} and it is given in Eq.~\eqref{eq:DeltaTMD}. By applying the Lorentz transformation in Eq.~\eqref{eq:LT}, and performing the $\boldsymbol{P_{h\perp}}$ and $\boldsymbol{p_\perp}$ integrations, we derive that that the integrated fragmentation correlator in the Breit frame is given by
+\begin{equation}
+    \begin{aligned}
+            \int \dd^{d-2}\boldsymbol{p_\perp}\,\Delta_{\rm{BF}}^q(z_h,\boldsymbol{p_\perp})&= z_h^{2\epsilon} (x_B \slashed{P}+\slashed{q})D_1^q(z_h) + \frac{z_h^{2\epsilon}M_h}{z_h} E^q(z_h)\\
+            &-\frac{2z_h^{2\epsilon}x_B M_h}{Q^2}\,i\comm{\slashed{P}}{\slashed{q}}\left(\frac{H^q(z_h)}{2 z_h} + H_1^{\perp(1),q}(z_h)\right)+\dots,
+    \end{aligned}
+\end{equation}
+where kinematical twist-3 contributions do appear in our formulae through the first moment of the Collins function. In the derivation of the above formula, we used the TMD relations
+\begin{equation}
+    \int \dd^{d-2}\boldsymbol{p_\perp}\,D_1^q(z,-z^2 \boldsymbol{p_\perp}^2)=z^{-2+2\epsilon}\,D_1^q(z),
+\end{equation}
+and
+\begin{equation}
+    \int \dd^{d-2}\boldsymbol{p_\perp}\,H_1^{\perp,q}(z,-z^2 \boldsymbol{p_\perp}^2)=z^{-2+2\epsilon}2 M_h^2\,H_1^{\perp(1),q}(z).
+\end{equation}
 
-A sketch of the lepton and hadron planes, along with the conventions for the different angles is shown in Fig.~\ref{fig:Breit frame}. It turns out that our results are particularly simple when expressed in terms of the difference $\phi_S-\phi_l$, where $\phi_S$ is the azimuthal angle of the transverse spin vector $\boldsymbol{S}_\perp$ of the nucleon. In fact, one can define such angle through the following Lorentz-invariant expression, adhering to the Trento conventions \cite{bacchetta_single-spin_2004}
+It is also interesting to visualize the Brei frame and introduce some angles that are quite popular when it comes to the treatment of sub-leading twist effects in SIDIS. A sketch of the lepton and hadron planes in teh Brei frame, along with the conventions for the different angles, is shown in Fig.~\ref{fig:Breit frame}. It turns out that our results are particularly simple when expressed in terms of the difference $\phi_S-\phi_l$, where $\phi_S$ is the azimuthal angle of the transverse spin vector $\boldsymbol{S}_\perp$ of the nucleon. In fact, one can define such angle through the following Lorentz-invariant expression, adhering to the Trento conventions \cite{bacchetta_single-spin_2004}
 \begin{equation}
 \begin{aligned}
      \sin(\phi_S-\phi_l)=& -\frac{\epsilon_\perp^{\mu\nu}l_\mu S_\nu}{\sqrt{-g^{\mu\nu}_\perp l_\mu l_\nu}}=-\frac{2x_By}{Q^3\sqrt{1-y}}\epsilon^{lPqS}=+\frac{2x_By}{Q^3\sqrt{1-y}}\epsilon^{lPl'S}\\
@@ -197,32 +270,20 @@ with the transverse Levi-Civita tensor defined as $\epsilon_\perp^{\mu\nu}=\epsi
     \label{fig:Breit frame}
 \end{figure}
 
-
-Also, the partonic momenta now become
-\begin{equation}\label{eq:partonic momenta in BF}
-    \begin{aligned}
-        k^\mu&=xP^\mu+k_T^\mu\eval_{\text{BF}}=x P^\mu+\vec k_\perp^\mu+2x_B\frac{\vec k_\perp^2}{Q^2}P^\mu\\
-        p^\mu&=\frac{1}{z}P_h^\mu+p_T^\mu\eval_{\text{BF}}=\frac{1}{z}P_h^\mu+\vec p_\perp^\mu-2x_B\frac{\vec p_\perp^2}{Q^2}P^\mu
-    \end{aligned}
-\end{equation}
-where $P$ and $P_h$ are in the Breit frame, of course. We anticipate that at LO, after integration, the momentum of the detected hadron can be written as
-\begin{equation}
-    P_h^\mu= z_h(x_BP^\mu+q^\mu)+z_hx_B\frac{(\vec k_\perp - \vec p_\perp)^2}{Q^2}P^\mu+z_h(\vec k_\perp-\vec p_\perp)^\mu.
-\end{equation}
-
-From now on, we carry on the calculation in the Breit frame. Going back to Eq. \eqref{eq:dsigma general master formula} and performing the Lorentz transformation we get the following Jacobian factors
+Going back to Eq. \eqref{eq:dsigma general master formula} and performing the Lorentz transformation we get the following Jacobian factors
 \begin{equation}
     \begin{aligned}
-        \frac{\dd^{3}l'}{2E'}&=J_l\dd x_B \dd y \dd \phi_l,\\
-        \frac{\dd^{3}P_h}{2E_h}&=J_{P_h}\dd z_h \dd^{2}P_{h\perp},\\
+        \frac{\dd^{3}l'}{2E'}&=\textcolor{red}{\frac{Q^2}{4 x_B}}\dd x_B \dd y \dd \phi_l,\\
+        \frac{\dd^{d-1}P_h}{2E_h}&=\frac{1}{2z_h}\dd z_h \dd^{d-2}P_{h\perp},\\
     \end{aligned}
 \end{equation}  
-with \textcolor{red}{$J_l=Q^2/4x_B$} and $J_{P_h}=1/2z_h$. The flux factor is given by $F=2s$, where $s=(l+P)^2=Q^2/x_B y$ is the common center-of-mass energy squared. The $P_{h\perp}$-integrated cross section is therefore given by
+The flux factor is given by $F=2s$, where $s=(l+P)^2=Q^2/x_B y$ is the common center-of-mass energy squared. The $P_{h\perp}$-integrated cross section is therefore given by
 \begin{equation}
-    \frac{\dd \sigma}{\dd x_B \dd y \dd \phi_l\dd z_h } = \frac{ J_lJ_{P_h}(4\pi)^2\alpha_{\text{em}}^2}{2sQ^4(2\pi)^{d-2}}L^{\mu\nu} \int\dd^{d-2}P_{h\perp} W_{\mu\nu}.
+    \frac{\dd \sigma}{\dd x_B \dd y \dd \phi_l\dd z_h } =\frac{\pi^2 \alpha^2_{\rm{em}}}{x_B z_h s Q^2}L^{\mu\nu}\int\frac{\dd^{d-2} P_{h\perp}}{(2\pi)^{d-2}} \,W_{\mu\nu}.
 \end{equation}
+Form the above formula, it is clear that we can study collinear twist-3 factorization directly a the level of the $P_{h\perp}$-integrated hadronic tensor. 
 
-ADD STUFF HERE ON DETAILS OF DERIVATION + CHECK WHAT MARC WRITES IN PAPER! 
+ADD STUFF HERE ON DETAILS OF DERIVATION + CHECK WHAT MARC WRITES IN PAPER! ADD 3 parton fragmentation
 
 
 
@@ -327,7 +388,7 @@ with $\bar x_B = x_B\Big(1-\frac{(\vec k_\perp - \vec p_\perp)^2}{Q^2}\Big)$. At
         \Delta(z, p_T)&\longrightarrow\Delta(z_h, p_\perp|\bar P_h,m)
     \end{aligned}
 \end{equation}
-     In order to extract the genuine and kinematical twist-3 contribution we perform the so-called collinear expansion of the hard scattering part
+     In order to extract the genuine and kinematical twist-3 contribution we perform the so-called collinear expansion of the hard scattering part to first order in the transverse partonic momentum
 \begin{equation}\label{eq:hadronic tensor LO gen+kin}\boxed{
     \begin{aligned}
         \int\dd^{d-2}P_{h\perp} W_{\mu\nu}^{q \to q} &= \frac{e_a^22x_B z_h}{Q^2} z_h^{-2\epsilon}\int \dd^{d-2}k_\perp \int \dd^{d-2}p_\perp \\&\times \text{Tr}\Bigg[\Big(\hat{\mathcal{M}}^{q\to q}\eval_{\text{CL}}+k_\perp^\alpha\pdv{\hat{\mathcal{M}}^{q\to q}}{k_\perp^\alpha}\eval_{\text{CL}}+p_\perp^\alpha\pdv{\hat{\mathcal{M}}^{q\to q}}{p_\perp^\alpha}\eval_{\text{CL}}\Big)_\mu\Phi(\bar x_B, k_\perp|P,\bar n)\\

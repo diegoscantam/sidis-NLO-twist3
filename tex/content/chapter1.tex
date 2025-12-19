@@ -173,15 +173,15 @@ Another kind of two-parton correlation functions are the so called \textit{kinem
     p^\mu = \frac{1}{z}P_h^\mu + p_T^\mu,
 \end{equation}
 where $p_T$ denotes the transverse partonic momentum. In practice, one performs a Taylor expansion to first order in $p_T$ in the hard scattering subprocess, commonly called the \textit{collinear expansion}. After this expansion, one often integrates out the transverse momentum, leaving us with a collinear matrix element. Keeping at first the full $p_T$-dependence into account, one may define a transverse momentum dependent (TMD) fragmentation correlator
-\begin{equation}
+\begin{equation}\label{eq:DeltaTMD}
     \begin{aligned}
         \Delta^q_{ij}(z,p_T)&= \sum_X\int\frac{\dd \lambda}{2\pi}\int\frac{\dd^{d-2}\eta_T}{(2\pi)^2} \,e^{-i\frac{\lambda}{z}-i\eta_T\cdot p_T}\\
         &\qquad\times\mel{0}{\psi^q_i(0)}{h(P_h);X}\mel{h(P_h);X}{\bar \psi^q_j(\lambda m+\eta_T)}{0}\\
         &= \frac{i z M_h}{2}\comm{\slashed{P}_h}{\slashed{m}}H^q(z,p_T)+\frac{iz}{2M_h}\comm{\slashed{p_T}}{\slashed{P}_h}H_1^{\perp,q}(z,p_T)\\
-        &\quad +zM_h(\mathbb{1})_{ij}\,E^q(z,p_T)+\cdots  .
+        &\quad +zM_h(\mathbb{I})_{ij}\,E^q(z,p_T)+\cdots  .
         \end{aligned}
 \end{equation}
-COMMENT ON FUNCTIONS\\
+COMMENT ON FUNCTIONS + KINEMATICAL CONTRIBUTIONS FRM LORENTZ TRANSFORM\\
 Now, the collinear matrix element relevant within the collinear twist-3 formalism is nothing else but the $p_T$-weighted correlator. It is
  \begin{equation}
     \begin{aligned}
